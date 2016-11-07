@@ -1,0 +1,34 @@
+{
+  "name": "compat-table",
+  "version": "0.0.1",
+  "description": "Raw kangax/compat-table data without unnecessary dependencies.",
+  "main": "index.js",
+  "scripts": {
+    "clean": "rimraf {data-*,*-browsers}.js",
+    "prebuild": "npm run clean",
+    "build": "cpy node_modules/compat-table/{data-*,*-browsers}.js .",
+    "preversion": "npm run build && git add -A . && ! git diff --cached --quiet",
+    "postversion": "npm publish && git push && git push --tags"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Gerhut/compat-table.git"
+  },
+  "keywords": [
+    "data"
+  ],
+  "author": "George Chung <Gerhut@GMail.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/Gerhut/compat-table/issues"
+  },
+  "homepage": "https://github.com/Gerhut/compat-table#readme",
+  "dependencies": {
+    "object.assign": "^4.0.4"
+  },
+  "devDependencies": {
+    "compat-table": "kangax/compat-table#gh-pages",
+    "cpy-cli": "^1.0.1",
+    "rimraf": "^2.5.4"
+  }
+}
