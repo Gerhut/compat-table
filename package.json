@@ -4,9 +4,9 @@
   "description": "Raw kangax/compat-table data without unnecessary dependencies.",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf {data-*,*-browsers}.js",
+    "clean": "rimraf \"!(index).js\"",
     "prebuild": "npm run clean",
-    "build": "cpy node_modules/compat-table/{data-*,*-browsers}.js .",
+    "build": "cpy node_modules/compat-table/data-*.js .",
     "preversion": "npm run build && git add -A . && ! git diff --cached --quiet",
     "postversion": "npm publish && git push && git push --tags"
   },
