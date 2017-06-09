@@ -1,55 +1,24 @@
-var browsers = require('./esnext-browsers');
+var common = require('./data-common');
+
+var typescript = common.typescript;
+var firefox = common.firefox;
+var chrome = common.chrome;
 
 exports.name = 'ES Next';
 exports.target_file = 'esnext/index.html';
 exports.skeleton_file = 'esnext/skeleton.html';
 
-var flag = "flagged";
-/* jshint unused:false */
-var strict = "strict";
-var fallthrough = "needs-polyfill-or-native";
-
-var babel = {
-    regenerator: {
-        val: true,
-        note_id: "babel-regenerator",
-        note_html: "This feature requires native generators or <code>regenerator-runtime</code>, it's a part of <code>babel-polyfill</code> or <code>babel-runtime</code>."
-    }
-};
-
-var typescript = {
-    corejs: {
-        val: true,
-        note_id: "typescript-core-js",
-        note_html: "This feature is supported when using TypeScript with <a href='https://github.com/zloirock/core-js'>core-js</a>, or when a native ES6 host is used."
-    },
-    fallthrough: {
-        val: fallthrough,
-        note_id: "typescript-es6",
-        note_html: "TypeScript's compiler will accept code using this feature if the <code>--target ES6</code> flag is set, but passes it through unmodified and does not supply a runtime polyfill."
-    },
-    asyncawait: {
-        val: true,
-        note_id: "typescript-async-await",
-        note_html: "TypeScript <code>async</code> / <code>await</code> requires native generators support."
-    },
-};
-var firefox = {
-  nightly: {
-    val: false,
-    note_id: "firefox-nightly",
-    note_html: "The feature is enabled by default only in Firefox Nightly."
-  }
-};
-
-exports.browsers = browsers;
-
+var STAGE0 = 'strawman (stage 0)';
+var STAGE1 = 'proposal (stage 1)';
+var STAGE2 = 'draft (stage 2)';
+var STAGE3 = 'candidate (stage 3)';
+var PRESTRAWMAN = 'pre-strawman';
 
 exports.tests = [
 {
   name: 'bind (::) operator',
   spec: 'https://github.com/zenparsing/es-function-bind',
-  category: 'strawman (stage 0)',
+  category: STAGE0,
   significance: 'medium',
   subtests: [
     {
@@ -61,6 +30,7 @@ exports.tests = [
       */},
       res: {
         babel: true,
+        duktape2_0: false,
       }
     },
     {
@@ -71,13 +41,14 @@ exports.tests = [
       */},
       res: {
         babel: true,
+        duktape2_0: false,
       },
     },
   ],
 },
 {
-  name: 'do expression',
-  category: 'strawman (stage 0)',
+  name: 'do expressions',
+  category: STAGE1,
   significance: 'small',
   spec: 'http://wiki.ecmascript.org/doku.php?id=strawman:do_expressions',
   exec: function () {/*
@@ -88,11 +59,12 @@ exports.tests = [
   */},
   res: {
     babel: true,
+    duktape2_0: false,
   }
 },
 {
   name: 'function.sent',
-  category: 'draft (stage 2)',
+  category: STAGE2,
   significance: 'small',
   spec: 'https://github.com/allenwb/ESideas/blob/master/Generator%20metaproperty.md',
   exec: function () {/*
@@ -105,590 +77,912 @@ exports.tests = [
     return result === 'tromple';
   */},
   res: {
+    duktape2_0: false,
   }
 },
 {
   name: 'SIMD (Single Instruction, Multiple Data)',
-  category: 'candidate (stage 3)',
+  category: STAGE3,
   significance: 'large',
   spec: 'https://tc39.github.io/ecmascript_simd/',
+  mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD',
   subtests: [
     {
       name: 'basic support',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD',
       exec: function () {/*
+        simdFloatTypes=['Float32x4'];
+        simdBoolTypes=['Bool32x4','Bool16x8','Bool8x16'];
+        simdIntTypes=['Int32x4','Int16x8','Int8x16','Uint32x4','Uint16x8','Uint8x16'];
+        simd32bitFloatIntTypes=['Float32x4','Int32x4','Uint32x4'];
+        simdSmallIntTypes=['Int16x8','Int8x16','Uint16x8','Uint8x16'];
+        simdBoolIntTypes=simdBoolTypes.concat(simdIntTypes);
+        simdFloatIntTypes=simdFloatTypes.concat(simdIntTypes);
+        simdAllTypes=simdFloatTypes.concat(simdIntTypes,simdBoolTypes);
         return typeof SIMD !== 'undefined';
       */},
       res: {
-        edge12: flag,
+        edge12: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'Float32x4',
+      spec: 'https://tc39.github.io/ecmascript_simd/#float32x4',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32x4',
       exec: function(){/*
         return typeof SIMD.Float32x4 === 'function';
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'Int32x4',
+      spec: 'https://tc39.github.io/ecmascript_simd/#int32x4',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32x4',
       exec: function(){/*
         return typeof SIMD.Int32x4 === 'function';
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'Int16x8',
+      spec: 'https://tc39.github.io/ecmascript_simd/#int16x8',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16x8',
       exec: function(){/*
         return typeof SIMD.Int16x8 === 'function';
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'Int8x16',
+      spec: 'https://tc39.github.io/ecmascript_simd/#int8x16',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8x16',
       exec: function(){/*
         return typeof SIMD.Int8x16 === 'function';
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'Uint32x4',
+      spec: 'https://tc39.github.io/ecmascript_simd/#uint32x4',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32x4',
       exec: function(){/*
         return typeof SIMD.Uint32x4 === 'function';
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'Uint16x8',
+      spec: 'https://tc39.github.io/ecmascript_simd/#uint16x8',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16x8',
       exec: function(){/*
         return typeof SIMD.Uint16x8 === 'function';
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'Uint8x16',
+      spec: 'https://tc39.github.io/ecmascript_simd/#uint8x16',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8x16',
       exec: function(){/*
         return typeof SIMD.Uint8x16 === 'function';
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'Bool32x4',
+      spec: 'https://tc39.github.io/ecmascript_simd/#bool32x4',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Bool32x4',
       exec: function(){/*
         return typeof SIMD.Bool32x4 === 'function';
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'Bool16x8',
+      spec: 'https://tc39.github.io/ecmascript_simd/#bool16x8',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Bool16x8',
       exec: function(){/*
         return typeof SIMD.Bool16x8 === 'function';
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'Bool8x16',
+      spec: 'https://tc39.github.io/ecmascript_simd/#bool8x16',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Bool8x16',
       exec: function(){/*
         return typeof SIMD.Bool8x16 === 'function';
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%type%.abs',
+      name: 'SIMD.%floatType%.abs',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-abs',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/abs',
       exec: function(){/*
-        return typeof SIMD.Float32x4.abs === 'function';
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].abs === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.add',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-add',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/add',
       exec: function(){/*
-        return typeof SIMD.Float32x4.add === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].add === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%integerType%.addSaturate',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-add-saturate',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/addSaturate',
       exec: function(){/*
-        return typeof SIMD.Int16x8.addSaturate === 'function';
+        return simdSmallIntTypes.every(function(type){
+          return typeof SIMD[type].addSaturate === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%booleanType%.and',
+      name: 'SIMD.%type%.and',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-and',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/and',
       exec: function(){/*
-        return typeof SIMD.Bool16x8.and === 'function';
+        return simdBoolIntTypes.every(function(type){
+          return typeof SIMD[type].and === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%booleanType%.anyTrue',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-any-true',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/anyTrue',
       exec: function(){/*
-        return typeof SIMD.Bool32x4.anyTrue === 'function';
+        return simdBoolTypes.every(function(type){
+          return typeof SIMD[type].anyTrue === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%booleanType%.allTrue',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-all-true',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/allTrue',
       exec: function(){/*
-        return typeof SIMD.Bool32x4.allTrue === 'function';
+        return simdBoolTypes.every(function(type){
+          return typeof SIMD[type].allTrue === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.check',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-check',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/check',
       exec: function(){/*
-        return typeof SIMD.Float32x4.check === 'function';
+        return simdAllTypes.every(function(type){
+          return typeof SIMD[type].check === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.equal',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-equal',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/equal',
       exec: function(){/*
-        return typeof SIMD.Float32x4.equal === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].equal === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.extractLane',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-extract-lane',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/extractLane',
       exec: function(){/*
-        return typeof SIMD.Float32x4.extractLane === 'function';
+        return simdAllTypes.every(function(type){
+          return typeof SIMD[type].extractLane === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.greaterThan',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-greater-than',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/greaterThan',
       exec: function(){/*
-        return typeof SIMD.Float32x4.greaterThan === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].greaterThan === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.greaterThanOrEqual',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-greater-than-or-equal',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/greaterThanOrEqual',
       exec: function(){/*
-        return typeof SIMD.Float32x4.greaterThanOrEqual === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].greaterThanOrEqual === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.lessThan',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-less-than',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/lessThan',
       exec: function(){/*
-        return typeof SIMD.Float32x4.lessThan === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].lessThan === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.lessThanOrEqual',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-less-than-or-equal',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/lessThanOrEqual',
       exec: function(){/*
-        return typeof SIMD.Float32x4.lessThanOrEqual === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].lessThanOrEqual === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.mul',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-mul',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/mul',
       exec: function(){/*
-        return typeof SIMD.Float32x4.mul === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].mul === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%type%.div',
+      name: 'SIMD.%floatType%.div',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-div',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/div',
       exec: function(){/*
-        return typeof SIMD.Float32x4.div === 'function';
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].div === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.load',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-load-function',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
       exec: function(){/*
-        return typeof SIMD.Float32x4.load === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].load === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.load1',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
       exec: function(){/*
-        return typeof SIMD.Float32x4.load1 === 'function';
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].load1 === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.load2',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
       exec: function(){/*
-        return typeof SIMD.Float32x4.load2 === 'function';
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].load2 === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.load3',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
       exec: function(){/*
-        return typeof SIMD.Float32x4.load3 === 'function';
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].load3 === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%type%.max',
+      name: 'SIMD.%floatType%.max',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-max',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/max',
       exec: function(){/*
-        return typeof SIMD.Float32x4.max === 'function';
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].max === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%type%.maxNum',
+      name: 'SIMD.%floatType%.maxNum',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-max-num',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/maxNum',
       exec: function(){/*
-        return typeof SIMD.Float32x4.maxNum === 'function';
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].maxNum === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        edge15: false,
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%type%.min',
+      name: 'SIMD.%floatType%.min',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-min',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/min',
       exec: function(){/*
-        return typeof SIMD.Float32x4.min === 'function';
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].min === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%type%.minNum',
+      name: 'SIMD.%floatType%.minNum',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-min-num',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/minNum',
       exec: function(){/*
-        return typeof SIMD.Float32x4.minNum === 'function';
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].minNum === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        edge15: false,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.neg',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-neg',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/neg',
       exec: function(){/*
-        return typeof SIMD.Float32x4.neg === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].neg === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%booleanType%.not',
+      name: 'SIMD.%type%.not',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-not',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/not',
       exec: function(){/*
-        return typeof SIMD.Bool16x8.not === 'function';
+        return simdBoolTypes.every(function(type){
+          return typeof SIMD[type].not === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.notEqual',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-not-equal',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/notEqual',
       exec: function(){/*
-        return typeof SIMD.Float32x4.notEqual === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].notEqual === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%booleanType%.or',
+      name: 'SIMD.%type%.or',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-or',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/or',
       exec: function(){/*
-        return typeof SIMD.Bool16x8.or === 'function';
+        return simdBoolIntTypes.every(function(type){
+          return typeof SIMD[type].or === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%type%.reciprocalApproximation',
+      name: 'SIMD.%floatType%.reciprocalApproximation',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-reciprocal-approximation',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/reciprocalApproximation',
       exec: function(){/*
-        return typeof SIMD.Float32x4.reciprocalApproximation === 'function';
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].reciprocalApproximation === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%type%.reciprocalSqrtApproximation',
+      name: 'SIMD.%floatType%.reciprocalSqrtApproximation',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-reciprocal-sqrt-approximation',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/reciprocalSqrtApproximation',
       exec: function(){/*
-        return typeof SIMD.Float32x4.reciprocalSqrtApproximation === 'function';
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].reciprocalSqrtApproximation === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.replaceLane',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-replace-lane',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/replaceLane',
       exec: function(){/*
-        return typeof SIMD.Float32x4.replaceLane === 'function';
+        return simdAllTypes.every(function(type){
+          return typeof SIMD[type].replaceLane === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.select',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-select',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/select',
       exec: function(){/*
-        return typeof SIMD.Float32x4.select === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].select === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%integerType%.shiftLeftByScalar',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-shift-left-by-scalar',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/shiftLeftByScalar',
       exec: function(){/*
-        return typeof SIMD.Int32x4.shiftLeftByScalar === 'function';
+        return simdIntTypes.every(function(type){
+          return typeof SIMD[type].shiftLeftByScalar === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%integerType%.shiftRightByScalar',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-shift-right-by-scalar',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/shiftRightByScalar',
       exec: function(){/*
-        return typeof SIMD.Int32x4.shiftRightByScalar === 'function';
+        return simdIntTypes.every(function(type){
+          return typeof SIMD[type].shiftRightByScalar === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.shuffle',
+      spec: 'https://tc39.github.io/ecmascript_simd/#shuffle',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/shuffle',
       exec: function(){/*
-        return typeof SIMD.Float32x4.shuffle === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].shuffle === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.splat',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-splat',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/splat',
       exec: function(){/*
-        return typeof SIMD.Float32x4.splat === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].splat === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%type%.sqrt',
+      name: 'SIMD.%floatType%.sqrt',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-sqrt',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/sqrt',
       exec: function(){/*
-        return typeof SIMD.Float32x4.sqrt === 'function';
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].sqrt === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.store',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-store-function',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
       exec: function(){/*
-        return typeof SIMD.Float32x4.store === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].store === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.store1',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
       exec: function(){/*
-        return typeof SIMD.Float32x4.store1 === 'function';
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].store1 === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.store2',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
       exec: function(){/*
-        return typeof SIMD.Float32x4.store2 === 'function';
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].store2 === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.store3',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
       exec: function(){/*
-        return typeof SIMD.Float32x4.store3 === 'function';
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].store3 === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.sub',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-sub',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/sub',
       exec: function(){/*
-        return typeof SIMD.Float32x4.sub === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].sub === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%integerType%.subSaturate',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-sub-saturate',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/subSaturate',
       exec: function(){/*
-        return typeof SIMD.Int16x8.subSaturate === 'function';
+        return simdSmallIntTypes.every(function(type){
+          return typeof SIMD[type].subSaturate === 'function';
+        });
       */},
       res: {
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.swizzle',
+      spec: 'https://tc39.github.io/ecmascript_simd/#swizzle',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/swizzle',
       exec: function(){/*
-        return typeof SIMD.Float32x4.swizzle === 'function';
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].swizzle === 'function';
+        });
       */},
       res: {
-        edge13: flag,
+        edge13: "flagged",
         firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        duktape2_0: false,
       }
     },
     {
-      name: 'SIMD.%booleanType%.xor',
+      name: 'SIMD.%type%.xor',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-xor',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/xor',
       exec: function(){/*
-        return typeof SIMD.Bool16x8.xor === 'function';
+        return simdBoolIntTypes.every(function(type){
+          return typeof SIMD[type].xor === 'function';
+        });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.fromTIMDBits',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-to-timd',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/fromFloat32x4Bits',
       exec: function(){/*
-        return 'Float32x4,Int32x4,Int8x16,Uint32x4,Uint16x8,Uint8x16'.split(',').every(function(type){
+        return ['Float32x4','Int32x4','Int8x16','Uint32x4','Uint16x8','Uint8x16'].every(function(type){
           return typeof SIMD.Int16x8['from' + type + 'Bits'] === 'function';
         });
       */},
       res: {
         firefox48: firefox.nightly,
-        edge14: flag,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     },
     {
       name: 'SIMD.%type%.fromTIMD',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-to-timd-logical',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/fromFloat32x4',
       exec: function(){/*
-        return 'Float32x4,Uint32x4'.split(',').every(function(type){
-          return typeof SIMD.Int32x4['from' + type] === 'function';
-        });
+        return typeof SIMD.Float32x4.fromInt32x4 === 'function' && typeof SIMD.Float32x4.fromUint32x4 === 'function' && typeof SIMD.Int32x4.fromFloat32x4 === 'function' && typeof SIMD.Uint32x4.fromFloat32x4 === 'function';
       */},
       res: {
+        firefox48: firefox.nightly,
+        chrome37: chrome.simd,
+        edge14: "flagged",
+        duktape2_0: false,
       }
     }
   ]
 },
 {
   name: 'class decorators',
-  category: 'draft (stage 2)',
+  category: STAGE2,
   significance: 'medium',
   spec: 'https://github.com/wycats/javascript-decorators',
   exec: function(){/*
@@ -703,13 +997,14 @@ exports.tests = [
     return Object.getOwnPropertyDescriptor(A.prototype, "B").configurable === false;
   */},
   res: {
-    babel: {val: false, note_id: "babel-decorators-legacy", note_html: "Babel 6 still has no official support decorators, but you can use <a href='https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy'>this plugin</a>."},
+    babel: {val: false, note_id: "regenerator-decorators-legacy", note_html: "Babel 6 still has no official support decorators, but you can use <a href='https://github.com/loganfsmyth/regenerator-plugin-transform-decorators-legacy'>this plugin</a>."},
     typescript: true,
+    duktape2_0: false,
   }
 },
 {
   name: 'class properties',
-  category: 'draft (stage 2)',
+  category: STAGE2,
   significance: 'medium',
   spec: 'https://github.com/jeffmo/es-class-properties',
   exec: function () {/*
@@ -723,11 +1018,12 @@ exports.tests = [
     babel: true,
     tr: true,
     typescript: true,
+    duktape2_0: false,
   }
 },
 {
   name: 'Realms',
-  category: 'strawman (stage 0)',
+  category: STAGE1,
   significance: 'large',
   spec: 'https://github.com/caridy/proposal-realms',
   exec: function () {/*
@@ -737,25 +1033,34 @@ exports.tests = [
       });
   */},
   res: {
+    duktape2_0: false,
   }
 },
 {
   name: 'object rest properties',
   significance: 'small',
   spec: 'https://github.com/sebmarkbage/ecmascript-rest-spread',
-  category: 'candidate (stage 3)',
+  category: STAGE3,
   exec: function () {/*
     var {a, ...rest} = {a: 1, b: 2, c: 3};
     return a === 1 && rest.a === undefined && rest.b === 2 && rest.c === 3;
   */},
   res: {
     babel: true,
+    typescript: true,
     jsx: true,
+    firefox55: true,
+    chrome58: 'flagged',
+    chrome61: true,
+    safari11: true,
+    safaritp: true,
+    webkit: true,
+    duktape2_0: false,
   }
 },
 {
   name: 'object spread properties',
-  category: 'candidate (stage 3)',
+  category: STAGE3,
   significance: 'medium',
   spec: 'https://github.com/sebmarkbage/ecmascript-rest-spread',
   exec: function () {/*
@@ -766,13 +1071,21 @@ exports.tests = [
   res: {
     babel: true,
     jsx: true,
+    firefox55: true,
+    chrome58: 'flagged',
+    chrome61: true,
+    typescript: true,
+    safari11: true,
+    safaritp: true,
+    webkit: true,
+    duktape2_0: false,
   }
 },
 {
   name: 'String.prototype.at',
   significance: 'small',
   spec: 'https://github.com/mathiasbynens/String.prototype.at',
-  category: 'strawman (stage 0)',
+  category: STAGE0,
   exec: function () {/*
     return 'a𠮷b'.at(1) === '𠮷';
   */},
@@ -780,62 +1093,81 @@ exports.tests = [
     babel: true,
     typescript: typescript.corejs,
     es7shim: true,
+    duktape2_0: false,
   }
 },
 {
   name: 'string trimming',
-  category: 'draft (stage 2)',
+  category: STAGE2,
   significance: 'small',
   spec: 'https://github.com/sebmarkbage/ecmascript-string-left-right-trim',
   subtests: [
     {
       name: 'String.prototype.trimLeft',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/TrimLeft',
       exec: function(){/*
         return ' \t \n abc   \t\n'.trimLeft() === 'abc   \t\n';
       */},
       res: {
         babel: true,
         typescript: typescript.corejs,
+        ie7: false,
         edge12: true,
-        firefox3: false,
+        firefox2: false,
         firefox3_5: true,
         firefox3_6: true,
         firefox4: true,
-        chrome30: true,
-        node: true,
+        chrome7: true,
+        opera10_10: false,
+        konq44: false,
+        konq49: true,
+        besen: false,
+        rhino1_7: false,
+        phantom: true,
+        node0_12: true,
         iojs: true,
-        safari51: true,
-        safari9: true,
+        safari3: false,
+        safari4: true,
         safaritp: true,
         webkit: true,
         es7shim: true,
-        android40: true,
-        ios51: true,
+        android4_0: true,
+        ios5_1: true,
+        duktape2_0: false,
       }
     },
     {
       name: 'String.prototype.trimRight',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/TrimRight',
       exec: function(){/*
         return ' \t \n abc   \t\n'.trimRight() === ' \t \n abc';
       */},
       res: {
         babel: true,
         typescript: typescript.corejs,
+        ie7: false,
         edge12: true,
-        firefox3: false,
+        firefox2: false,
         firefox3_5: true,
         firefox3_6: true,
         firefox4: true,
-        chrome30: true,
-        node: true,
+        chrome7: true,
+        opera10_10: false,
+        konq44: false,
+        konq49: true,
+        besen: false,
+        rhino1_7: false,
+        phantom: true,
+        node0_12: true,
         iojs: true,
-        safari51: true,
-        safari9: true,
+        safari3: false,
+        safari4: true,
         safaritp: true,
         webkit: true,
         es7shim: true,
-        android40: true,
-        ios51: true,
+        android4_0: true,
+        ios5_1: true,
+        duktape2_0: false,
       }
     },
     {
@@ -846,6 +1178,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -856,26 +1189,94 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     }
   ]
 },
 {
   name: 'global',
-  category: 'candidate (stage 3)',
+  category: STAGE3,
   significance: 'small',
   spec: 'https://github.com/tc39/proposal-global',
-  exec: function(){/*
-    Function('return this')().__system_global_test__ = 42;
-    return typeof global === 'object' && global && !global.lacksGlobal && global.__system_global_test__ === 42;
-  */},
-  res: {
-    node: true,
-  }
+  subtests: [{
+    name: '"global" global property is global object',
+    exec: function(){/*
+      var actualGlobal = Function('return this')();
+      actualGlobal.__system_global_test__ = 42;
+      return typeof global === 'object' && global && global === actualGlobal && !global.lacksGlobal && global.__system_global_test__ === 42;
+    */},
+    res: {
+      firefox53: {
+        val: false,
+        note_id: 'ffox-global-property',
+        note_html: 'The feature was disabled due to <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1325907">some</a> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1326032">compatibility</a> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1328218">issues</a>.',
+      },
+      safari10_1: false,
+      safaritp: {
+        val: false,
+        note_id: 'wk-global-property',
+        note_html: 'The feature was disabled due to <a href="https://bugs.webkit.org/show_bug.cgi?id=165171">compatibility issues</a>.',
+      },
+      webkit: {
+        val: false,
+        note_id: 'wk-global-property',
+        note_html: 'The feature was disabled due to <a href="https://bugs.webkit.org/show_bug.cgi?id=165171">compatibility issues</a>.',
+      },
+      node0_10: true,
+      node0_12: true,
+      node4: true,
+      node6: true,
+      node6_5: true,
+      node7: true,
+      node7_6: true,
+      duktape2_0: false,
+      duktape2_1: true,
+    }
+  }, {
+    name: '"global" global property has correct property descriptor',
+    exec: function(){/*
+      var actualGlobal = Function('return this')();
+      if (typeof global !== 'object') { return false; }
+      if (!('global' in actualGlobal)) { return false; }
+      if (Object.prototype.propertyIsEnumerable.call(actualGlobal, 'global')) { return false; }
+      if (typeof Object.getOwnPropertyDescriptor !== 'function') { return true; } // ES3
+
+      var descriptor = Object.getOwnPropertyDescriptor(actualGlobal, 'global');
+      return descriptor.value === actualGlobal && !descriptor.enumerable && descriptor.configurable && descriptor.writable;
+    */},
+    res: {
+      firefox53: {
+        val: false,
+        note_id: 'ffox-global-property',
+        note_html: 'The feature was disabled due to <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1325907">some</a> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1326032">compatibility</a> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1328218">issues</a>.',
+      },
+      safaritp: {
+        val: false,
+        note_id: 'wk-global-property',
+        note_html: 'The feature was disabled due to <a href="https://bugs.webkit.org/show_bug.cgi?id=165171">compatibility issues</a>.',
+      },
+      safari10_1: false,
+      webkit: {
+        val: false,
+        note_id: 'wk-global-property',
+        note_html: 'The feature was disabled due to <a href="https://bugs.webkit.org/show_bug.cgi?id=165171">compatibility issues</a>.',
+      },
+      node0_10: false,
+      node0_12: false,
+      node4: false,
+      node6: false,
+      node6_5: false,
+      node7: false,
+      node7_6: false,
+      duktape2_0: false,
+      duktape2_1: true,
+    }
+  }]
 },
 {
   name: 'Math methods for 64-bit integers',
-  category: 'strawman (stage 0)',
+  category: STAGE1,
   significance: 'tiny',
   spec: 'https://gist.github.com/BrendanEich/4294d5c212a6d2254703',
   subtests: [
@@ -887,6 +1288,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -897,6 +1299,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -907,6 +1310,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -917,13 +1321,14 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
   ]
 },
 {
   name: 'Observable',
-  category: 'proposal (stage 1)',
+  category: STAGE1,
   significance: 'medium',
   spec: 'https://github.com/zenparsing/es-observable',
   'subtests': [
@@ -935,6 +1340,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -945,6 +1351,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -955,6 +1362,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -975,6 +1383,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -986,6 +1395,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -997,6 +1407,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -1007,6 +1418,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -1017,13 +1429,14 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     }
   ]
 },
 {
   name: 'String.prototype.matchAll',
-  category: 'proposal (stage 1)',
+  category: STAGE1,
   significance: 'small',
   spec: 'https://github.com/tc39/String.prototype.matchAll',
   exec: function(){/*
@@ -1042,169 +1455,12 @@ exports.tests = [
   res: {
     babel: true,
     typescript: typescript.corejs,
+    duktape2_0: false,
   }
 },
 {
-  name: 'shared memory and atomics',
-  category: 'draft (stage 2)',
-  significance: 'large',
-  spec: 'https://github.com/tc39/ecmascript_sharedmem',
-  'subtests': [
-    {
-      name: 'SharedArrayBuffer',
-      exec: function () {/*
-        return typeof SharedArrayBuffer === 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'SharedArrayBuffer[Symbol.species]',
-      exec: function () {/*
-        return SharedArrayBuffer[Symbol.species]() === SharedArrayBuffer;
-      */},
-      res: {
-      }
-    },
-    {
-      name: 'SharedArrayBuffer.prototype.byteLength',
-      exec: function () {/*
-        return 'byteLength' in SharedArrayBuffer.prototype;
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'SharedArrayBuffer.prototype.slice',
-      exec: function () {/*
-        return typeof SharedArrayBuffer.prototype.slice === 'function';
-      */},
-      res: {
-      }
-    },
-    {
-      name: 'SharedArrayBuffer.prototype[Symbol.toStringTag]',
-      exec: function () {/*
-        return SharedArrayBuffer.prototype[Symbol.toStringTag] === 'SharedArrayBuffer';
-      */},
-      res: {
-      }
-    },
-    {
-      name: 'Atomics.add',
-      exec: function () {/*
-        return typeof Atomics.add == 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.and',
-      exec: function () {/*
-        return typeof Atomics.and == 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.compareExchange',
-      exec: function () {/*
-        return typeof Atomics.compareExchange == 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.exchange',
-      exec: function () {/*
-        return typeof Atomics.exchange == 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.wait',
-      exec: function () {/*
-        return typeof Atomics.wait == 'function';
-      */},
-      res: {
-        firefox48: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.wake',
-      exec: function () {/*
-        return typeof Atomics.wake == 'function';
-      */},
-      res: {
-        firefox48: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.isLockFree',
-      exec: function () {/*
-        return typeof Atomics.isLockFree == 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.load',
-      exec: function () {/*
-        return typeof Atomics.load == 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.or',
-      exec: function () {/*
-        return typeof Atomics.or == 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.store',
-      exec: function () {/*
-        return typeof Atomics.store == 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.sub',
-      exec: function () {/*
-        return typeof Atomics.sub == 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    },
-    {
-      name: 'Atomics.xor',
-      exec: function () {/*
-        return typeof Atomics.xor == 'function';
-      */},
-      res: {
-        firefox46: firefox.nightly,
-      }
-    }
-  ]
-},
-{
   name: 'additional meta properties',
-  category: 'strawman (stage 0)',
+  category: STAGE0,
   significance: 'medium',
   spec: 'https://github.com/allenwb/ESideas/blob/master/ES7MetaProps.md',
   subtests: [
@@ -1215,6 +1471,7 @@ exports.tests = [
         return f();
       */},
       res: {
+        duktape2_0: false,
       }
     },
     {
@@ -1223,6 +1480,7 @@ exports.tests = [
         return (_ => function.count)(1, 2, 3) === 3;
       */},
       res: {
+        duktape2_0: false,
       }
     },
     {
@@ -1236,6 +1494,7 @@ exports.tests = [
           && arr[2] === 3;
       */},
       res: {
+        duktape2_0: false,
       }
     }
   ]
@@ -1243,7 +1502,7 @@ exports.tests = [
 {
   name: 'method parameter decorators',
   spec: 'https://docs.google.com/document/d/1Qpkqf_8NzAwfD8LdnqPjXAQ2wwh8BBUGynhn-ZlCWT0',
-  category: 'strawman (stage 0)',
+  category: STAGE0,
   significance: 'small',
   exec: function(){/*
     var target, key, index;
@@ -1261,12 +1520,13 @@ exports.tests = [
   */},
   res : {
     typescript: true,
+    duktape2_0: false,
   }
 },
 {
   name: 'function expression decorators',
   spec: 'https://docs.google.com/document/d/1ikxIP5-RVYq6d_f8lAvf3pKC00W78ueyp-xIZ6q67uU/edit?pref=2&pli=1#',
-  category: 'strawman (stage 0)',
+  category: STAGE0,
   significance: 'small',
   exec: function(){/*
     function inverse(f){
@@ -1279,12 +1539,13 @@ exports.tests = [
     })(2);
   */},
   res : {
+    duktape2_0: false,
   }
 },
 {
   name: 'weak references',
   spec: 'https://github.com/tc39/proposal-weakrefs',
-  category: 'proposal (stage 1)',
+  category: STAGE1,
   significance: 'large',
   exec: function(){/*
     var O = {};
@@ -1294,11 +1555,12 @@ exports.tests = [
     return works && weakref.get() === undefined;
   */},
   res : {
+    duktape2_0: false,
   }
 },
 {
   name: 'Async iteration',
-  category: 'candidate (stage 3)',
+  category: STAGE3,
   significance: 'medium',
   spec: 'https://github.com/tc39/proposal-async-iteration',
   subtests: [
@@ -1316,6 +1578,8 @@ exports.tests = [
       */},
       res: {
         babel: true,
+        firefox55: firefox.nightly,
+        duktape2_0: false,
       }
     },
     {
@@ -1342,6 +1606,8 @@ exports.tests = [
       */},
       res: {
         babel: true,
+        firefox55: firefox.nightly,
+        duktape2_0: false,
       }
     }
   ]
@@ -1349,7 +1615,7 @@ exports.tests = [
 {
   name: 'RegExp named capture groups',
   spec: 'https://github.com/goyakin/es-regexp-named-groups',
-  category: 'strawman (stage 0)',
+  category: STAGE3,
   significance: 'small',
   exec: function(){/*
     var result = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/.exec('2016-03-11');
@@ -1362,23 +1628,40 @@ exports.tests = [
       && result.groups[3] === '11';
   */},
   res : {
+    duktape2_0: false,
   }
 },
 {
   name: 'RegExp lookbehind',
-  spec: 'https://github.com/goyakin/es-regexp-lookbehind',
-  category: 'strawman (stage 0)',
+  spec: 'https://github.com/tc39/proposal-regexp-lookbehind',
+  category: STAGE3,
   significance: 'small',
   exec: function(){/*
-    return /(?<=a)b/.test('ab') && /(?<!a)b/.test('cb');
+    return /(?<=a)b/.test('ab') && /(?<!a)b/.test('cb') &&
+           !/(?<=a)b/.test('b');
   */},
   res : {
-    chrome50: flag,
+    chrome50: "flagged",
+    duktape2_0: false,
+  }
+},
+{
+  name: 'RegExp Unicode Property Escapes',
+  category: STAGE3,
+  significance: 'small',
+  spec: 'https://github.com/tc39/proposal-regexp-unicode-property-escapes',
+  exec: function () {/*
+    const regexGreekSymbol = /\p{Script=Greek}/u;
+    return regexGreekSymbol.test('π');
+  */},
+  res: {
+    chrome59: "flagged",
+    duktape2_0: false,
   }
 },
 {
   name: 'Reflect.isCallable / Reflect.isConstructor',
-  category: 'strawman (stage 0)',
+  category: STAGE0,
   significance: 'small',
   spec: 'https://github.com/caitp/TC39-Proposals/blob/master/tc39-reflect-isconstructor-iscallable.md',
   subtests: [
@@ -1390,6 +1673,7 @@ exports.tests = [
           && !Reflect.isCallable(class {});
       */},
       res: {
+        duktape2_0: false,
       }
     },
     {
@@ -1400,13 +1684,14 @@ exports.tests = [
           && Reflect.isConstructor(class {});
       */},
       res: {
+        duktape2_0: false,
       }
     }
   ]
 },
 {
   name: 'Metadata reflection API',
-  category: 'pre-strawman',
+  category: PRESTRAWMAN,
   significance: 'medium',
   spec: 'https://github.com/rbuckton/ReflectDecorators',
   subtests: [
@@ -1418,6 +1703,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -1428,6 +1714,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -1438,6 +1725,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -1448,6 +1736,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -1458,6 +1747,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -1468,6 +1758,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -1478,6 +1769,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -1488,6 +1780,7 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     },
     {
@@ -1498,13 +1791,14 @@ exports.tests = [
       res: {
         babel: true,
         typescript: typescript.corejs,
+        duktape2_0: false,
       }
     }
   ]
 },
 {
   name: 'zones',
-  category: 'strawman (stage 0)',
+  category: STAGE0,
   significance: 'large',
   spec: 'https://github.com/domenic/zones',
   subtests: [
@@ -1514,6 +1808,7 @@ exports.tests = [
         return typeof Zone == 'function';
       */},
       res: {
+        duktape2_0: false,
       }
     },
     {
@@ -1522,6 +1817,7 @@ exports.tests = [
         return 'current' in Zone;
       */},
       res: {
+        duktape2_0: false,
       }
     },
     {
@@ -1530,6 +1826,7 @@ exports.tests = [
         return 'name' in Zone.prototype;
       */},
       res: {
+        duktape2_0: false,
       }
     },
     {
@@ -1538,6 +1835,7 @@ exports.tests = [
         return 'parent' in Zone.prototype;
       */},
       res: {
+        duktape2_0: false,
       }
     },
     {
@@ -1546,6 +1844,7 @@ exports.tests = [
         return typeof Zone.prototype.fork == 'function';
       */},
       res: {
+        duktape2_0: false,
       }
     },
     {
@@ -1554,6 +1853,7 @@ exports.tests = [
         return typeof Zone.prototype.run == 'function';
       */},
       res: {
+        duktape2_0: false,
       }
     },
     {
@@ -1562,13 +1862,14 @@ exports.tests = [
         return typeof Zone.prototype.wrap == 'function';
       */},
       res: {
+        duktape2_0: false,
       }
     }
   ]
 },
 {
   name: 'frozen realms',
-  category: 'proposal (stage 1)',
+  category: STAGE1,
   significance: 'medium',
   spec: 'https://github.com/FUDCo/frozen-realms',
   exec: function () {/*
@@ -1576,11 +1877,12 @@ exports.tests = [
       && typeof Reflect.Realm.prototype.spawn === 'function';
   */},
   res: {
+    duktape2_0: false,
   }
 },
 {
   name: 'private fields',
-  category: 'proposal (stage 1)',
+  category: STAGE2,
   significance: 'medium',
   spec: 'https://github.com/zenparsing/es-private-fields',
   subtests: [
@@ -1599,6 +1901,7 @@ exports.tests = [
         return new C(42).x() === 42;
       */},
       res: {
+        duktape2_0: false,
       }
     },
     {
@@ -1613,6 +1916,7 @@ exports.tests = [
         return new C().x() === 42;
       */},
       res: {
+        duktape2_0: false,
       }
     },
   ]
@@ -1620,7 +1924,7 @@ exports.tests = [
 {
   name: 'asap',
   spec: 'https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask',
-  category: 'strawman (stage 0)',
+  category: STAGE0,
   significance: 'medium',
   exec: function(){/*
     var passed = false;
@@ -1631,11 +1935,12 @@ exports.tests = [
   res : {
     babel: true,
     typescript: typescript.corejs,
+    duktape2_0: false,
   }
 },
 {
   name: 'syntactic tail calls',
-  category: 'strawman (stage 0)',
+  category: STAGE0,
   significance: 'medium',
   spec: 'https://github.com/tc39/proposal-ptc-syntax',
   subtests: [
@@ -1650,7 +1955,9 @@ exports.tests = [
           return continue f(n - 1);
         }(1e6)) === "foo";
       */},
-      res: {},
+      res: {
+        duktape2_0: false,
+      },
     },
     {
       name: 'mutual recursion',
@@ -1670,15 +1977,116 @@ exports.tests = [
         }
         return f(1e6) === "foo" && f(1e6+1) === "bar";
       */},
-      res: {},
+      res: {
+        duktape2_0: false,
+      },
     }
   ]
+},
+{
+  name: 'Function.prototype.toString',
+  category: STAGE3,
+  significance: 'small',
+  spec: 'https://tc39.github.io/Function-prototype-toString-revision/',
+  mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/toString',
+  subtests: [{
+    name: 'functions created with the Function constructor',
+    exec: function(){/*
+      var fn = Function('a', ' /\x2A a \x2A/ b, c /\x2A b \x2A/ //', '/\x2A c \x2A/ ; /\x2A d \x2A/ //');
+      var str = 'function anonymous(a, /\x2A a \x2A/ b, c /\x2A b \x2A/ //\n) {\n/\x2A c \x2A/ ; /\x2A d \x2A/ //\n}';
+      return fn + '' === str;
+    */},
+    res: {
+      firefox54: true,
+      chrome59: "flagged",
+      duktape2_0: false,
+    },
+  }, {
+    name: 'arrows',
+    exec: function(){/*
+      var str = 'a => b';
+      return eval('(' + str + ')') + '' === str;
+    */},
+    res: {
+      node4: true,
+      firefox51: true,
+      chrome50: true,
+      safari10: true,
+      edge13: true,
+      duktape2_0: false,
+    },
+  }, {
+    name: '[native code]',
+    exec: function(){/*
+      const NATIVE_EVAL_RE = /\bfunction\b[\s\S]*\beval\b[\s\S]*\([\s\S]*\)[\s\S]*\{[\s\S]*\[[\s\S]*\bnative\b[\s\S]+\bcode\b[\s\S]*\][\s\S]*\}/;
+      return NATIVE_EVAL_RE.test(eval + '');
+    */},
+    res: {
+      ie11: true,
+      node4: true,
+      firefox45: true,
+      chrome50: true,
+      safari3_1: true,
+      edge13: true,
+      duktape2_0: true,
+    },
+  }, {
+    name: 'class expression with implicit constructor',
+    exec: function(){/*
+      var str = 'class A {}';
+      return eval('(' + str + ')') + '' === str;
+    */},
+    res: {
+      node4: true,
+      firefox55: true,
+      chrome50: true,
+      safari10: true,
+      edge14: true,
+      duktape2_0: false,
+    },
+  }, {
+    name: 'class expression with explicit constructor',
+    exec: function(){/*
+      var str = 'class /\x2A a \x2A/ A /\x2A b \x2A/ extends /\x2A c \x2A/ function B(){} /\x2A d \x2A/ { /\x2A e \x2A/ constructor /\x2A f \x2A/ ( /\x2A g \x2A/ ) /\x2A h \x2A/ { /\x2A i \x2A/ ; /\x2A j \x2A/ } /\x2A k \x2A/ m /\x2A l \x2A/ ( /\x2A m \x2A/ ) /\x2A n \x2A/ { /\x2A o \x2A/ } /\x2A p \x2A/ }';
+      return eval('(/\x2A before \x2A/' + str + '/\x2A after \x2A/)') + '' === str;
+    */},
+    res: {
+      node4: true,
+      firefox55: true,
+      chrome50: true,
+      safari10: true,
+      edge14: true,
+      duktape2_0: false,
+    },
+  }, {
+    name: 'unicode escape sequences in identifiers',
+    exec: function(){/*
+      var str = 'function \\u0061(\\u{62}, \\u0063) { \\u0062 = \\u{00063}; return b; }';
+      return eval('(/\x2A before \x2A/' + str + '/\x2A after \x2A/)') + '' === str;
+    */},
+    res: {
+      firefox54: true,
+      chrome59: "flagged",
+      duktape2_0: false,
+    },
+  }, {
+    name: 'methods and computed property names',
+    exec: function(){/*
+      var str = '[ /\x2A a \x2A/ "f" /\x2A b \x2A/ ] /\x2A c \x2A/ ( /\x2A d \x2A/ ) /\x2A e \x2A/ { /\x2A f \x2A/ }';
+      return eval('({ /\x2A before \x2A/' + str + '/\x2A after \x2A/ }.f)') + '' === str;
+    */},
+    res: {
+      firefox54: true,
+      chrome59: "flagged",
+      duktape2_0: false,
+    },
+  }]
 },
 ];
 
 //Shift annex B features to the bottom
 exports.tests = exports.tests.reduce(function(a,e) {
-  var index = ['candidate (stage 3)', 'draft (stage 2)', 'proposal (stage 1)', 'strawman (stage 0)', 'pre-strawman'].indexOf(e.category);
+  var index = [STAGE3, STAGE2, STAGE1, STAGE0, PRESTRAWMAN].indexOf(e.category);
   if (index === -1) {
     console.log('"' + a.category + '" is not an ESnext category!');
   }

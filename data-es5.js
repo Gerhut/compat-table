@@ -1,1168 +1,1711 @@
-var browsers = require('./esnext-browsers');
+var common = require('./data-common');
 
-exports.name = 'ES2016+';
-exports.target_file = 'es2016plus/index.html';
-exports.skeleton_file = 'es2016plus/skeleton.html';
+var sparseNote = common.sparseNote;
 
-var temp = {};
-var flag = "flagged";
-/* jshint unused:false */
-var strict = "strict";
-var fallthrough = "needs-polyfill-or-native";
-
-var babel = {
-  regenerator: {
-    val: true,
-    note_id: "babel-regenerator",
-    note_html: "This feature requires native generators or <code>regenerator-runtime</code>, it's a part of <code>babel-polyfill</code> or <code>babel-runtime</code>."
-  }
-};
-
-var typescript = {
-  corejs: {
-    val: true,
-    note_id: "typescript-core-js",
-    note_html: "This feature is supported when using TypeScript with <a href='https://github.com/zloirock/core-js'>core-js</a>, or when a native ES6 host is used."
-  },
-  fallthrough: {
-    val: fallthrough,
-    note_id: "typescript-es6",
-    note_html: "TypeScript's compiler will accept code using this feature if the <code>--target ES6</code> flag is set, but passes it through unmodified and does not supply a runtime polyfill."
-  },
-  asyncawait: {
-    val: true,
-    note_id: "typescript-async-await",
-    note_html: "TypeScript <code>async</code> / <code>await</code> requires native generators support."
-  },
-};
-var firefox = {
-  nightly: {
-    val: false,
-    note_id: "firefox-nightly",
-    note_html: "The feature is enabled by default only in Firefox Nightly."
-  }
-};
-
-exports.browsers = browsers;
+exports.name = 'ES5';
+exports.target_file = 'es5/index.html';
+exports.skeleton_file = 'es5/skeleton.html';
 
 exports.tests = [
-  {
-    name: 'exponentiation (**) operator',
-    category: '2016 features',
-    significance: 'small',
-    spec: 'http://www.ecma-international.org/ecma-262/7.0/index.html#sec-exp-operator',
-    subtests: [
-      {
-        name: 'basic support',
-        exec: function () {/*
-         return 2 ** 3 === 8 && -(5 ** 2) === -25 && (-5) ** 2 === 25;
-         */},
-        res: {
-          tr: true,
-          babel: true,
-          closure: true,
-          typescript: true,
-          edge13: flag,
-          edge14: true,
-          firefox42: firefox.nightly,
-          firefox52: true,
-          chrome51: flag,
-          chrome52: true,
-          safaritp: true,
-          webkit: true,
-        }
-      },
-      {
-        name: 'assignment',
-        exec: function () {/*
-         var a = 2; a **= 3; return a === 8;
-         */},
-        res: {
-          tr: true,
-          babel: true,
-          closure: true,
-          typescript: true,
-          edge13: flag,
-          edge14: true,
-          firefox48: firefox.nightly,
-          firefox52: true,
-          chrome51: flag,
-          chrome52: true,
-          safaritp: true,
-          webkit: true,
-        }
-      },
-      {
-        name: 'early syntax error for unary negation without parens',
-        exec: function () {/*
-         if (2 ** 3 !== 8) { return false; }
-         try {
-         Function("-5 ** 2")();
-         } catch(e) {
-         return true;
-         }
-         */},
-        res: {
-          babel: true,
-          closure: true,
-          edge14: true,
-          firefox52: true,
-          chrome51: flag,
-          chrome52: true,
-          safaritp: true,
-          webkit: true,
-        }
-      },
-    ],
-  },
-  {
-    name: 'Object.values',
-    spec: 'https://github.com/ljharb/proposal-object-values-entries',
-    category: '2017 features',
-    significance: 'small',
+{
+  name: 'Object/array literal extensions',
+  significance: 'large',
+  subtests: [{
+    name: 'Getter accessors',
     exec: function () {/*
-     var obj = Object.create({ a: "qux", d: "qux" });
-     obj.a = "foo"; obj.b = "bar"; obj.c = "baz";
-     var v = Object.values(obj);
-     return Array.isArray(v) && String(v) === "foo,bar,baz";
-     */},
+      return ({ get x(){ return 1 } }).x === 1;
+    */},
     res: {
-      babel: true,
-      es7shim: true,
-      typescript: typescript.corejs,
-      firefox45: firefox.nightly,
-      firefox47: true,
-      chrome51: flag,
-      chrome54: true,
-      edge14: true,
-      safaritp: true,
-      webkit: true,
-    }
-  },
-  {
-    name: 'Object.entries',
-    spec: 'https://github.com/ljharb/proposal-object-values-entries',
-    category: '2017 features',
-    significance: 'small',
-    exec: function () {/*
-     var obj = Object.create({ a: "qux", d: "qux" });
-     obj.a = "foo"; obj.b = "bar"; obj.c = "baz";
-     var e = Object.entries(obj);
-     return Array.isArray(e)
-     && e.length === 3
-     && String(e[0]) === "a,foo"
-     && String(e[1]) === "b,bar"
-     && String(e[2]) === "c,baz";
-     */},
-    res: {
-      babel: true,
-      es7shim: true,
-      typescript: typescript.corejs,
-      firefox45: firefox.nightly,
-      firefox47: true,
-      chrome51: flag,
-      chrome54: true,
-      edge14: true,
-      safaritp: true,
-      webkit: true,
-    }
-  },
-  {
-    name: 'Array.prototype.includes',
-    spec: 'http://www.ecma-international.org/ecma-262/7.0/index.html#sec-array.prototype.includes',
-    category: '2016 features',
-    significance: 'small',
-    subtests: [
-      {
-        name: 'Array.prototype.includes',
-        exec: function(){/*
-         return [1, 2, 3].includes(1)
-         && ![1, 2, 3].includes(4)
-         && ![1, 2, 3].includes(1, 1)
-         && [NaN].includes(NaN)
-         && Array(1).includes();
-         */},
-        res: {
-          babel: true,
-          es7shim: true,
-          typescript: typescript.corejs,
-          safari9: true,
-          safaritp: true,
-          webkit: true,
-          chrome47: true,
-          edge14: true,
-          firefox43: true,
-        }
-      },
-      {
-        name: 'Array.prototype.includes is generic',
-        exec: function(){/*
-         var passed = 0;
-         return [].includes.call({
-         get "0"() {
-         passed = NaN;
-         return 'foo';
-         },
-         get "11"() {
-         passed += 1;
-         return 0;
-         },
-         get "19"() {
-         passed += 1;
-         return 'foo';
-         },
-         get "21"() {
-         passed = NaN;
-         return 'foo';
-         },
-         get length() {
-         passed += 1;
-         return 24;
-         }
-         }, 'foo', 6) === true && passed === 3;
-         */},
-        res: {
-          babel: true,
-          es7shim: true,
-          typescript: typescript.corejs,
-          safari9: true,
-          safaritp: true,
-          webkit: true,
-          chrome47: true,
-          edge14: true,
-          firefox43: true,
-        }
-      },
-      {
-        name: '%TypedArray%.prototype.includes',
-        exec: function(){/*
-         return [Int8Array, Uint8Array, Uint8ClampedArray, Int16Array, Uint16Array,
-         Int32Array, Uint32Array, Float32Array, Float64Array].every(function(TypedArray){
-         return new TypedArray([1, 2, 3]).includes(1)
-         && !new TypedArray([1, 2, 3]).includes(4)
-         && !new TypedArray([1, 2, 3]).includes(1, 1);
-         });
-         */},
-        res: {
-          babel: true,
-          typescript: typescript.corejs,
-          chrome47: true,
-          edge14: true,
-          firefox43: true,
-          safaritp: true,
-          safari10: true,
-          webkit: true,
-        }
-      },
-    ],
-  },
-  {
-    name: 'Object.getOwnPropertyDescriptors',
-    spec: 'https://github.com/tc39/proposal-object-getownpropertydescriptors',
-    category: '2017 features',
-    significance: 'small',
-    subtests: [
-      {
-        name: 'basic support',
-        exec: function () {/*
-          var object = {a: 1};
-          var B = typeof Symbol === 'function' ? Symbol('b') : 'b';
-          object[B] = 2;
-          var O = Object.defineProperty(object, 'c', {value: 3});
-          var D = Object.getOwnPropertyDescriptors(O);
-
-          return D.a.value === 1 && D.a.enumerable === true && D.a.configurable === true && D.a.writable === true
-          && D[B].value === 2 && D[B].enumerable === true && D[B].configurable === true && D[B].writable === true
-          && D.c.value === 3 && D.c.enumerable === false && D.c.configurable === false && D.c.writable === false;
-          */},
-        res: {
-          babel: true,
-          es7shim: true,
-          typescript: typescript.corejs,
-          chrome51: flag,
-          chrome54: true,
-          firefox50: true,
-          safari10: true,
-          safaritp: true,
-          webkit: true,
-        },
-      },
-      {
-        name: "doesn't provide undefined descriptors",
-        exec: function () {/*
-          var P = new Proxy({a:1}, {
-            getOwnPropertyDescriptor: function(t, k) {}
-          });
-          return !Object.getOwnPropertyDescriptors(P).hasOwnProperty('a');
-        */},
-        res: {
-          firefox50: true,
-          chrome54: true,
-          safaritp: true,
-          webkit: true,
-        },
-      },
-    ]
-  },
-  {
-    name: 'String padding',
-    category: '2017 features',
-    significance: 'small',
-    spec: 'https://github.com/tc39/proposal-string-pad-start-end',
-    subtests: [
-      {
-        name: 'String.prototype.padStart',
-        exec: function(){/*
-         return 'hello'.padStart(10) === '     hello'
-         && 'hello'.padStart(10, '1234') === '12341hello'
-         && 'hello'.padStart() === 'hello'
-         && 'hello'.padStart(6, '123') === '1hello';
-         */},
-        res: {
-          babel: true,
-          typescript: typescript.corejs,
-          es7shim: true,
-          firefox48: true,
-          edge14: flag,
-          chrome52: flag,
-          safari10: true,
-          safaritp: true,
-          webkit: true,
-        }
-      },
-      {
-        name: 'String.prototype.padEnd',
-        exec: function(){/*
-         return 'hello'.padEnd(10) === 'hello     '
-         && 'hello'.padEnd(10, '1234') === 'hello12341'
-         && 'hello'.padEnd() === 'hello'
-         && 'hello'.padEnd(6, '123') === 'hello1';
-         */},
-        res: {
-          babel: true,
-          typescript: typescript.corejs,
-          es7shim: true,
-          firefox48: true,
-          edge14: flag,
-          chrome52: flag,
-          safari10: true,
-          safaritp: true,
-          webkit: true,
-        }
-      }
-    ]
-  },
-  {
-    name: 'trailing commas in function syntax',
-    spec: 'https://jeffmo.github.io/es-trailing-function-commas/',
-    category: '2017 features',
-    significance: 'small',
-    subtests: [
-      {
-        name: 'in parameter lists',
-        exec: function(){/*
-          return typeof function f( a, b, ){} === 'function';
-        */},
-        res: {
-          babel: true,
-          typescript: true,
-          edge14: true,
-          firefox52: true,
-          safari10: true,
-          safaritp: true,
-          webkit: true,
-        }
-      },
-      {
-        name: 'in argument lists',
-        exec: function(){/*
-          return Math.min(1,2,3,) === 1;
-        */},
-        res: {
-          babel: true,
-          typescript: true,
-          edge14: true,
-          firefox52: true,
-          safari10: true,
-          safaritp: true,
-          webkit: true,
-        }
-      },
-    ],
-  },
-  {
-    name: 'async functions',
-    category: '2017 features',
-    significance: 'large',
-    spec: 'https://tc39.github.io/ecmascript-asyncawait/',
-    subtests: [
-      {
-        name: 'basic support',
-        exec: function () {/*
-          return (async function(){
-            return 42;
-          })() instanceof Promise
-        */},
-        res: {
-          tr: true,
-          babel: babel.regenerator,
-          closure: true,
-          typescript: typescript.asyncawait,
-          chrome52: flag,
-          chrome55: true,
-          edge13: flag,
-          edge14: flag,
-          firefox52: true,
-        }
-      },
-      {
-        name: 'await support',
-        exec: function () {/*
-          return (async function(){
-            return 10 + await Promise.resolve(10);
-          })() instanceof Promise
-        */},
-        res: {
-          tr: true,
-          babel: babel.regenerator,
-          closure: true,
-          typescript: typescript.asyncawait,
-          chrome52: flag,
-          chrome55: true,
-          edge13: flag,
-          edge14: flag,
-          firefox52: true,
-        }
-      },
-      {
-        name: 'arrow async functions',
-        exec: function () {/*
-          return (async () => 42 + await Promise.resolve(42))() instanceof Promise
-        */},
-        res: {
-          tr: true,
-          babel: babel.regenerator,
-          closure: true,
-          typescript: false, // still buggy output
-          chrome52: flag,
-          chrome55: true,
-          edge13: flag,
-          edge14: flag,
-          firefox52: true,
-        }
-      }
-    ]
-  },
-  {
-    name: 'generator functions can\'t be used with "new"',
-    category: '2016 misc',
-    significance: 'tiny',
-    spec: 'http://www.ecma-international.org/ecma-262/7.0/index.html#sec-createdynamicfunction',
-    links: [
-      {
-        note_id: 'new-gen-fn',
-        note_html: '<a href="https://github.com/rwaldron/tc39-notes/blob/master/es7/2015-07/july-28.md#67-new--generatorfunction">TC39 meeting notes from July 28, 2015.</a>',
-      }
-    ],
-    exec: function(){/*
-     function * generator() {
-     yield 3;
-     }
-     try {
-     new generator();
-     } catch(e) {
-     return true;
-     }
-     */},
-    res: {
-      edge13: true,
-      firefox43: true,
-      chrome50: true,
-      safari10: true,
-      safaritp: true,
-      webkit: true,
-    }
-  },
-  {
-    name: 'generator throw() caught by inner generator',
-    category: '2016 misc',
-    significance: 'tiny',
-    spec: 'http://www.ecma-international.org/ecma-262/7.0/index.html#sec-generatorfunction-objects',
-    links: [
-      {
-        note_id: 'gen-throw',
-        note_html: '<a href="https://github.com/tc39/ecma262/issues/293">\'Semantics of yield* in throw case\' GitHub issue in ECMA-262 repo.</a>',
-      }
-    ],
-    exec: function(){/*
-     function * generator() {
-     yield * (function * () {
-     try {
-     yield 'foo';
-     }
-     catch(e) {
-     return;
-     }
-     }());
-     yield 'bar';
-     }
-     var iter = generator();
-     iter.next();
-     return iter['throw']().value === 'bar';
-     */},
-    res: {
-      closure: true,
-      edge14: true,
-      firefox27: true,
-      chrome39: true,
-      node: flag,
-      node4: true,
-      safari10: true,
-      safaritp: true,
-      webkit: true,
-    }
-  },
-  {
-    name: 'strict fn w/ non-strict non-simple params is error',
-    category: '2016 misc',
-    significance: 'tiny',
-    spec: 'http://www.ecma-international.org/ecma-262/7.0/index.html#sec-functiondeclarationinstantiation',
-    links: [
-      {
-        note_id: 'strict-fn-non-strict-params',
-        note_html: '<a href="https://github.com/rwaldron/tc39-notes/blob/master/es7/2015-07/july-29.md#611-the-scope-of-use-strict-with-respect-to-destructuring-in-parameter-lists">TC39 meeting notes from July 29, 2015.</a>',
-      },
-    ],
-    exec: function(){/*
-     function foo(...a){}
-     try {
-     Function("function bar(...a){'use strict';}")();
-     } catch(e) {
-     return true;
-     }
-     */},
-    res: {
-      edge12: true,
-      firefox52: true,
-      chrome47: true,
-      safari10: true,
-      safaritp: true,
-      webkit: true,
-    }
-  },
-  {
-    name: 'nested rest destructuring, declarations',
-    category: '2016 misc',
-    significance: 'tiny',
-    spec: 'http://www.ecma-international.org/ecma-262/7.0/index.html#sec-destructuring-assignment',
-    links: [
-      {
-        note_id: 'nested-rest-destruct-decl',
-        note_html: '<a href="https://github.com/rwaldron/tc39-notes/blob/master/es7/2015-07/july-28.md#66-bindingrestelement-should-allow-a-bindingpattern-ala-assignmentrestelement">TC39 meeting notes from July 28, 2015.</a>',
-      }
-    ],
-    exec: function(){/*
-     var [x, ...[y, ...z]] = [1,2,3,4];
-     return x === 1 && y === 2 && z + '' === '3,4';
-     */},
-    res: {
-      babel: true,
-      closure: true,
-      edge13: flag,
-      edge14: true,
-      firefox47: true,
-      typescript: true,
-      chrome49: true,
-      safaritp: true,
-      webkit: true,
-    }
-  },
-  {
-    name: 'nested rest destructuring, parameters',
-    category: '2016 misc',
-    significance: 'tiny',
-    spec: 'http://www.ecma-international.org/ecma-262/7.0/index.html#sec-destructuring-assignment',
-    links: [
-      {
-        note_id: 'nested-rest-destruct-params',
-        note_html: '<a href="https://github.com/rwaldron/tc39-notes/blob/master/es7/2015-07/july-28.md#66-bindingrestelement-should-allow-a-bindingpattern-ala-assignmentrestelement">TC39 meeting notes from July 28, 2015.</a>',
-      },
-    ],
-    exec: function(){/*
-     return function([x, ...[y, ...z]]) {
-     return x === 1 && y === 2 && z + '' === '3,4';
-     }([1,2,3,4]);
-     */},
-    res: {
-      babel: true,
-      closure: true,
-      edge13: flag,
-      edge14: true,
-      firefox47: true,
-      typescript: true,
-      chrome49: true,
-      safaritp: true,
-      webkit: true,
-    }
-  },
-  {
-    name: 'Proxy, "enumerate" handler removed',
-    category: '2016 misc',
-    significance: 'tiny',
-    spec: 'http://www.ecma-international.org/ecma-262/7.0/index.html#sec-proxy-objects',
-    links: [
-      {
-        note_id: 'proxy-enumerate-removed',
-        note_html: '<a href="https://github.com/tc39/ecma262/pull/367">\'Normative: Remove [[Enumerate]] and associated reflective capabilities\' GitHub Pull Request in ECMA-262 repo.</a>',
-      },
-    ],
-    exec: function() {/*
-     var passed = true;
-     var proxy = new Proxy({}, {
-     enumerate: function() {
-     passed = false;
-     }
-     });
-     for(var key in proxy); // Should not throw, nor execute the 'enumerate' method.
-     return passed;
-     */},
-    res: {
-      firefox18: true,
-      firefox25: false,
-      firefox47: true,
-      chrome50: true,
-      safari10: true,
-      safaritp: true,
-      webkit: true,
-    },
-  },
-  {
-    name: 'Proxy internal calls, Array.prototype.includes',
-    category: '2016 misc',
-    significance: 'tiny',
-    spec: 'http://www.ecma-international.org/ecma-262/7.0/index.html#sec-array.prototype.includes',
-    exec: function() {/*
-     // Array.prototype.includes -> Get -> [[Get]]
-     var get = [];
-     var p = new Proxy({length: 3, 0: '', 1: '', 2: '', 3: ''}, { get: function(o, k) { get.push(k); return o[k]; }});
-     Array.prototype.includes.call(p, {});
-     if (get + '' !== "length,0,1,2") return;
-
-     get = [];
-     p = new Proxy({length: 4, 0: NaN, 1: '', 2: NaN, 3: ''}, { get: function(o, k) { get.push(k); return o[k]; }});
-     Array.prototype.includes.call(p, NaN, 1);
-     return (get + '' === "length,1,2");
-     */},
-    res: {
-      firefox43: true,
-      chrome49: true,
-      edge14: true,
-      safari10: true,
-      safaritp: true,
-      webkit: true,
-    },
-  },
-  {
-    name: 'Object.prototype getter/setter methods',
-    spec: 'https://tc39.github.io/ecma262/#sec-object.prototype.__defineGetter__',
-    category: '2017 annex b',
-    significance: 'tiny',
-    subtests: [{
-      name: '__defineGetter__',
-      exec: function () {/*
-       var obj = {};
-       function bar() { return "bar"; }
-       Object.prototype.__defineGetter__.call(obj, "foo", bar);
-       var prop = Object.getOwnPropertyDescriptor(obj, "foo");
-       return prop.get === bar && !prop.writable && prop.configurable
-       && prop.enumerable;
-       */},
-      res: (temp.basicDefineGetterResults = {
-        babel: true,
-        typescript: typescript.corejs,
-        ie11: true,
-        firefox4: true,
-        chrome30: true,
-        node: true,
-        iojs: true,
-        safari51: true,
-        safari9: true,
-        safaritp: true,
-        webkit: true,
-        android40: true,
-        ios51: true,
-      })
-    },
-      {
-        name: '__defineGetter__, symbols',
-        exec: function () {/*
-         var obj = {};
-         var sym = Symbol();
-         function bar() { return "bar"; }
-         Object.prototype.__defineGetter__.call(obj, sym, bar);
-         var prop = Object.getOwnPropertyDescriptor(obj, sym);
-         return prop.get === bar && !prop.writable && prop.configurable
-         && prop.enumerable;
-         */},
-        res: (temp.defineGetterSymbolsResults = {
-          babel: true,
-          typescript: typescript.corejs,
-          edge12: true,
-          firefox36: true,
-          chrome30: flag,
-          chrome38: true,
-          node: true,
-          iojs: true,
-          safari9: true,
-          safaritp: true,
-          webkit: true,
-          android40: true,
-        })
-      },
-      {
-        name: '__defineGetter__, ToObject(this)',
-        exec: function () {/*
-         var key = '__accessors_test__';
-         __defineGetter__.call(1, key, function(){});
-         try {
-         __defineGetter__.call(null, key, function(){});
-         } catch(e){
-         return true;
-         }
-         */},
-        res: {
-          babel: true,
-          typescript: typescript.corejs,
-          firefox48: true,
-          safari51: true,
-          safari9: true,
-          safaritp: true,
-          webkit: true,
-        },
-      },
-      {
-        name: '__defineSetter__',
-        exec: function () {/*
-         var obj = {};
-         function bar() {}
-         Object.prototype.__defineSetter__.call(obj, "foo", bar);
-         var prop = Object.getOwnPropertyDescriptor(obj, "foo");
-         return prop.set === bar && !prop.writable && prop.configurable
-         && prop.enumerable;
-         */},
-        res: temp.basicDefineGetterResults,
-      },
-      {
-        name: '__defineSetter__, symbols',
-        exec: function () {/*
-         var obj = {};
-         var sym = Symbol();
-         function bar(baz) {}
-         Object.prototype.__defineSetter__.call(obj, sym, bar);
-         var prop = Object.getOwnPropertyDescriptor(obj, sym);
-         return prop.set === bar && !prop.writable && prop.configurable
-         && prop.enumerable;
-         */},
-        res: temp.defineGetterSymbolsResults,
-      },
-      {
-        name: '__defineSetter__, ToObject(this)',
-        exec: function () {/*
-         var key = '__accessors_test__';
-         __defineSetter__.call(1, key, function(){});
-         try {
-         __defineSetter__.call(null, key, function(){});
-         } catch(e){
-         return true;
-         }
-         */},
-        res: {
-          babel: true,
-          typescript: typescript.corejs,
-          firefox48: true,
-          safari51: true,
-          safari9: true,
-          safaritp: true,
-          webkit: true,
-        },
-      },
-      {
-        name: '__lookupGetter__',
-        exec: function () {/*
-         var obj = {
-         get foo() { return "bar"},
-         qux: 1
-         };
-         var foo = Object.prototype.__lookupGetter__.call(obj, "foo");
-         return foo() === "bar"
-         && Object.prototype.__lookupGetter__.call(obj, "qux") === undefined
-         && Object.prototype.__lookupGetter__.call(obj, "baz") === undefined;
-         */},
-        res: Object.assign({}, temp.basicDefineGetterResults, {
-          firefox2:   true,
-        }),
-      },
-      {
-        name: '__lookupGetter__, prototype chain',
-        exec: function () {/*
-         var obj = {
-         get foo() { return "bar"},
-         qux: 1
-         };
-         var foo = Object.prototype.__lookupGetter__.call(Object.create(obj), "foo");
-         return foo() === "bar"
-         && Object.prototype.__lookupGetter__.call(obj, "qux") === undefined
-         && Object.prototype.__lookupGetter__.call(obj, "baz") === undefined;
-         */},
-        res: temp.basicDefineGetterResults,
-      },
-      {
-        name: '__lookupGetter__, symbols',
-        exec: function () {/*
-         var sym = Symbol();
-         var sym2 = Symbol();
-         var obj = {};
-         Object.defineProperty(obj, sym, { get: function() { return "bar"; }});
-         Object.defineProperty(obj, sym2, { value: 1 });
-         var foo = Object.prototype.__lookupGetter__.call(obj, sym);
-         return foo() === "bar"
-         && Object.prototype.__lookupGetter__.call(obj, sym2) === undefined
-         && Object.prototype.__lookupGetter__.call(obj, Symbol()) === undefined;
-         */},
-        res: temp.defineGetterSymbolsResults,
-      },
-      {
-        name: '__lookupGetter__, ToObject(this)',
-        exec: function () {/*
-         __lookupGetter__.call(1, 'key');
-         try {
-         __lookupGetter__.call(null, 'key');
-         } catch(e){
-         return true;
-         }
-         */},
-        res: {
-          babel: true,
-          typescript: typescript.corejs,
-          ie11: true,
-          firefox24: true,
-          safari51: true,
-          safari9: true,
-          safaritp: true,
-          webkit: true,
-        },
-      },
-      {
-        name: '__lookupGetter__, data properties can shadow accessors',
-        exec: function () {/*
-         var a = { };
-         var b = Object.create(a);
-         b.foo = 1;
-         a.__defineGetter__("foo", function () {})
-         return b.__lookupGetter__("foo") === undefined
-         */},
-        res: (temp.lookupGetterShadowResults = {
-          babel: true,
-          typescript: typescript.corejs,
-          firefox4: true,
-          safari51: true,
-          safari9: true,
-          safaritp: true,
-          webkit: true,
-          ios51: true,
-        }),
-      },
-      {
-        name: '__lookupSetter__',
-        exec: function () {/*
-         var obj = {
-         set foo(baz) { return "bar"; },
-         qux: 1
-         };
-         var foo = Object.prototype.__lookupSetter__.call(obj, "foo");
-         return foo() === "bar"
-         && Object.prototype.__lookupSetter__.call(obj, "qux") === undefined
-         && Object.prototype.__lookupSetter__.call(obj, "baz") === undefined;
-         */},
-        res: Object.assign({}, temp.basicDefineGetterResults, {
-          firefox2:   true,
-        }),
-      },
-      {
-        name: '__lookupSetter__, prototype chain',
-        exec: function () {/*
-         var obj = {
-         set foo(baz) { return "bar"; },
-         qux: 1
-         };
-         var foo = Object.prototype.__lookupSetter__.call(Object.create(obj), "foo");
-         return foo() === "bar"
-         && Object.prototype.__lookupSetter__.call(obj, "qux") === undefined
-         && Object.prototype.__lookupSetter__.call(obj, "baz") === undefined;
-         */},
-        res: temp.basicDefineGetterResults,
-      },
-      {
-        name: '__lookupSetter__, symbols',
-        exec: function () {/*
-         var sym = Symbol();
-         var sym2 = Symbol();
-         var obj = {};
-         Object.defineProperty(obj, sym, { set: function(baz) { return "bar"; }});
-         Object.defineProperty(obj, sym2, { value: 1 });
-         var foo = Object.prototype.__lookupSetter__.call(obj, sym);
-         return foo() === "bar"
-         && Object.prototype.__lookupSetter__.call(obj, sym2) === undefined
-         && Object.prototype.__lookupSetter__.call(obj, Symbol()) === undefined;
-         */},
-        res: temp.defineGetterSymbolsResults,
-      },
-      {
-        name: '__lookupSetter__, ToObject(this)',
-        exec: function () {/*
-         __lookupSetter__.call(1, 'key');
-         try {
-         __lookupSetter__.call(null, 'key');
-         } catch(e){
-         return true;
-         }
-         */},
-        res: {
-          babel: true,
-          typescript: typescript.corejs,
-          ie11: true,
-          firefox24: true,
-          safari51: true,
-          safari9: true,
-          safaritp: true,
-          webkit: true,
-        },
-      },
-      {
-        name: '__lookupSetter__, data properties can shadow accessors',
-        exec: function () {/*
-         var a = { };
-         var b = Object.create(a);
-         b.foo = 1;
-         a.__defineSetter__("foo", function () {})
-         return b.__lookupSetter__("foo") === undefined
-         */},
-        res: temp.lookupGetterShadowResults,
-      }
-    ]
-  },
-  {
-    name: 'Proxy internal calls, getter/setter methods',
-    spec: 'https://tc39.github.io/ecma262/#sec-object.prototype.__defineGetter__',
-    category: '2017 annex b',
-    significance: 'tiny',
-    subtests: [{
-      name: '__defineGetter__',
-      exec: function () {/*
-       // Object.prototype.__defineGetter__ -> DefinePropertyOrThrow -> [[DefineOwnProperty]]
-       var def = [];
-       var p = new Proxy({}, { defineProperty: function(o, v, desc) { def.push(v); Object.defineProperty(o, v, desc); return true; }});
-       Object.prototype.__defineGetter__.call(p, "foo", Object);
-       return def + '' === "foo";
-       */},
-      res: {
-        firefox18: true,
-        edge13: true,
-        chrome52: true,
-        safari10: true,
-        safaritp: true,
-        webkit: true,
-      }
-    },
-      {
-        name: '__defineSetter__',
-        exec: function () {/*
-         // Object.prototype.__defineSetter__ -> DefinePropertyOrThrow -> [[DefineOwnProperty]]
-         var def = [];
-         var p = new Proxy({}, { defineProperty: function(o, v, desc) { def.push(v); Object.defineProperty(o, v, desc); return true; }});
-         Object.prototype.__defineSetter__.call(p, "foo", Object);
-         return def + '' === "foo";
-         */},
-        res: {
-          firefox18: true,
-          edge13: true,
-          chrome52: true,
-          safari10: true,
-          safaritp: true,
-          webkit: true,
-        }
-      },
-      {
-        name: '__lookupGetter__',
-        exec: function () {/*
-         // Object.prototype.__lookupGetter__ -> [[GetOwnProperty]]
-         // Object.prototype.__lookupGetter__ -> [[GetPrototypeOf]]
-         var gopd = [];
-         var gpo = false;
-         var p = new Proxy({}, {
-         getPrototypeOf: function(o) { gpo = true; return Object.getPrototypeOf(o); },
-         getOwnPropertyDescriptor: function(o, v) { gopd.push(v); return Object.getOwnPropertyDescriptor(o, v); }
-         });
-         Object.prototype.__lookupGetter__.call(p, "foo");
-         return gopd + '' === "foo" && gpo;
-         */},
-        res: {
-          edge14: true,
-          firefox49: true,
-          safari10: true,
-          safaritp: true,
-          webkit: true,
-        }
-      },
-      {
-        name: '__lookupSetter__',
-        exec: function () {/*
-         // Object.prototype.__lookupSetter__ -> [[GetOwnProperty]]
-         // Object.prototype.__lookupSetter__ -> [[GetPrototypeOf]]
-         var gopd = [];
-         var gpo = false;
-         var p = new Proxy({}, {
-         getPrototypeOf: function(o) { gpo = true; return Object.getPrototypeOf(o); },
-         getOwnPropertyDescriptor: function(o, v) { gopd.push(v); return Object.getOwnPropertyDescriptor(o, v); }
-         });
-         Object.prototype.__lookupSetter__.call(p, "foo");
-         return gopd + '' === "foo" && gpo;
-         */},
-        res: {
-          edge14: true,
-          firefox49: true,
-          safari10: true,
-          safaritp: true,
-          webkit: true,
-        }
-      }
-    ]
-  },
-  {
-    name: 'class extends null',
-    category: '2017 misc',
-    significance: 'tiny',
-    spec: 'https://github.com/tc39/ecma262/issues/543',
-    subtests: [
-      {
-        name: 'proper default constructor',
-        exec: function() {/*
-         class C extends null {}
-         return new C instanceof C;
-         */},
-        res: {
-          safaritp: true,
-          webkit: true,
-        },
-      },
-      {
-        name: 'proper "this" binding',
-        exec: function() {/*
-         var passed = false;
-         new class C extends null {
-         constructor() {
-         passed = (this instanceof C && !(this instanceof Object));
-         return this;
-         }
-         };
-         return passed;
-         */},
-        res: {
-          safaritp: true,
-          webkit: true,
-        },
-      },
-    ]
-  },
-  {
-    name: 'Proxy "ownKeys" handler, duplicate keys for non-extensible targets',
-    category: '2017 misc',
-    significance: 'tiny',
-    spec: 'https://github.com/tc39/ecma262/pull/594',
-    exec: function() {/*
-     var P = new Proxy(Object.preventExtensions(Object.defineProperty({a:1}, "b", {value:1})), {
-     ownKeys: function() {
-     return ['a','a','b','b'];
-     }
-     });
-     return Object.getOwnPropertyNames(P) + '' === "a,a,b,b";
-     */},
-    res: {
-      firefox51: true,
-      chrome51: true,
-      safari10: true,
-      safaritp: true,
-      webkit: true,
-    },
-  },
-  {
-    name: 'RegExp "u" flag, case folding',
-    category: '2017 misc',
-    significance: 'tiny',
-    spec: 'https://github.com/tc39/ecma262/pull/525',
-    exec: function() {/*
-     return "ſ".match(/\w/iu) && !"ſ".match(/\W/iu)
-     && "\u212a".match(/\w/iu) && !"\u212a".match(/\W/iu)
-     && "\u212a".match(/.\b/iu) && "ſ".match(/.\b/iu)
-     && !"\u212a".match(/.\B/iu) && !"ſ".match(/.\B/iu);
-     */},
-    res: {
-      safari10: true,
-      safaritp: true,
-      webkit: true,
-    },
-  },
-  {
-    name: 'assignments allowed in for-in head in non-strict mode',
-    spec: 'https://tc39.github.io/ecma262/#sec-initializers-in-forin-statement-heads',
-    category: '2017 annex b',
-    significance: 'tiny',
-    exec: function(){/*
-     for (var i = 0 in {}) {}
-     return i === 0;
-     */},
-    res: {
-      tr: true,
-      ie10: true,
-      edge12: true,
+      ie9: true,
       firefox2: true,
-      firefox31: true,
-      firefox40: false,
-      firefox52: true,
-      chrome30: true,
-      safari51: true,
-      safari9: false,
+      safari3_1: true,
       safaritp: true,
       webkit: true,
-      node: true,
-      android40: true,
-      ios51: true,
+      chrome5: true,
+      opera10_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Setter accessors',
+    exec: function () {/*
+      var value = 0;
+      ({ set x(v){ value = v; } }).x = 1;
+      return value === 1;
+    */},
+    res: {
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
     },
   },
   {
-    name: 'arguments.caller removed',
-    category: '2017 misc',
-    significance: 'tiny',
-    spec: 'https://github.com/tc39/ecma262/pull/689',
-    exec: function() {/*
-     return (function(){
-       'use strict';
-       return !Object.getOwnPropertyDescriptor(arguments,'caller');
-     })();
-     */},
+    name: 'Trailing commas in object literals',
+    exec: function () {/*
+      return { a: true, }.a === true;
+    */},
     res: {
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: null,
+      chrome7: true,
+      opera10_50: null,
+      opera12_10: true,
+      konq43: null,
+      besen: null,
+      rhino1_7: null,
+      ejs: null,
+      android4_0: null,
+      duktape2_0: true,
     },
   },
-];
-
-//Shift annex B features to the bottom
-exports.tests = exports.tests.reduce(function(a,e) {
-  var index = ['2016 features', '2016 misc', '2017 features', '2017 misc', '2017 annex b', 'finished (stage 4)'].indexOf(e.category);
-  if (index === -1) {
-    console.log('"' + a.category + '" is not an ES2016+ category!');
+  {
+    name: 'Trailing commas in array literals',
+    exec: function () {/*
+      return [1,].length === 1;
+    */},
+    res: {
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: null,
+      chrome7: true,
+      opera10_50: null,
+      opera12_10: true,
+      konq43: null,
+      besen: null,
+      rhino1_7: null,
+      ejs: null,
+      android4_0: null,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'Reserved words as property names',
+    exec: function () {/*
+      return ({ if: 1 }).if === 1;
+    */},
+    res: {
+      ie9: true,
+      firefox2: true,
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: false,
+      chrome6: false,
+      chrome7: true,
+      chrome13: true,
+      chrome19: true,
+      chrome23: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: false,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    },
+  }],
+  separator: 'after'
+},
+{
+  name: 'Object static methods',
+  significance: 'large',
+  subtests: [{
+    name: 'Object.create',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/create',
+    exec: function () {
+      return typeof Object.create == 'function';
+    },
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.defineProperty',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperty',
+    exec: function () {
+      return typeof Object.defineProperty == 'function';
+    },
+    res: {
+      ie8: {
+        val: true,
+        note_id: 'define-property-ie',
+        note_html: 'In Internet Explorer 8 <code>Object.defineProperty</code> only accepts DOM objects ' +
+          '(<a href="http://msdn.microsoft.com/en-us/library/dd548687(VS.85).aspx">MSDN reference</a>).'
+      },
+      ie9: true,
+      firefox4: true,
+      firefox21: true,
+      safari4: {
+        val: true,
+        note_id: 'define-property-webkit',
+        note_html: 'In some versions of Safari 5, <code>Object.defineProperty</code> does <b>not</b> work with DOM objects.'
+      },
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.defineProperties',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/defineProperties',
+    exec: function () {
+      return typeof Object.defineProperties == 'function';
+    },
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.getPrototypeOf',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getPrototypeOf',
+    exec: function () {
+      return typeof Object.getPrototypeOf == 'function';
+    },
+    res: {
+      ie9: true,
+      firefox3_5: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera12: true,
+      konq43: false,
+      konq49: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.keys',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/keys',
+    exec: function () {
+      return typeof Object.keys == 'function';
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox4: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera12: true,
+      konq43: false,
+      konq49: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.seal',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/seal',
+    exec: function () {
+      return typeof Object.seal == 'function';
+    },
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome6: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.freeze',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/freeze',
+    exec: function () {
+      return typeof Object.freeze == 'function';
+    },
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome6: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.preventExtensions',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/preventExtensions',
+    exec: function () {
+      return typeof Object.preventExtensions == 'function';
+    },
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome6: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.isSealed',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isSealed',
+    exec: function () {
+      return typeof Object.isSealed == 'function';
+    },
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome6: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.isFrozen',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isFrozen',
+    exec: function () {
+      return typeof Object.isFrozen == 'function';
+    },
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome6: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.isExtensible',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/isExtensible',
+    exec: function () {
+      return typeof Object.isExtensible == 'function';
+    },
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome6: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.getOwnPropertyDescriptor',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptor',
+    exec: function () {
+      return typeof Object.getOwnPropertyDescriptor == 'function';
+    },
+    res: {
+      ie7: false,
+      ie8: {
+        val: true,
+        note_id: 'get-own-property-descriptor-ie',
+        note_html: 'In Internet Explorer 8 <code>Object.getOwnPropertyDescriptor</code> only accepts DOM objects ' +
+          '(<a href="http://msdn.microsoft.com/en-us/library/dd548687(VS.85).aspx">MSDN reference</a>).'
+      },
+      ie9: true,
+      ie10: true,
+      firefox4: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera12: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Object.getOwnPropertyNames',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyNames',
+    exec: function () {
+      return typeof Object.getOwnPropertyNames == 'function';
+    },
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera12: true,
+      konq43: false,
+      konq49: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    },
+    separator: 'after'
+  }],
+},
+{
+  name: 'Array methods',
+  significance: 'large',
+  subtests: [{
+    name: 'Array.isArray',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/isArray',
+    exec: function () {
+      return typeof Array.isArray == 'function';
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox4: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_50: true,
+      konq43: false,
+      konq49: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Array.prototype.indexOf',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/indexOf',
+    exec: function () {
+      return typeof Array.prototype.indexOf == 'function';
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Array.prototype.lastIndexOf',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/lastIndexOf',
+    exec: function () {
+      return typeof Array.prototype.lastIndexOf == 'function';
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Array.prototype.every',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/every',
+    exec: function () {
+      return typeof Array.prototype.every == 'function';
+    },
+    res: {
+      es5shim: sparseNote,
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Array.prototype.some',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/some',
+    exec: function () {
+      return typeof Array.prototype.some == 'function';
+    },
+    res: {
+      es5shim: sparseNote,
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Array.prototype.forEach',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/forEach',
+    exec: function () {
+      return typeof Array.prototype.forEach == 'function';
+    },
+    res: {
+      es5shim: sparseNote,
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Array.prototype.map',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/map',
+    exec: function () {
+      return typeof Array.prototype.map == 'function';
+    },
+    res: {
+      es5shim: sparseNote,
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Array.prototype.filter',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/filter',
+    exec: function () {
+      return typeof Array.prototype.filter == 'function';
+    },
+    res: {
+      es5shim: sparseNote,
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Array.prototype.reduce',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduce',
+    exec: function () {
+      return typeof Array.prototype.reduce == 'function';
+    },
+    res: {
+      es5shim: sparseNote,
+      ie9: true,
+      firefox3: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_50: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Array.prototype.reduceRight',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/reduceRight',
+    exec: function () {
+      return typeof Array.prototype.reduceRight == 'function';
+    },
+    res: {
+      es5shim: sparseNote,
+      ie9: true,
+      firefox3: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_50: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    },
+  }, {
+    name: 'Array.prototype.sort: compareFn must be function or undefined',
+    exec: function () {
+      try {
+        [1,2].sort(null);
+        return false;
+      } catch (enull) {}
+      try {
+        [1,2].sort(true);
+        return false;
+      } catch (etrue) {}
+      try {
+        [1,2].sort({});
+        return false;
+      } catch (eobj) {}
+      try {
+        [1,2].sort([]);
+        return false;
+      } catch (earr) {}
+      try {
+        [1,2].sort(/a/g);
+        return false;
+      } catch (eregex) {}
+      return true;
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox5: true,
+      safari10_1: true,
+      safaritp: true,
+      webkit: true,
+      opera10_10: null,
+      opera10_50: true,
+      konq43: null,
+      konq49: null,
+      konq413: null,
+      besen: null,
+      rhino1_7: null,
+      ejs: null,
+      android4_0: false,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'Array.prototype.sort: compareFn may be explicit undefined',
+    exec: function () {
+      try {
+        var arr = [2, 1];
+        return arr.sort(undefined) === arr && arr[0] === 1 && arr[1] === 2;
+      } catch (e) {
+        return false;
+      }
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox4: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome13: true,
+      opera10_10: null,
+      opera10_50: true,
+      konq43: null,
+      konq49: null,
+      konq413: null,
+      besen: null,
+      rhino1_7: null,
+      ejs: null,
+      android4_0: true,
+      duktape2_0: true,
+    },
+  }],
+},
+{
+  name: 'String properties and methods',
+  significance: 'small',
+  subtests: [{
+    name: 'Property access on strings',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String#Character_access',
+    exec: function () {
+      return "foobar"[3] === "b";
+    },
+    res: {
+      ie7: false,
+      ie8: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'String.prototype.trim',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/Trim',
+    exec: function () {
+      return typeof String.prototype.trim == 'function';
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox3_5: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_50: true,
+      konq43: false,
+      konq49: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    },
+    separator: 'after'
   }
-  (a[index] = a[index] || []).push(e);
-  return a;
-},[]).reduce(function(a,e) {
-  return a.concat(e);
-},[]);
+  ]
+},
+{
+  name: 'Date methods',
+  significance: 'small',
+  subtests: [{
+    name: 'Date.prototype.toISOString',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toISOString',
+    exec: function () {
+      return typeof Date.prototype.toISOString == 'function';
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox3_5: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_50: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: false,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Date.now',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/now',
+    exec: function () {
+      return typeof Date.now == 'function';
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox2: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_50: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Date.prototype.toJSON',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Date/toJSON',
+    exec: function () {
+      try {
+        return Date.prototype.toJSON.call(new Date(NaN)) === null;
+      } catch (e) {
+        return false;
+      }
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox4: true,
+      safari10: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: false,
+      opera10_50: false,
+      opera12: {
+        val: true,
+        note_id: 'Date.prototype.toJSON-OP11_60-OP11_64',
+        note_html: 'In Opera 11.60-11.64 Date.prototype.toJSON is undefined.'
+      },
+      opera12_10: true,
+      konq43: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_0: true,
+      duktape2_0: true,
+    }
+  }]
+},
+{
+  name: 'Function.prototype.bind',
+  significance: 'medium',
+  mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/bind',
+  exec: function () {
+    return typeof Function.prototype.bind == 'function';
+  },
+  res: {
+    es5shim: true,
+    ie9: true,
+    firefox4: true,
+    safari5_1: true,
+    safaritp: true,
+    webkit: true,
+    chrome7: true,
+    opera12: true,
+    konq413: true,
+    besen: true,
+    rhino1_7: true,
+    phantom: true,
+    ejs: true,
+    ios7: true,
+    android4_0: true,
+    duktape2_0: true,
+  },
+},
+{
+  name: 'JSON',
+  significance: 'medium',
+  mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/JSON',
+  exec: function () {
+    return typeof JSON == 'object';
+  },
+  res: {
+    ie7: false,
+    ie8: true,
+    ie9: true,
+    ie10: true,
+    firefox3_5: true,
+    safari4: true,
+    safaritp: true,
+    webkit: true,
+    chrome5: true,
+    opera10_50: true,
+    konq43: false,
+    konq49: true,
+    konq413: true,
+    besen: true,
+    rhino1_7: true,
+    phantom: true,
+    ejs: true,
+    ios7: true,
+    android4_0: true,
+    duktape2_0: true,
+  },
+  separator: 'after'
+},
+{
+  name: 'Immutable globals',
+  significance: 'small',
+  subtests: [
+  {
+    name: 'undefined',
+    exec: function () {/*
+      undefined = 12345;
+      var result = typeof undefined == 'undefined';
+      undefined = void 0;
+      return result;
+    */},
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome19: true,
+      chrome23: true,
+      opera12: true,
+      konq43: false,
+      konq49: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: false,
+      android4_1: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'NaN',
+    exec: function () {/*
+      NaN = false;
+      var result = typeof NaN == 'number';
+      NaN = Math.sqrt(-1);
+      return result;
+    */},
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome19: true,
+      chrome23: true,
+      opera12: true,
+      konq43: false,
+      konq49: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: false,
+      android4_1: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Infinity',
+    exec: function () {/*
+      Infinity = false;
+      var result = typeof Infinity == 'number';
+      Infinity = 1/0;
+      return result;
+    */},
+    res: {
+      ie9: true,
+      firefox4: true,
+      safari4: true,
+      safaritp: true,
+      webkit: true,
+      chrome19: true,
+      chrome23: true,
+      opera12: true,
+      konq43: false,
+      konq49: true,
+      konq413: true,
+      besen: true,
+      rhino1_7: true,
+      ejs: false,
+      android4_1: true,
+      duktape2_0: true,
+    }
+  }]
+},
+{
+  name: 'Miscellaneous',
+  significance: 'medium',
+  subtests: [{
+    name: 'Function.prototype.apply permits array-likes',
+    exec: function () {
+      return (function(a,b) { return a === 1 && b === 2; }).apply({}, {0:1, 1:2, length:2});
+    },
+    res: {
+      ie7: null,
+      ie9: true,
+      firefox4: true,
+      safari3_1: false,
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: false,
+      chrome13: true,
+      opera10_10: null,
+      opera10_50: true,
+      konq43: null,
+      besen: null,
+      rhino1_7: null,
+      ejs: null,
+      android4_0: null,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'parseInt ignores leading zeros',
+    exec: function () {
+      return parseInt('010') === 10;
+    },
+    res: {
+      es5shim: true,
+      ie9: true,
+      firefox2: false,
+      firefox21: true,
+      safari6: true,
+      safaritp: true,
+      webkit: true,
+      chrome23: true,
+      opera10_10: false,
+      konq43: false,
+      konq49: false,
+      konq413: false,
+      besen: true,
+      rhino1_7: false,
+      ejs: true,
+      android4_4: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Function "prototype" property is non-enumerable',
+    exec: function () {/*
+      return !Function().propertyIsEnumerable('prototype');
+    */},
+    res: {
+      ie7: null,
+      ie9: true,
+      firefox3_6: true,
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: false,
+      chrome13: true,
+      opera10_10: null,
+      opera10_50: false,
+      opera12_10: true,
+      konq43: null,
+      besen: null,
+      rhino1_7: null,
+      ejs: null,
+      android4_0: null,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'Arguments toStringTag is "Arguments"',
+    exec: function () {/*
+      return (function(){ return Object.prototype.toString.call(arguments) === '[object Arguments]'; }());
+    */},
+    res: {
+      ie7: null,
+      ie9: true,
+      firefox4: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: null,
+      chrome7: true,
+      chrome13: true,
+      opera10_10: null,
+      opera10_50: false,
+      opera12_10: true,
+      konq43: null,
+      besen: null,
+      rhino1_7: null,
+      ejs: null,
+      android4_0: null,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'Zero-width chars in identifiers',
+    exec: function () {/*
+      var _\u200c\u200d = true;
+      return _\u200c\u200d;
+    */},
+    res: {
+      ie9: true,
+      firefox2: false,
+      firefox3_5: false,
+      firefox8: true,
+      firefox21: true,
+      safari6: true,
+      safaritp: true,
+      webkit: true,
+      chrome19: true,
+      chrome23: true,
+      opera10_10: false,
+      opera12_10: true,
+      konq43: false,
+      konq49: false,
+      konq413: false,
+      besen: true,
+      rhino1_7: true,
+      ejs: true,
+      android4_1: true,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Unreserved words',
+    exec: function () {/*
+      var abstract, boolean, byte, char, double, final, float, goto, int, long,
+        native, short, synchronized, transient, volatile;
+      return true;
+    */},
+    res: {
+      ie7: null,
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: false,
+      chrome13: true,
+      opera10_10: null,
+      opera10_50: true,
+      konq43: null,
+      besen: null,
+      rhino1_7: null,
+      ejs: null,
+      android4_0: null,
+      duktape2_0: true,
+    }
+  },
+  {
+    name: 'Enumerable properties can be shadowed by non-enumerables',
+    exec: function () {/*
+      var result = true;
+      Object.prototype.length = 42;
+      for (var i in Function) {
+          if (i == 'length') {
+              result = false;
+          }
+      }
+      delete Object.prototype.length;
+      return result;
+    */},
+    res: {
+      ie7: null,
+      ie9: false,
+      edge13: true,
+      firefox2: true,
+      safari3_1: false,
+      chrome5: false,
+      chrome13: false,
+      chrome54: true,
+      opera10_10: null,
+      opera10_50: true,
+      konq43: null,
+      besen: null,
+      rhino1_7: null,
+      ejs: null,
+      android4_0: null,
+      duktape2_0: false,
+    }
+  },
+  {
+    name: 'Thrown functions have proper "this" values',
+    exec: function () {/*
+      try {
+        throw function() { return !('a' in this); };
+      }
+      catch(e) {
+        var a = true;
+        return e();
+      }
+    */},
+    res: {
+      ie7: null,
+      ie9: true,
+      firefox2: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome5: true,
+      opera10_10: null,
+      opera10_50: true,
+      konq43: null,
+      besen: null,
+      rhino1_7: null,
+      ejs: null,
+      android4_0: null,
+      duktape2_0: true,
+    },
+  }]
+},
+{
+  name: 'Strict mode',
+  significance: 'large',
+  mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Strict_mode',
+  subtests: [
+  {
+    name: 'reserved words',
+    exec: function() {/*
+      'use strict';
+      var words = 'implements,interface,let,package,private,protected,public,static,yield'.split(',');
+      for (var i = 0; i < 9; i+=1) {
+        try { eval('var ' + words[i]); return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      }
+      return true;
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: '"this" is undefined in functions',
+    exec: function() {/*
+      'use strict';
+      return this === undefined && (function(){ return this === undefined; }).call();
+    */},
+    res: {
+      ie10: {
+        val: true,
+        note_id: 'strict-mode-ie10',
+        note_html: 'IE10 PP2 fails this test.</code>'
+      },
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: '"this" is not coerced to object in primitive methods',
+    exec: function() {/*
+      'use strict';
+      return (function(){ return typeof this === 'string' }).call('')
+        && (function(){ return typeof this === 'number' }).call(1)
+        && (function(){ return typeof this === 'boolean' }).call(true);
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: '"this" is not coerced to object in primitive accessors',
+    exec: function() {/*
+      'use strict';
+
+      function test(Class, instance) {
+        Object.defineProperty(Class.prototype, 'test', {
+          get: function () { passed = passed && this === instance; },
+          set: function () { passed = passed && this === instance; },
+          configurable: true
+        });
+
+        var passed = true;
+        instance.test;
+        instance.test = 42;
+        return passed;
+      }
+
+      return test(String, '')
+        && test(Number, 1)
+        && test(Boolean, true);
+    */},
+    res: {
+      ie10: true,
+      firefox4: false,
+      firefox46: true,
+      safari6: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'legacy octal is a SyntaxError',
+    exec: function() {/*
+      'use strict';
+      try { eval('010');     return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      try { eval('"\\010"'); return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      return true;
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'assignment to unresolvable identifiers is a ReferenceError',
+    exec: function() {/*
+      'use strict';
+      try { eval('__i_dont_exist = 1'); } catch (err) { return err instanceof ReferenceError; }
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'assignment to eval or arguments is a SyntaxError',
+    exec: function() {/*
+      'use strict';
+      try { eval('eval = 1');      return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      try { eval('arguments = 1'); return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      try { eval('eval++');        return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      try { eval('arguments++');   return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      return true;
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'assignment to non-writable properties is a TypeError',
+    exec: function() {/*
+      'use strict';
+      try { Object.defineProperty({},"x",{ writable: false }).x = 1; return false; } catch (err) { if (!(err instanceof TypeError)) return false; }
+      try { Object.preventExtensions({}).x = 1;                      return false; } catch (err) { if (!(err instanceof TypeError)) return false; }
+      try { ({ get x(){ } }).x = 1;                                  return false; } catch (err) { if (!(err instanceof TypeError)) return false; }
+      try { (function f() { f = 123; })();                           return false; } catch (err) { if (!(err instanceof TypeError)) return false; }
+      return true;
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'eval or arguments bindings is a SyntaxError',
+    exec: function() {/*
+      'use strict';
+      try { eval('var eval');                return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      try { eval('var arguments');           return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      try { eval('(function(eval){})');      return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      try { eval('(function(arguments){})'); return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      try { eval('try{}catch(eval){}');      return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      try { eval('try{}catch(arguments){}'); return false; } catch (err) { if (!(err instanceof SyntaxError)) return false; }
+      return true;
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'arguments.caller removed or is a TypeError',
+    exec: function() {/*
+      'use strict';
+      if ('caller' in arguments) {
+        try { arguments.caller; return false; } catch (err) { if (!(err instanceof TypeError)) return false; }
+      }
+      return true;
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari3_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'arguments.callee is a TypeError',
+    exec: function() {/*
+      'use strict';
+      try { arguments.callee; return false; } catch (err) { if (!(err instanceof TypeError)) return false; }
+      return true;
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      safaritp: true,
+      webkit: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: '(function(){}).caller and (function(){}).arguments is a TypeError',
+    exec: function() {/*
+      'use strict';
+      try { (function(){}).caller;    return false; } catch (err) { if (!(err instanceof TypeError)) return false; }
+      try { (function(){}).arguments; return false; } catch (err) { if (!(err instanceof TypeError)) return false; }
+      return true;
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'arguments is unmapped',
+    exec: function() {/*
+      'use strict';
+      return (function(x){
+        x = 2;
+        return arguments[0] === 1;
+      })(1) && (function(x){
+        arguments[0] = 2;
+        return x === 1;
+      })(1);
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'eval() can\'t create bindings',
+    exec: function() {/*
+      'use strict';
+      try { eval('var __some_unique_variable;'); __some_unique_variable; } catch (err) { return err instanceof ReferenceError; }
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'deleting bindings is a SyntaxError',
+    exec: function() {/*
+      'use strict';
+      try { eval('var x; delete x;'); } catch (err) { return err instanceof SyntaxError; }
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'deleting non-configurable properties is a TypeError',
+    exec: function() {/*
+      'use strict';
+      try { delete Object.prototype; } catch (err) { return err instanceof TypeError; }
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: '"with" is a SyntaxError',
+    exec: function() {/*
+      'use strict';
+      try { eval('with({}){}'); } catch (err) { return err instanceof SyntaxError; }
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'repeated parameter names is a SyntaxError',
+    exec: function() {/*
+      'use strict';
+      try { eval('function f(x, x) { }'); } catch (err) { return err instanceof SyntaxError; }
+    */},
+    res: {
+      ie10: true,
+      firefox4: true,
+      safari5_1: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      android4_1: true,
+      duktape2_0: true,
+    },
+  },
+  {
+    name: 'function expressions with matching name and argument are valid',
+    exec: function() {/*
+      var foo = function bar(bar) {'use strict'};
+      return typeof foo === 'function';
+    */},
+    res: {
+      ie10: true,
+      firefox2: true,
+      safari3_1: true,
+      safari5_1: false,
+      safari10: true,
+      safaritp: true,
+      webkit: true,
+      chrome13: true,
+      opera12: true,
+      besen: true,
+      phantom: true,
+      ejs: true,
+      ios7: true,
+      ios8: true,
+      ios9: true,
+      android4_1: true,
+      duktape2_0: true,
+    }
+  }]
+}
+];
