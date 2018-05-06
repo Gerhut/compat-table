@@ -4,6 +4,7 @@ var babel = common.babel;
 var typescript = common.typescript;
 var firefox = common.firefox;
 var chrome = common.chrome;
+var edge = common.edge;
 
 exports.name = 'ES2016+';
 exports.target_file = 'es2016plus/index.html';
@@ -24,18 +25,19 @@ exports.tests = [
          */},
         res: {
           tr: true,
-          babel: true,
+          babel6: true,
           closure: true,
-          typescript: true,
-          edge13: "flagged",
+          typescript1: true,
+          ie11: false,
+          edge13: edge.experimental,
           edge14: true,
+          firefox2: false,
           firefox42: firefox.nightly,
           firefox52: true,
+          opera10_50: false,
           chrome51: "flagged",
           chrome52: true,
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: true,
         }
       },
@@ -46,18 +48,19 @@ exports.tests = [
          */},
         res: {
           tr: true,
-          babel: true,
+          babel6: true,
           closure: true,
-          typescript: true,
-          edge13: "flagged",
+          typescript1: true,
+          ie11: false,
+          edge13: edge.experimental,
           edge14: true,
+          firefox2: false,
           firefox48: firefox.nightly,
           firefox52: true,
+          opera10_50: false,
           chrome51: "flagged",
           chrome52: true,
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: true,
         }
       },
@@ -72,15 +75,16 @@ exports.tests = [
          }
          */},
         res: {
-          babel: true,
+          babel6: true,
           closure: true,
+          ie11: false,
           edge14: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           chrome51: "flagged",
           chrome52: true,
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         }
       },
@@ -94,7 +98,7 @@ exports.tests = [
     subtests: [
       {
         name: 'Object.values',
-        spec: 'https://tc39.github.io/ecma262/#sec-properties-of-the-object-constructor',
+        spec: 'https://tc39.github.io/ecma262/#sec-object.values',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/values',
         category: '2017 features',
         significance: 'medium',
@@ -105,22 +109,25 @@ exports.tests = [
          return Array.isArray(v) && String(v) === "foo,bar,baz";
          */},
         res: {
-          babel: true,
+          babel6: babel.corejs,
+          closure: true,
           es7shim: true,
-          typescript: typescript.corejs,
+          typescript1: typescript.corejs,
+          firefox2: false,
           firefox45: firefox.nightly,
           firefox47: true,
+          opera10_50: false,
           chrome51: "flagged",
           chrome54: true,
+          ie11: false,
           edge14: true,
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         }
       },
       {
         name: 'Object.entries',
+        spec: 'https://tc39.github.io/ecma262/#sec-object.entries',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/entries',
         exec: function () {/*
          var obj = Object.create({ a: "qux", d: "qux" });
@@ -133,22 +140,25 @@ exports.tests = [
          && String(e[2]) === "c,baz";
          */},
         res: {
-          babel: true,
+          babel6: babel.corejs,
+          closure: true,
           es7shim: true,
-          typescript: typescript.corejs,
+          typescript1: typescript.corejs,
+          firefox2: false,
           firefox45: firefox.nightly,
           firefox47: true,
+          opera10_50: false,
           chrome51: "flagged",
           chrome54: true,
+          ie11: false,
           edge14: true,
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         }
       },
       {
         name: 'Object.getOwnPropertyDescriptors',
+        spec: 'https://tc39.github.io/ecma262/#sec-object.getownpropertydescriptors',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/getOwnPropertyDescriptors',
         exec: function () {/*
           var object = {a: 1};
@@ -162,16 +172,18 @@ exports.tests = [
           && D.c.value === 3 && D.c.enumerable === false && D.c.configurable === false && D.c.writable === false;
           */},
         res: {
-          babel: true,
+          babel6: babel.corejs,
+          closure: true,
           es7shim: true,
-          typescript: typescript.corejs,
+          typescript1: typescript.corejs,
+          ie11: false,
           edge15: true,
           chrome51: "flagged",
           chrome54: true,
+          firefox2: false,
           firefox50: true,
+          opera10_50: false,
           safari10: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         },
       },
@@ -184,12 +196,15 @@ exports.tests = [
           return !Object.getOwnPropertyDescriptors(P).hasOwnProperty('a');
         */},
         res: {
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
+          ie11: false,
           edge15: true,
+          firefox2: false,
           firefox50: true,
+          opera10_50: false,
           chrome54: true,
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         },
       },
@@ -213,15 +228,17 @@ exports.tests = [
          && Array(1).includes();
          */},
         res: {
-          babel: true,
+          babel6: babel.corejs,
+          closure: true,
           es7shim: true,
-          typescript: typescript.corejs,
+          typescript1: typescript.corejs,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           chrome47: true,
+          ie11: false,
           edge14: true,
+          firefox2: false,
           firefox43: true,
+          opera10_50: false,
           duktape2_0: false,
         }
       },
@@ -253,15 +270,17 @@ exports.tests = [
          }, 'foo', 6) === true && passed === 3;
          */},
         res: {
-          babel: true,
+          babel6: babel.corejs,
+          closure20180402: true,
           es7shim: true,
-          typescript: typescript.corejs,
+          typescript1: typescript.corejs,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           chrome47: true,
+          ie11: false,
           edge14: true,
+          firefox2: false,
           firefox43: true,
+          opera10_50: false,
           duktape2_0: false,
         }
       },
@@ -277,14 +296,15 @@ exports.tests = [
          });
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
           chrome47: true,
+          ie11: false,
           edge14: true,
+          firefox2: false,
           firefox43: true,
-          safaritp: true,
+          opera10_50: false,
           safari10: true,
-          webkit: true,
           duktape2_0: false,
         }
       },
@@ -298,6 +318,7 @@ exports.tests = [
     subtests: [
       {
         name: 'String.prototype.padStart',
+        spec: 'https://tc39.github.io/ecma262/#sec-string.prototype.padstart',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padStart',
         exec: function(){/*
          return 'hello'.padStart(10) === '     hello'
@@ -308,22 +329,26 @@ exports.tests = [
          && 'hello'.padStart(3, '123') === 'hello';
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          closure: true,
+          typescript1: typescript.corejs,
           es7shim: true,
+          firefox2: false,
           firefox48: true,
-          edge14: "flagged",
+          opera10_50: false,
+          ie11: false,
+          edge14: edge.experimental,
           edge15: true,
           chrome52: "flagged",
           chrome57: true,
+          node8: true,
           safari10: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         }
       },
       {
         name: 'String.prototype.padEnd',
+        spec: 'https://tc39.github.io/ecma262/#sec-string.prototype.padend',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/padEnd',
         exec: function(){/*
          return 'hello'.padEnd(10) === 'hello     '
@@ -334,17 +359,20 @@ exports.tests = [
          && 'hello'.padEnd(3, '123') === 'hello';
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          closure: true,
+          typescript1: typescript.corejs,
           es7shim: true,
+          firefox2: false,
           firefox48: true,
-          edge14: "flagged",
+          opera10_50: false,
+          ie11: false,
+          edge14: edge.experimental,
           edge15: true,
           chrome52: "flagged",
           chrome57: true,
+          node8: true,
           safari10: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         }
       }
@@ -364,15 +392,18 @@ exports.tests = [
           return typeof function f( a, b, ){} === 'function';
         */},
         res: {
-          babel: true,
-          typescript: true,
+          babel6: true,
+          closure: true,
+          typescript2: true,
+          ie11: false,
           edge14: true,
           chrome57: "flagged",
           chrome58: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
+          node8: true,
           safari10: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         }
       },
@@ -383,15 +414,18 @@ exports.tests = [
           return Math.min(1,2,3,) === 1;
         */},
         res: {
-          babel: true,
-          typescript: true,
+          babel6: true,
+          closure: true,
+          typescript2: true,
+          ie11: false,
           edge14: true,
           chrome57: "flagged",
           chrome58: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
+          node8: true,
           safari10: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         }
       },
@@ -401,7 +435,7 @@ exports.tests = [
     name: 'async functions',
     category: '2017 features',
     significance: 'large',
-    spec: 'https://tc39.github.io/ecmascript-asyncawait/',
+    spec: 'https://tc39.github.io/ecma262/#sec-async-function-definitions',
     mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Statements/async_function',
     subtests: [
       {
@@ -424,16 +458,18 @@ exports.tests = [
         */},
         res: {
           tr: true,
-          babel: babel.regenerator,
+          babel6: babel.regenerator,
           closure: true,
-          typescript: typescript.asyncawait,
+          typescript1: typescript.asyncawait,
           chrome52: "flagged",
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -455,16 +491,18 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: true,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -476,17 +514,19 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: false,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
+          ie11: false,
           edge13: false,
-          edge14: "flagged",
+          edge14: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -498,16 +538,18 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: false,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         },
       },
@@ -526,16 +568,18 @@ exports.tests = [
         */},
         res: {
           tr: true,
-          babel: babel.regenerator,
+          babel6: babel.regenerator,
           closure: true,
-          typescript: typescript.asyncawait,
+          typescript1: typescript.asyncawait,
           chrome52: "flagged",
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -555,16 +599,18 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: true,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -576,16 +622,18 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: true,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -602,16 +650,18 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: true,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -623,16 +673,18 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: false,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -654,16 +706,18 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: true,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -685,16 +739,18 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: true,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -714,16 +770,18 @@ exports.tests = [
         */},
         res: {
           tr: true,
-          babel: babel.regenerator,
+          babel6: babel.regenerator,
           closure: true,
-          typescript: false, // still buggy output
+          typescript1: false, // still buggy output
           chrome52: "flagged",
           chrome55: true,
-          edge13: "flagged",
+          ie11: false,
+          edge13: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         }
       },
@@ -733,21 +791,22 @@ exports.tests = [
           var asyncFunctionProto = Object.getPrototypeOf(async function (){});
           return asyncFunctionProto !== function(){}.prototype
             && Object.getPrototypeOf(asyncFunctionProto) === Function.prototype;
-          return passed;
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: false,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
+          ie11: false,
           edge13: false,
-          edge14: "flagged",
+          edge14: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         },
       },
@@ -758,16 +817,18 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: false,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
+          ie11: false,
           edge13: false,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         },
       },
@@ -787,17 +848,19 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel: null,
-          closure: null,
-          typescript: null,
+          babel6: null,
+          closure: false,
+          typescript1: null,
           chrome52: null,
           chrome55: true,
+          ie11: false,
           edge13: false,
-          edge14: "flagged",
+          edge14: edge.experimental,
           edge15: true,
+          firefox2: false,
           firefox52: true,
+          opera10_50: false,
           safari10_1: true,
-          safaritp: true,
           duktape2_0: false,
         },
       },
@@ -807,25 +870,44 @@ exports.tests = [
     name: 'shared memory and atomics',
     category: '2017 features',
     significance: 'medium',
-    spec: 'https://github.com/tc39/ecmascript_sharedmem',
     'subtests': [
       {
         name: 'SharedArrayBuffer',
+        spec: 'https://tc39.github.io/ecma262/#sec-sharedarraybuffer-objects',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer',
         exec: function () {/*
          return typeof SharedArrayBuffer === 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: {
+            val: false,
+            note_id: 'fx-shared-memory-spectre',
+            note_html: 'The feature was temporarily disabled to mitigate the <a href="https://blog.mozilla.org/security/2018/01/03/mitigations-landing-new-class-timing-attack/">Meltdown and Spectre CPU bugs</a>.',
+          },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: {
+            val: false,
+            note_id: 'chr-shared-memory-spectre',
+            note_html: 'The feature was temporarily disabled to mitigate the Meltdown and Spectre CPU bugs</a>.',
+          },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11: {
+            val: false,
+            note_id: 'sf-shared-memory-spectre',
+            note_html: 'The feature was temporarily disabled to mitigate <a href="https://webkit.org/blog/8048/what-spectre-and-meltdown-mean-for-webkit/">the Meltdown and Spectre CPU bugs</a>.',
+          },
+          safaritp: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
@@ -835,310 +917,424 @@ exports.tests = [
          return SharedArrayBuffer[Symbol.species] === SharedArrayBuffer;
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox52: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          chrome61: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11: { val: false, note_id: 'sf-shared-memory-spectre' },
+          safaritp: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'SharedArrayBuffer.prototype.byteLength',
+        spec: 'https://tc39.github.io/ecma262/#sec-get-sharedarraybuffer.prototype.bytelength',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer/byteLength',
         exec: function () {/*
          return 'byteLength' in SharedArrayBuffer.prototype;
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
-          safari11: true,
-          safaritp: true,
-          webkit: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          safari11: { val: false, note_id: 'sf-shared-memory-spectre' },
+          safaritp: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'SharedArrayBuffer.prototype.slice',
+        spec: 'https://tc39.github.io/ecma262/#sec-sharedarraybuffer.prototype.slice',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SharedArrayBuffer/slice',
         exec: function () {/*
          return typeof SharedArrayBuffer.prototype.slice === 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox52: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          chrome61: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11: { val: false, note_id: 'sf-shared-memory-spectre' },
+          safaritp: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'SharedArrayBuffer.prototype[Symbol.toStringTag]',
+        spec: 'https://tc39.github.io/ecma262/#sec-sharedarraybuffer.prototype.toString',
         exec: function () {/*
          return SharedArrayBuffer.prototype[Symbol.toStringTag] === 'SharedArrayBuffer';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox52: firefox.developer,
           firefox53: firefox.sharedmem,
-          chrome48: chrome.sharedmem,
-          chrome61: true,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
+          chrome48: chrome.sharedmem,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11: { val: false, note_id: 'sf-shared-memory-spectre' },
+          safaritp: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.add',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.add',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/add',
         exec: function () {/*
          return typeof Atomics.add == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.and',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.and',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/and',
         exec: function () {/*
          return typeof Atomics.and == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.compareExchange',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.compareExchange',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/compareExchange',
         exec: function () {/*
          return typeof Atomics.compareExchange == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.exchange',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.exchange',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/exchange',
         exec: function () {/*
          return typeof Atomics.exchange == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.wait',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.wait',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/wait',
         exec: function () {/*
          return typeof Atomics.wait == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox48: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.wake',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.wake',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/wake',
         exec: function () {/*
          return typeof Atomics.wake == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox48: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.isLockFree',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.isLockFree',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/isLockFree',
         exec: function () {/*
          return typeof Atomics.isLockFree == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.load',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.load',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/load',
         exec: function () {/*
          return typeof Atomics.load == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.or',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.or',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/or',
         exec: function () {/*
          return typeof Atomics.or == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.store',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.store',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/store',
         exec: function () {/*
          return typeof Atomics.store == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.sub',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.sub',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/sub',
         exec: function () {/*
          return typeof Atomics.sub == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       },
       {
         name: 'Atomics.xor',
+        spec: 'https://tc39.github.io/ecma262/#sec-atomics.xor',
         mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Atomics/xor',
         exec: function () {/*
          return typeof Atomics.xor == 'function';
          */},
         res: {
-          edge15: "flagged",
+          ie11: false,
+          edge15: edge.experimental,
+          edge16: true,
+          edge17: false,
+          firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
+          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          opera10_50: false,
           chrome48: chrome.sharedmem,
-          chrome61: true,
+          chrome60: true,
+          chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
           safari10_1: true,
-          safaritp: true,
-          webkit: true,
+          safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
         }
       }
@@ -1167,12 +1363,13 @@ exports.tests = [
      }
      */},
     res: {
+      ie11: false,
       edge13: true,
+      firefox2: false,
       firefox43: true,
+      opera10_50: false,
       chrome50: true,
       safari10: true,
-      safaritp: true,
-      webkit: true,
       duktape2_0: false,
     }
   },
@@ -1205,15 +1402,16 @@ exports.tests = [
      return iter['throw']().value === 'bar';
      */},
     res: {
-      closure: true,
+      closure20180319: true,
+      ie11: false,
       edge14: true,
+      firefox2: false,
       firefox27: true,
+      opera10_50: false,
       chrome39: true,
       node0_12: "flagged",
       node4: true,
       safari10: true,
-      safaritp: true,
-      webkit: true,
       duktape2_0: false,
     }
   },
@@ -1237,12 +1435,13 @@ exports.tests = [
      }
      */},
     res: {
+      ie11: false,
       edge12: true,
+      firefox2: false,
       firefox52: true,
+      opera10_50: false,
       chrome47: true,
       safari10: true,
-      safaritp: true,
-      webkit: true,
       duktape2_0: false,
     }
   },
@@ -1263,16 +1462,17 @@ exports.tests = [
      return x === 1 && y === 2 && z + '' === '3,4';
      */},
     res: {
-      babel: true,
+      babel6: true,
       closure: true,
-      edge13: "flagged",
+      ie11: false,
+      edge13: edge.experimental,
       edge14: true,
+      firefox2: false,
       firefox47: true,
-      safari10_1: true,
-      typescript: true,
+      opera10_50: false,
       chrome49: true,
-      safaritp: true,
-      webkit: true,
+      safari10_1: true,
+      typescript1: true,
       duktape2_0: false,
     }
   },
@@ -1293,16 +1493,17 @@ exports.tests = [
      }([1,2,3,4]);
      */},
     res: {
-      babel: true,
+      babel6: true,
       closure: true,
-      edge13: "flagged",
+      ie11: false,
+      edge13: edge.experimental,
       edge14: true,
+      firefox2: false,
       firefox47: true,
-      typescript: true,
+      opera10_50: false,
+      typescript1: true,
       chrome49: true,
       safari10_1: true,
-      safaritp: true,
-      webkit: true,
       duktape2_0: false,
     }
   },
@@ -1329,14 +1530,15 @@ exports.tests = [
      return passed;
      */},
     res: {
+      ie11: false,
       edge15: true,
+      firefox2: false,
       firefox18: true,
       firefox25: false,
       firefox47: true,
+      opera10_50: false,
       chrome50: true,
       safari10: true,
-      safaritp: true,
-      webkit: true,
       duktape2_0: true,
     },
   },
@@ -1358,12 +1560,13 @@ exports.tests = [
      return (get + '' === "length,1,2");
      */},
     res: {
+      firefox2: false,
       firefox43: true,
+      opera10_50: false,
       chrome49: true,
+      ie11: false,
       edge14: true,
       safari10: true,
-      safaritp: true,
-      webkit: true,
       duktape2_0: false,
     },
   },
@@ -1384,20 +1587,21 @@ exports.tests = [
        && prop.enumerable;
        */},
       res: {
-        babel: true,
-        typescript: typescript.corejs,
+        babel6: babel.corejs,
+        typescript1: typescript.corejs,
         ie11: true,
+        firefox2: false,
         firefox4: true,
+        opera10_50: false,
+        opera12: true,
         chrome30: true,
         node0_12: true,
-        iojs: true,
         safari4: true,
         safari9: true,
-        safaritp: true,
-        webkit: true,
         android4_0: true,
         ios5_1: true,
         duktape2_0: false,
+        duktape2_2: true,
       }
     },
       {
@@ -1412,19 +1616,20 @@ exports.tests = [
          && prop.enumerable;
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
+          ie11: false,
           edge12: true,
+          firefox2: false,
           firefox36: true,
+          opera10_50: false,
           chrome30: "flagged",
           chrome38: true,
           node0_12: true,
-          iojs: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           android4_0: true,
           duktape2_0: false,
+          duktape2_2: true,
         }
       },
       {
@@ -1439,15 +1644,20 @@ exports.tests = [
          }
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
+          ie11: false,
+          edge16: true,
+          firefox2: false,
           firefox48: true,
-          chrome61: "flagged",
+          opera10_50: false,
+          opera12: true,
+          chrome60: chrome.harmony,
+          chrome62: true,
           safari5_1: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1462,20 +1672,21 @@ exports.tests = [
          && prop.enumerable;
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
           ie11: true,
+          firefox2: false,
           firefox4: true,
+          opera10_50: false,
+          opera12: true,
           chrome30: true,
           node0_12: true,
-          iojs: true,
           safari4: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           android4_0: true,
           ios5_1: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1490,19 +1701,20 @@ exports.tests = [
          && prop.enumerable;
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
+          ie11: false,
           edge12: true,
+          firefox2: false,
           firefox36: true,
+          opera10_50: false,
           chrome30: "flagged",
           chrome38: true,
           node0_12: true,
-          iojs: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           android4_0: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1517,15 +1729,20 @@ exports.tests = [
          }
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
+          ie11: false,
+          edge16: true,
+          firefox2: false,
           firefox48: true,
-          chrome61: "flagged",
+          opera10_50: false,
+          opera12: true,
+          chrome60: chrome.harmony,
+          chrome62: true,
           safari5_1: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1542,20 +1759,20 @@ exports.tests = [
          && Object.prototype.__lookupGetter__.call(obj, "baz") === undefined;
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
           ie11: true,
           firefox2: true,
+          opera10_50: true,
+          opera12: true,
           chrome30: true,
           node0_12: true,
-          iojs: true,
           safari3_1: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           android4_0: true,
           ios5_1: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1571,20 +1788,21 @@ exports.tests = [
          && Object.prototype.__lookupGetter__.call(obj, "baz") === undefined;
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
           ie11: true,
+          firefox2: false,
           firefox4: true,
+          opera10_50: false,
+          opera12: true,
           chrome30: true,
           node0_12: true,
-          iojs: true,
           safari4: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           android4_0: true,
           ios5_1: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1601,19 +1819,20 @@ exports.tests = [
          && Object.prototype.__lookupGetter__.call(obj, Symbol()) === undefined;
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
+          ie11: false,
           edge12: true,
+          firefox2: false,
           firefox36: true,
+          opera10_50: false,
           chrome30: "flagged",
           chrome38: true,
           node0_12: true,
-          iojs: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           android4_0: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1627,16 +1846,19 @@ exports.tests = [
          }
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
           ie11: true,
+          firefox2: false,
           firefox24: true,
-          chrome61: "flagged",
+          opera10_50: false,
+          opera12: true,
+          chrome60: chrome.harmony,
+          chrome62: true,
           safari5_1: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1649,16 +1871,20 @@ exports.tests = [
          return b.__lookupGetter__("foo") === undefined
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
+          ie11: false,
+          firefox2: false,
           firefox4: true,
+          opera10_50: false,
+          opera12: true,
           chrome57: true,
+          node8: true,
           safari4: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           ios5_1: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1675,20 +1901,20 @@ exports.tests = [
          && Object.prototype.__lookupSetter__.call(obj, "baz") === undefined;
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
           ie11: true,
           firefox2: true,
+          opera10_50: true,
+          opera12: true,
           chrome30: true,
           node0_12: true,
-          iojs: true,
           safari3_1: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           android4_0: true,
           ios5_1: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1704,20 +1930,21 @@ exports.tests = [
          && Object.prototype.__lookupSetter__.call(obj, "baz") === undefined;
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
           ie11: true,
+          firefox2: false,
           firefox4: true,
+          opera10_50: false,
+          opera12: true,
           chrome30: true,
           node0_12: true,
-          iojs: true,
           safari4: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           android4_0: true,
           ios5_1: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1734,19 +1961,20 @@ exports.tests = [
          && Object.prototype.__lookupSetter__.call(obj, Symbol()) === undefined;
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
+          ie11: false,
           edge12: true,
+          firefox2: false,
           firefox36: true,
+          opera10_50: false,
           chrome30: "flagged",
           chrome38: true,
           node0_12: true,
-          iojs: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           android4_0: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1760,16 +1988,19 @@ exports.tests = [
          }
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
           ie11: true,
+          firefox2: false,
           firefox24: true,
-          chrome61: "flagged",
+          opera10_50: false,
+          opera12: true,
+          chrome60: chrome.harmony,
+          chrome62: true,
           safari5_1: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       },
       {
@@ -1782,16 +2013,20 @@ exports.tests = [
          return b.__lookupSetter__("foo") === undefined
          */},
         res: {
-          babel: true,
-          typescript: typescript.corejs,
+          babel6: babel.corejs,
+          typescript1: typescript.corejs,
+          ie11: false,
+          firefox2: false,
           firefox4: true,
+          opera10_50: false,
+          opera12: true,
           chrome57: true,
+          node8: true,
           safari4: true,
           safari9: true,
-          safaritp: true,
-          webkit: true,
           ios5_1: true,
           duktape2_0: false,
+          duktape2_2: true,
         },
       }
     ]
@@ -1811,12 +2046,13 @@ exports.tests = [
        return def + '' === "foo";
        */},
       res: {
+        firefox2: false,
         firefox18: true,
+        opera10_50: false,
+        ie11: false,
         edge13: true,
         chrome52: true,
         safari10: true,
-        safaritp: true,
-        webkit: true,
         duktape2_0: false,
       }
     },
@@ -1830,12 +2066,13 @@ exports.tests = [
          return def + '' === "foo";
          */},
         res: {
+          firefox2: false,
           firefox18: true,
+          opera10_50: false,
+          ie11: false,
           edge13: true,
           chrome52: true,
           safari10: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         }
       },
@@ -1854,12 +2091,14 @@ exports.tests = [
          return gopd + '' === "foo" && gpo;
          */},
         res: {
+          ie11: false,
           edge14: true,
           chrome57: true,
+          firefox2: false,
           firefox49: true,
+          opera10_50: false,
+          node8: true,
           safari10: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         }
       },
@@ -1878,23 +2117,31 @@ exports.tests = [
          return gopd + '' === "foo" && gpo;
          */},
         res: {
+          ie11: false,
           edge14: true,
           chrome57: true,
+          firefox2: false,
           firefox49: true,
+          opera10_50: false,
+          node8: true,
           safari10: true,
-          safaritp: true,
-          webkit: true,
           duktape2_0: false,
         }
       }
     ]
   },
   {
-    name: 'Proxy "ownKeys" handler, duplicate keys for non-extensible targets',
+    name: 'Proxy "ownKeys" handler, duplicate keys for non-extensible targets (ES 2017 semantics)',
     category: '2017 misc',
     significance: 'tiny',
     spec: 'https://github.com/tc39/ecma262/pull/594',
     mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Proxy/handler/ownKeys',
+    links: [
+      {
+        note_id: 'proxy-duplictate-ownkeys-updated',
+        note_html: 'The behaviour of the Proxy “ownKeys” handler in presence of duplicate keys has been <a href="https://github.com/tc39/ecma262/issues/833">modified later</a>.',
+      }
+    ],
     exec: function() {/*
      var P = new Proxy(Object.preventExtensions(Object.defineProperty({a:1}, "b", {value:1})), {
      ownKeys: function() {
@@ -1904,12 +2151,16 @@ exports.tests = [
      return Object.getOwnPropertyNames(P) + '' === "a,a,b,b";
      */},
     res: {
+      ie11: false,
+      edge16: true,
+      firefox2: false,
       firefox51: true,
+      firefox56: true,
+      firefox57: false,
+      opera10_50: false,
       chrome51: true,
       safari10: true,
       safari10_1: true,
-      safaritp: true,
-      webkit: true,
       duktape2_0: true,
     },
   },
@@ -1925,12 +2176,13 @@ exports.tests = [
      && !"\u212a".match(/.\B/iu) && !"ſ".match(/.\B/iu);
      */},
     res: {
+      ie11: false,
+      firefox2: false,
       firefox54: true,
+      opera10_50: false,
       chrome59: true,
       safari10: true,
       safari10_1: true,
-      safaritp: true,
-      webkit: true,
       duktape2_0: false,
     },
   },
@@ -1952,16 +2204,18 @@ exports.tests = [
       firefox31: true,
       firefox40: false,
       firefox52: true,
+      opera10_50: true,
       chrome30: true,
       safari3_1: true,
       safari9: false,
       safari10_1: true,
-      safaritp: true,
-      webkit: true,
       node0_12: true,
       android4_0: true,
       ios5_1: true,
       duktape2_0: true,
+      nashorn1_8: true,
+      nashorn9: true,
+      nashorn10: true,
     },
   },
   {
@@ -1977,12 +2231,212 @@ exports.tests = [
      })();
      */},
     res: {
-      chrome56: true,
-      safari10_1: true,
-      safaritp: true,
+      ie11: false,
+      edge16: true,
+      firefox2: false,
       firefox53: true,
+      opera10_50: false,
+      chrome56: true,
+      node8: true,
+      safari10_1: true,
       duktape2_0: false,
     },
+  },
+  {
+    name: 'object rest/spread properties',
+    significance: 'medium',
+    category: '2018 features',
+    spec: 'https://github.com/tc39/proposal-object-rest-spread',
+    subtests: [
+      {
+        name: 'object rest properties',
+        exec: function () {/*
+          var {a, ...rest} = {a: 1, b: 2, c: 3};
+          return a === 1 && rest.a === undefined && rest.b === 2 && rest.c === 3;
+          */},
+        res: {
+          babel6: true,
+          closure: true,
+          typescript2_1: true,
+          jsx: true,
+          ie11: false,
+          firefox2: false,
+          firefox55: true,
+          opera10_50: false,
+          chrome58: 'flagged',
+          chrome60: true,
+          safari11: false,
+          safari11_1: true,
+          safaritp: true,
+          webkit: true,
+          duktape2_0: false,
+        }
+      },
+      {
+        name: 'object spread properties',
+        exec: function () {/*
+          var spread = {b: 2, c: 3};
+          var O = {a: 1, ...spread};
+          return O !== spread && (O.a + O.b + O.c) === 6;
+          */},
+        res: {
+          babel6: true,
+          closure: true,
+          jsx: true,
+          ie11: false,
+          firefox2: false,
+          firefox55: true,
+          opera10_50: false,
+          chrome58: 'flagged',
+          chrome60: true,
+          typescript2_1: true,
+          safari11: false,
+          safari11_1: true,
+          safaritp: true,
+          webkit: true,
+          duktape2_0: false,
+        }
+      },
+    ],
+  },
+  {
+    name: 'Promise.prototype.finally',
+    category: '2018 features',
+    significance: 'medium',
+    spec: 'https://github.com/tc39/proposal-promise-finally',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Promise/finally',
+    subtests: [
+      {
+        name: 'basic support',
+        exec: function(){/*
+        var p1 = Promise.resolve("foo");
+        var p2 = Promise.reject("bar");
+        var score = 0;
+        function thenFn(result)  {
+          score += (result === "foo");
+          check();
+        }
+        function catchFn(result) {
+          score += (result === "bar");
+          check();
+        }
+        function finallyFn() {
+          score += (arguments.length === 0);
+          check();
+        }
+        p1.then(thenFn);
+        p1.finally(finallyFn);
+        p1.finally(function() {
+          // should return a new Promise
+          score += p1.finally() !== p1;
+          check();
+        });
+        p2.catch(catchFn);
+        p2.finally(finallyFn);
+        function check() {
+          if (score === 5) asyncTestPassed();
+        }
+      */},
+        res: {
+          babel6: babel.corejs,
+          closure20180402: true,
+          typescript1: typescript.corejs,
+          ie11: false,
+          firefox2: false,
+          firefox57: false,
+          firefox58: true,
+          opera10_50: false,
+          chrome61: chrome.promise,
+          chrome63: true,
+          safari11_1: true,
+          safaritp: true,
+          webkit: true,
+          duktape2_2: false,
+        }
+      },
+      {
+        name: 'don\'t change resolution value',
+        exec: function(){/*
+        var score = 0;
+        function thenFn(result)  {
+          score += (result === "foo");
+          check();
+        }
+        function catchFn(result) {
+          score += (result === "bar");
+          check();
+        }
+        function finallyFn() {
+          score++;
+          check();
+          return Promise.resolve("foobar");
+        }
+        Promise.resolve("foo").finally(finallyFn).then(thenFn);
+        Promise.reject("bar").finally(finallyFn).catch(catchFn);
+        function check() {
+          if (score === 4) asyncTestPassed();
+        }
+      */},
+        res: {
+          babel6: babel.corejs,
+          closure20180402: true,
+          typescript1: typescript.corejs,
+          ie11: false,
+          firefox2: false,
+          firefox57: false,
+          firefox58: true,
+          opera10_50: false,
+          chrome61: chrome.promise,
+          chrome63: true,
+          safari11_1: true,
+          safaritp: true,
+          webkit: true,
+          duktape2_2: false,
+        }
+      },
+      {
+        name: 'change rejection value',
+        exec: function(){/*
+        var score = 0;
+        Promise
+          .reject("foobar")
+          .finally(function() {
+            return Promise.reject("foo");
+          })
+          .catch(function(result) {
+            score += (result === "foo");
+            check();
+            return Promise.reject("foobar");
+          })
+          .finally(function() {
+            throw new Error('bar');
+          })
+          .catch(function(result) {
+            score += (result.message === "bar");
+            check();
+          });
+        function check() {
+          if (score === 2) asyncTestPassed();
+        }
+      */},
+        res: {
+          babel6: babel.corejs,
+          closure20180402: true,
+          typescript1: typescript.corejs,
+          ie11: false,
+          firefox2: false,
+          firefox57: false,
+          firefox58: true,
+          opera10_50: false,
+          safari11_1: true,
+          safaritp: true,
+          chrome61: chrome.promise,
+          chrome63: true,
+          webkit: true,
+          duktape2_2: false,
+        }
+      }
+    ]
   },
   {
     name: 'template literal revision',
@@ -2000,13 +2454,192 @@ exports.tests = [
      return tag`\01\1\xg\xAg\u0\u0g\u00g\u000g\u{g\u{0\u{110000}${0}\0`;
      */},
     res: {
+      ie11: false,
+      firefox2: false,
       firefox53: true,
-      chrome59: 'flagged',
+      opera10_50: false,
+      chrome59: chrome.harmony,
+      chrome62: true,
       safari11: true,
-      safaritp: true,
-      webkit: true,
       duktape2_0: false,
     }
+  },
+  {
+    name: 's (dotAll) flag for regular expressions',
+    spec: 'https://tc39.github.io/ecma262/#sec-get-regexp.prototype.dotAll',
+    category: '2018 features',
+    significance: 'small',
+    exec: function(){/*
+    const regex = /foo.bar/s;
+    return regex.test('foo\nbar');
+  */},
+    res : {
+      es6tr: null,
+      tr: null,
+      babel6: true,
+      closure: false,
+      jsx: null,
+      typescript1: null,
+      es6shim: null,
+      konq414: null,
+      ie7: null,
+      ie10: false,
+      firefox1: null,
+      firefox2: false,
+      opera10_50: false,
+      chrome1: null,
+      chrome60: chrome.harmony,
+      chrome62: true,
+      safari11_1: true,
+      safaritp: true,
+      webkit: true,
+      rhino1_7: null,
+      xs6: null,
+      jxa: null,
+      node0_10: null,
+      duktape2_0: null,
+      duktape2_2: false,
+      android1_5: null,
+      ios4: null,
+    },
+  },
+  {
+    name: 'RegExp named capture groups',
+    spec: 'https://github.com/tc39/proposal-regexp-named-groups',
+    category: '2018 features',
+    significance: 'small',
+    exec: function(){/*
+      var result = /(?<year>\d{4})-(?<month>\d{2})-(?<day>\d{2})/.exec('2016-03-11');
+      return result.groups.year === '2016'
+        && result.groups.month === '03'
+        && result.groups.day === '11'
+        && result[0] === '2016-03-11'
+        && result[1] === '2016'
+        && result[2] === '03'
+        && result[3] === '11';
+      */},
+    res : {
+      babel6: true,
+      ie11: false,
+      firefox2: false,
+      opera10_50: false,
+      chrome60: chrome.harmony,
+      chrome64: true,
+      safari11_1: true,
+      safaritp: true,
+      duktape2_0: false,
+    }
+  },
+  {
+    name: 'RegExp Lookbehind Assertions',
+    spec: 'https://github.com/tc39/proposal-regexp-lookbehind',
+    category: '2018 features',
+    significance: 'small',
+    exec: function(){/*
+    return /(?<=a)b/.test('ab') && /(?<!a)b/.test('cb') &&
+           !/(?<=a)b/.test('b');
+  */},
+    res : {
+      ie11: false,
+      firefox2: false,
+      opera10_50: false,
+      chrome50: chrome.harmony,
+      chrome62: true,
+      duktape2_0: false,
+    }
+  },
+  {
+    name: 'RegExp Unicode Property Escapes',
+    category: '2018 features',
+    significance: 'small',
+    spec: 'https://github.com/tc39/proposal-regexp-unicode-property-escapes',
+    exec: function () {/*
+    const regexGreekSymbol = /\p{Script=Greek}/u;
+    return regexGreekSymbol.test('π');
+  */},
+    res: {
+      babel6: true,
+      ie11: false,
+      firefox2: false,
+      opera10_50: false,
+      chrome59: chrome.harmony,
+      chrome64: true,
+      safari11_1: true,
+      safaritp: true,
+      duktape2_0: false,
+    }
+  },
+  {
+    name: 'Asynchronous Iterators',
+    category: '2018 features',
+    significance: 'medium',
+    spec: 'https://github.com/tc39/proposal-async-iteration',
+    subtests: [
+      {
+        name: 'async generators',
+        exec: function(){/*
+          async function*generator(){
+            yield 42;
+          }
+
+          var iterator = generator();
+          iterator.next().then(function(step){
+            if(iterator[Symbol.asyncIterator]() === iterator && step.done === false && step.value === 42)asyncTestPassed();
+          });
+        */},
+        res: {
+          babel6: true,
+          chrome62: chrome.harmony,
+          chrome63: true,
+          typescript2_3: true,
+          ie11: false,
+          firefox2: false,
+          firefox55: firefox.nightly,
+          firefox57: true,
+          opera10_50: false,
+          safaritp: true,
+          webkit: true,
+          duktape2_0: false,
+        }
+      },
+      {
+        name: 'for-await-of loops',
+        exec: function(){/*
+          var asyncIterable = {};
+          asyncIterable[Symbol.asyncIterator] = function(){
+            var i = 0;
+            return {
+              next: function(){
+                switch(++i){
+                  case 1: return Promise.resolve({done: false, value: 'a'});
+                  case 2: return Promise.resolve({done: false, value: 'b'});
+                } return Promise.resolve({done: true});
+              }
+            };
+          };
+
+          (async function(){
+            var result = '';
+            for await(var value of asyncIterable)result += value;
+            if(result === 'ab')asyncTestPassed();
+          })();
+        */},
+        res: {
+          babel6: true,
+          chrome62: chrome.harmony,
+          chrome63: true,
+          typescript2_3: true,
+          ie11: false,
+          firefox2: false,
+          firefox55: firefox.nightly,
+          firefox57: true,
+          opera10_50: false,
+          safaritp: true,
+          webkit: true,
+          duktape2_0: false,
+        }
+      }
+    ]
   },
 ];
 
