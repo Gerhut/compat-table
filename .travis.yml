@@ -1,0 +1,9 @@
+language: node_js
+node_js:
+  - node
+before_script:
+  - alias git="git --quiet"
+  - git remote set-url origin "https://${GITHUB_TOKEN}@github.com/Gerhut/compat-table.git"
+  - cat "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> .npmrc
+script:
+  - npm version 0.1.0.$(npx date-now --format="YYYYMMDDHHmmssSSS")
