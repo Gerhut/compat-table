@@ -5,10 +5,10 @@ before_install:
   - git remote add github "https://${GITHUB_TOKEN}@github.com/${TRAVIS_REPO_SLUG}.git"
 script:
   - npm run build
-  - "! git diff --quite"
+  - "! git diff --quiet"
 before_deploy:
   - npm version --force 0.0.$(date +%Y%m%d%H%M%S)
-  - git push --quiet --follow-tags github ${TRAVIS_BRANCH}
+  - git push --follow-tags github ${TRAVIS_BRANCH}
 deploy:
   provider: npm
   email: Gerhut@GMail.com
