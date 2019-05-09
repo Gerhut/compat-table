@@ -1,14 +1,11 @@
 {
   "name": "compat-table",
-  "version": "0.0.3",
   "description": "Raw kangax/compat-table data without unnecessary dependencies.",
   "main": "index.js",
   "scripts": {
     "clean": "rimraf \"!(index).js\"",
     "prebuild": "npm run clean",
-    "build": "cpy node_modules/compat-table/data-*.js .",
-    "preversion": "npm run build && git add -A . && ! git diff --cached --quiet",
-    "postversion": "npm publish && git push && git push --tags"
+    "build": "cpy node_modules/compat-table/data-*.js ."
   },
   "repository": {
     "type": "git",
@@ -17,7 +14,7 @@
   "keywords": [
     "data"
   ],
-  "author": "George Chung <Gerhut@GMail.com>",
+  "author": "George Cheng <Gerhut@GMail.com>",
   "license": "MIT",
   "bugs": {
     "url": "https://github.com/Gerhut/compat-table/issues"
