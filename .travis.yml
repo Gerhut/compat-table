@@ -8,7 +8,7 @@ script:
   - "! git diff --quite"
 before_deploy:
   - npm version --force 0.0.$(date +%Y%m%d%H%M%S)
-  - git --quiet push --follow-tags github ${TRAVIS_BRANCH}
+  - git push --quiet --follow-tags github ${TRAVIS_BRANCH}
 deploy:
   provider: npm
   email: Gerhut@GMail.com
