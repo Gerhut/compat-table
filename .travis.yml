@@ -9,7 +9,7 @@ script:
 before_deploy:
   - git add .
   - npm version --force 0.0.$(date +%Y%m%d%H%M%S)
-  - git push --follow-tags github ${TRAVIS_BRANCH}
+  - git push --follow-tags github HEAD:${TRAVIS_BRANCH}
 deploy:
   provider: npm
   email: Gerhut@GMail.com
