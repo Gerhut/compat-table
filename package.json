@@ -27,5 +27,6 @@
     "compat-table": "kangax/compat-table#gh-pages",
     "cpy-cli": "^1.0.1",
     "rimraf": "^2.6.1"
-  }
+  },
+  "version": "0.0.20190509082700"
 }

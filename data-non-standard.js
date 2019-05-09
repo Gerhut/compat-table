@@ -1,8 +1,1255 @@
+var common = require('./data-common');
+
+var firefox = common.firefox;
+var chrome = common.chrome;
+var edge = common.edge;
+
 exports.name = 'Non-standard';
 exports.target_file = 'non-standard/index.html';
 exports.skeleton_file = 'non-standard/skeleton.html';
 
 exports.tests = [
+{
+  name: 'SIMD (Single Instruction, Multiple Data)',
+  spec: 'https://tc39.github.io/ecmascript_simd/',
+  mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD',
+  subtests: [
+    {
+      name: 'basic support',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD',
+      exec: function () {/*
+        simdFloatTypes=['Float32x4'];
+        simdBoolTypes=['Bool32x4','Bool16x8','Bool8x16'];
+        simdIntTypes=['Int32x4','Int16x8','Int8x16','Uint32x4','Uint16x8','Uint8x16'];
+        simd32bitFloatIntTypes=['Float32x4','Int32x4','Uint32x4'];
+        simdSmallIntTypes=['Int16x8','Int8x16','Uint16x8','Uint8x16'];
+        simdBoolIntTypes=simdBoolTypes.concat(simdIntTypes);
+        simdFloatIntTypes=simdFloatTypes.concat(simdIntTypes);
+        simdAllTypes=simdFloatTypes.concat(simdIntTypes,simdBoolTypes);
+        return typeof SIMD !== 'undefined';
+      */},
+      res: {
+        ie11: false,
+        edge12: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'Float32x4',
+      spec: 'https://tc39.github.io/ecmascript_simd/#float32x4',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32x4',
+      exec: function(){/*
+        return typeof SIMD.Float32x4 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'Int32x4',
+      spec: 'https://tc39.github.io/ecmascript_simd/#int32x4',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32x4',
+      exec: function(){/*
+        return typeof SIMD.Int32x4 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'Int16x8',
+      spec: 'https://tc39.github.io/ecmascript_simd/#int16x8',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16x8',
+      exec: function(){/*
+        return typeof SIMD.Int16x8 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'Int8x16',
+      spec: 'https://tc39.github.io/ecmascript_simd/#int8x16',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8x16',
+      exec: function(){/*
+        return typeof SIMD.Int8x16 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'Uint32x4',
+      spec: 'https://tc39.github.io/ecmascript_simd/#uint32x4',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32x4',
+      exec: function(){/*
+        return typeof SIMD.Uint32x4 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'Uint16x8',
+      spec: 'https://tc39.github.io/ecmascript_simd/#uint16x8',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16x8',
+      exec: function(){/*
+        return typeof SIMD.Uint16x8 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'Uint8x16',
+      spec: 'https://tc39.github.io/ecmascript_simd/#uint8x16',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8x16',
+      exec: function(){/*
+        return typeof SIMD.Uint8x16 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'Bool32x4',
+      spec: 'https://tc39.github.io/ecmascript_simd/#bool32x4',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Bool32x4',
+      exec: function(){/*
+        return typeof SIMD.Bool32x4 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'Bool16x8',
+      spec: 'https://tc39.github.io/ecmascript_simd/#bool16x8',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Bool16x8',
+      exec: function(){/*
+        return typeof SIMD.Bool16x8 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'Bool8x16',
+      spec: 'https://tc39.github.io/ecmascript_simd/#bool8x16',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Bool8x16',
+      exec: function(){/*
+        return typeof SIMD.Bool8x16 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%floatType%.abs',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-abs',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/abs',
+      exec: function(){/*
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].abs === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.add',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-add',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/add',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].add === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%integerType%.addSaturate',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-add-saturate',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/addSaturate',
+      exec: function(){/*
+        return simdSmallIntTypes.every(function(type){
+          return typeof SIMD[type].addSaturate === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.and',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-and',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/and',
+      exec: function(){/*
+        return simdBoolIntTypes.every(function(type){
+          return typeof SIMD[type].and === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%booleanType%.anyTrue',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-any-true',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/anyTrue',
+      exec: function(){/*
+        return simdBoolTypes.every(function(type){
+          return typeof SIMD[type].anyTrue === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%booleanType%.allTrue',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-all-true',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/allTrue',
+      exec: function(){/*
+        return simdBoolTypes.every(function(type){
+          return typeof SIMD[type].allTrue === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.check',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-check',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/check',
+      exec: function(){/*
+        return simdAllTypes.every(function(type){
+          return typeof SIMD[type].check === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.equal',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-equal',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/equal',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].equal === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.extractLane',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-extract-lane',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/extractLane',
+      exec: function(){/*
+        return simdAllTypes.every(function(type){
+          return typeof SIMD[type].extractLane === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.greaterThan',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-greater-than',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/greaterThan',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].greaterThan === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.greaterThanOrEqual',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-greater-than-or-equal',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/greaterThanOrEqual',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].greaterThanOrEqual === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.lessThan',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-less-than',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/lessThan',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].lessThan === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.lessThanOrEqual',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-less-than-or-equal',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/lessThanOrEqual',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].lessThanOrEqual === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.mul',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-mul',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/mul',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].mul === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%floatType%.div',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-div',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/div',
+      exec: function(){/*
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].div === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.load',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-load-function',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].load === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.load1',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
+      exec: function(){/*
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].load1 === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.load2',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
+      exec: function(){/*
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].load2 === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.load3',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
+      exec: function(){/*
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].load3 === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%floatType%.max',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-max',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/max',
+      exec: function(){/*
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].max === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%floatType%.maxNum',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-max-num',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/maxNum',
+      exec: function(){/*
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].maxNum === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        edge15: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%floatType%.min',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-min',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/min',
+      exec: function(){/*
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].min === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%floatType%.minNum',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-min-num',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/minNum',
+      exec: function(){/*
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].minNum === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        edge15: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.neg',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-neg',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/neg',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].neg === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.not',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-not',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/not',
+      exec: function(){/*
+        return simdBoolTypes.every(function(type){
+          return typeof SIMD[type].not === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.notEqual',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-not-equal',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/notEqual',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].notEqual === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.or',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-or',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/or',
+      exec: function(){/*
+        return simdBoolIntTypes.every(function(type){
+          return typeof SIMD[type].or === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%floatType%.reciprocalApproximation',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-reciprocal-approximation',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/reciprocalApproximation',
+      exec: function(){/*
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].reciprocalApproximation === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%floatType%.reciprocalSqrtApproximation',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-reciprocal-sqrt-approximation',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/reciprocalSqrtApproximation',
+      exec: function(){/*
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].reciprocalSqrtApproximation === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.replaceLane',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-replace-lane',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/replaceLane',
+      exec: function(){/*
+        return simdAllTypes.every(function(type){
+          return typeof SIMD[type].replaceLane === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.select',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-select',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/select',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].select === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%integerType%.shiftLeftByScalar',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-shift-left-by-scalar',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/shiftLeftByScalar',
+      exec: function(){/*
+        return simdIntTypes.every(function(type){
+          return typeof SIMD[type].shiftLeftByScalar === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%integerType%.shiftRightByScalar',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-shift-right-by-scalar',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/shiftRightByScalar',
+      exec: function(){/*
+        return simdIntTypes.every(function(type){
+          return typeof SIMD[type].shiftRightByScalar === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.shuffle',
+      spec: 'https://tc39.github.io/ecmascript_simd/#shuffle',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/shuffle',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].shuffle === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.splat',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-splat',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/splat',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].splat === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%floatType%.sqrt',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-sqrt',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/sqrt',
+      exec: function(){/*
+        return simdFloatTypes.every(function(type){
+          return typeof SIMD[type].sqrt === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.store',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-store-function',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].store === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.store1',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
+      exec: function(){/*
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].store1 === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.store2',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
+      exec: function(){/*
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].store2 === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.store3',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
+      exec: function(){/*
+        return simd32bitFloatIntTypes.every(function(type){
+          return typeof SIMD[type].store3 === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.sub',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-sub',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/sub',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].sub === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%integerType%.subSaturate',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-sub-saturate',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/subSaturate',
+      exec: function(){/*
+        return simdSmallIntTypes.every(function(type){
+          return typeof SIMD[type].subSaturate === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.swizzle',
+      spec: 'https://tc39.github.io/ecmascript_simd/#swizzle',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/swizzle',
+      exec: function(){/*
+        return simdFloatIntTypes.every(function(type){
+          return typeof SIMD[type].swizzle === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge13: edge.experimental,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.xor',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-xor',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/xor',
+      exec: function(){/*
+        return simdBoolIntTypes.every(function(type){
+          return typeof SIMD[type].xor === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.fromTIMDBits',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-to-timd',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/fromFloat32x4Bits',
+      exec: function(){/*
+        return ['Float32x4','Int32x4','Int8x16','Uint32x4','Uint16x8','Uint8x16'].every(function(type){
+          return typeof SIMD.Int16x8['from' + type + 'Bits'] === 'function';
+        });
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    },
+    {
+      name: 'SIMD.%type%.fromTIMD',
+      spec: 'https://tc39.github.io/ecmascript_simd/#simd-to-timd-logical',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/fromFloat32x4',
+      exec: function(){/*
+        return typeof SIMD.Float32x4.fromInt32x4 === 'function' && typeof SIMD.Float32x4.fromUint32x4 === 'function' && typeof SIMD.Int32x4.fromFloat32x4 === 'function' && typeof SIMD.Uint32x4.fromFloat32x4 === 'function';
+      */},
+      res: {
+        ie11: false,
+        edge16: false,
+        firefox2: false,
+        firefox48: firefox.nightly,
+        firefox63: false,
+        opera10_50: false,
+        chrome37: chrome.simd,
+        chrome58: false,
+        edge14: edge.experimental,
+        duktape2_0: false,
+      }
+    }
+  ],
+  separator: 'after'
+},
 {
   name: 'decompilation',
   subtests: [
@@ -19,6 +1266,7 @@ exports.tests = [
         opera10_50: false,
         rhino1_7: true,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -43,6 +1291,7 @@ exports.tests = [
         besen: true,
         rhino1_7: true,
         duktape2_0: false,
+        graalvm: false,
       },
     },
     {
@@ -56,6 +1305,7 @@ exports.tests = [
         opera10_50: false,
         rhino1_7: null,
         duktape2_0: false,
+        graalvm: false,
       },
     },
     {
@@ -157,6 +1407,7 @@ exports.tests = [
         besen: null,
         rhino1_7: null,
         duktape2_0: false,
+        graalvm: false,
       },
     },
   ]
@@ -177,6 +1428,7 @@ exports.tests = [
     opera10_50: false,
     rhino1_7: null,
     duktape2_0: false,
+    graalvm: false,
   },
   separator: 'after'
 },
@@ -200,6 +1452,7 @@ exports.tests = [
     phantom: true,
     android4_0: true,
     duktape2_0: false,
+    graalvm: true,
   }
 },
 {
@@ -224,6 +1477,7 @@ exports.tests = [
     rhino1_7: true,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -249,6 +1503,7 @@ exports.tests = [
     phantom: true,
     android4_0: true,
     duktape2_0: false,
+    graalvm: true,
   }
 },
 {
@@ -274,6 +1529,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   },
   separator: 'after'
 },
@@ -293,6 +1549,7 @@ exports.tests = [
     opera7_5: false,
     opera10_50: false,
     duktape2_0: false,
+    graalvm: false,
   },
 },
 {
@@ -317,6 +1574,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -340,6 +1598,7 @@ exports.tests = [
     rhino1_7: true,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -371,6 +1630,11 @@ exports.tests = [
     nashorn1_8: true,
     nashorn9: true,
     nashorn10: true,
+    graalvm: {
+      val: "flagged",
+      note_id: 'graalvm-nashorn-compat',
+      note_html: 'The feature has to be enabled via the <code>--nashorn-compat</code> flag.'
+    },
   }
 },
 {
@@ -391,6 +1655,7 @@ exports.tests = [
     rhino1_7: true,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -401,6 +1666,8 @@ exports.tests = [
   res: {
     ie7: false,
     firefox2: true,
+    firefox67: true,
+    firefox68: false,
     safari3_1: false,
     chrome7: false,
     opera7_5: false,
@@ -411,6 +1678,7 @@ exports.tests = [
     rhino1_7: true,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   },
   separator: 'after'
 },
@@ -438,6 +1706,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -457,6 +1726,7 @@ exports.tests = [
     opera7_5: false,
     opera10_50: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -483,6 +1753,7 @@ exports.tests = [
     nashorn1_8: true,
     nashorn9: true,
     nashorn10: true,
+    graalvm: false,
   }
 },
 {
@@ -506,6 +1777,7 @@ exports.tests = [
     rhino1_7: true,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -536,6 +1808,7 @@ exports.tests = [
     nashorn1_8: true,
     nashorn9: true,
     nashorn10: true,
+    graalvm: false,
   }
 },
 {
@@ -560,6 +1833,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   },
   separator: 'after'
 },
@@ -599,6 +1873,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -640,6 +1915,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -691,6 +1967,7 @@ exports.tests = [
     rhino1_7: true,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   },
 },
 {
@@ -716,6 +1993,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -741,6 +2019,7 @@ exports.tests = [
     opera7_5: false,
     opera10_50: false,
     duktape2_0: false,
+    graalvm: false,
   },
   separator: 'after'
 },
@@ -770,61 +2049,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
-  }
-},
-{
-  name: 'RegExp "lastMatch"',
-  mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/lastMatch',
-  exec: function () {
-    var re = /\w/;
-    re.exec('x');
-    return RegExp.lastMatch === 'x';
-  },
-  res: {
-    ie7: true,
-    firefox2: true,
-    safari3_1: true,
-    chrome7: true,
-    opera7_5: false,
-    opera10_10: false,
-    opera10_50: true,
-    konq4_4: true,
-    besen: false,
-    rhino1_7: true,
-    phantom: true,
-    android4_0: true,
-    duktape2_0: false,
-    nashorn1_8: true,
-    nashorn9: true,
-    nashorn10: true,
-  }
-},
-{
-  name: 'RegExp.$1-$9',
-  mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/n',
-  exec: function () {
-    for (var i = 1; i < 10; i++) {
-      if (!(('$' + i) in RegExp)) return false;
-    }
-    return true;
-  },
-  res: {
-    ie7: true,
-    firefox2: true,
-    safari3_1: true,
-    chrome7: true,
-    opera7_5: true,
-    opera10_10: true,
-    opera10_50: true,
-    konq4_4: true,
-    besen: false,
-    rhino1_7: true,
-    phantom: true,
-    android4_0: true,
-    duktape2_0: false,
-    nashorn1_8: true,
-    nashorn9: true,
-    nashorn10: true,
+    graalvm: false,
   }
 },
 {
@@ -845,6 +2070,7 @@ exports.tests = [
     rhino1_7: true,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -867,6 +2093,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   },
   separator: 'after'
 },
@@ -888,6 +2115,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -904,6 +2132,7 @@ exports.tests = [
     rhino1_7: true,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   },
   separator: 'after'
 },
@@ -926,6 +2155,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   },
 },
 {
@@ -951,6 +2181,7 @@ exports.tests = [
     ejs: true,
     android4_0: true,
     duktape2_0: false,
+    graalvm: false,
   },
   separator: 'after'
 },
@@ -973,6 +2204,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -994,6 +2226,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -1014,6 +2247,7 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   },
 },
 {
@@ -1033,6 +2267,7 @@ exports.tests = [
     node0_10: true,
     android5_0: true,
     duktape2_0: false,
+    graalvm: false,
   },
   separator: 'after'
 },
@@ -1066,6 +2301,7 @@ exports.tests = [
     nashorn1_8: true,
     nashorn9: true,
     nashorn10: true,
+    graalvm: true,
   }
 },
 {
@@ -1091,6 +2327,7 @@ exports.tests = [
     nashorn1_8: true,
     nashorn9: true,
     nashorn10: true,
+    graalvm: false,
   }
 },
 {
@@ -1117,6 +2354,7 @@ exports.tests = [
     nashorn1_8: true,
     nashorn9: true,
     nashorn10: true,
+    graalvm: false,
   }
 },
 {
@@ -1142,6 +2380,7 @@ exports.tests = [
     nashorn1_8: true,
     nashorn9: true,
     nashorn10: true,
+    graalvm: false,
   }
 },
 {
@@ -1163,7 +2402,75 @@ exports.tests = [
     rhino1_7: false,
     phantom: false,
     duktape2_0: false,
+    graalvm: false,
   },
   separator: 'after'
-}
+},
+  {
+    name: 'global',
+    subtests: [{
+      name: '"global" global property is global object',
+      exec: function(){/*
+      var actualGlobal = Function('return this')();
+      actualGlobal.__system_global_test__ = 42;
+      return typeof global === 'object' && global && global === actualGlobal && !global.lacksGlobal && global.__system_global_test__ === 42;
+    */},
+      res: {
+        ie11: false,
+        firefox2: false,
+        firefox53: false,
+        opera10_50: false,
+        safari10_1: false,
+        safaritp: false,
+        webkit: false,
+        node0_10: true,
+        node0_12: true,
+        node4: true,
+        node6: true,
+        node6_5: true,
+        node7: true,
+        node7_6: true,
+        node8: true,
+        node8_3: true,
+        node8_7: true,
+        duktape2_0: false,
+        duktape2_1: true,
+        graalvm: true,
+      }
+    }, {
+      name: '"global" global property has correct property descriptor',
+      exec: function(){/*
+      var actualGlobal = Function('return this')();
+      if (typeof global !== 'object') { return false; }
+      if (!('global' in actualGlobal)) { return false; }
+      if (Object.prototype.propertyIsEnumerable.call(actualGlobal, 'global')) { return false; }
+      if (typeof Object.getOwnPropertyDescriptor !== 'function') { return true; } // ES3
+
+      var descriptor = Object.getOwnPropertyDescriptor(actualGlobal, 'global');
+      return descriptor.value === actualGlobal && !descriptor.enumerable && descriptor.configurable && descriptor.writable;
+    */},
+      res: {
+        ie11: false,
+        firefox2: false,
+        firefox53: false,
+        opera10_50: false,
+        safaritp: false,
+        safari10_1: false,
+        webkit: false,
+        node0_10: false,
+        node0_12: false,
+        node4: false,
+        node6: false,
+        node6_5: false,
+        node7: false,
+        node7_6: false,
+        node8: false,
+        node8_3: false,
+        node8_7: false,
+        duktape2_0: false,
+        duktape2_1: true,
+        graalvm: false,
+      }
+    }]
+  }
 ];

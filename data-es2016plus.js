@@ -25,9 +25,9 @@ exports.tests = [
          */},
         res: {
           tr: true,
-          babel6: true,
+          babel6corejs2: true,
           closure: true,
-          typescript1: true,
+          typescript1corejs2: true,
           ie11: false,
           edge13: edge.experimental,
           edge14: true,
@@ -35,10 +35,11 @@ exports.tests = [
           firefox42: firefox.nightly,
           firefox52: true,
           opera10_50: false,
-          chrome51: "flagged",
+          chrome51: chrome.experimental,
           chrome52: true,
           safari10_1: true,
           duktape2_0: true,
+          graalvm: true,
         }
       },
       {
@@ -48,9 +49,9 @@ exports.tests = [
          */},
         res: {
           tr: true,
-          babel6: true,
+          babel6corejs2: true,
           closure: true,
-          typescript1: true,
+          typescript1corejs2: true,
           ie11: false,
           edge13: edge.experimental,
           edge14: true,
@@ -58,10 +59,11 @@ exports.tests = [
           firefox48: firefox.nightly,
           firefox52: true,
           opera10_50: false,
-          chrome51: "flagged",
+          chrome51: chrome.experimental,
           chrome52: true,
           safari10_1: true,
           duktape2_0: true,
+          graalvm: true,
         }
       },
       {
@@ -75,17 +77,18 @@ exports.tests = [
          }
          */},
         res: {
-          babel6: true,
+          babel6corejs2: true,
           closure: true,
           ie11: false,
           edge14: true,
           firefox2: false,
           firefox52: true,
           opera10_50: false,
-          chrome51: "flagged",
+          chrome51: chrome.experimental,
           chrome52: true,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
     ],
@@ -109,20 +112,21 @@ exports.tests = [
          return Array.isArray(v) && String(v) === "foo,bar,baz";
          */},
         res: {
-          babel6: babel.corejs,
+          babel6corejs2: babel.corejs,
           closure: true,
           es7shim: true,
-          typescript1: typescript.corejs,
+          typescript1corejs2: typescript.corejs,
           firefox2: false,
           firefox45: firefox.nightly,
           firefox47: true,
           opera10_50: false,
-          chrome51: "flagged",
+          chrome51: chrome.experimental,
           chrome54: true,
           ie11: false,
           edge14: true,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -140,20 +144,21 @@ exports.tests = [
          && String(e[2]) === "c,baz";
          */},
         res: {
-          babel6: babel.corejs,
+          babel6corejs2: babel.corejs,
           closure: true,
           es7shim: true,
-          typescript1: typescript.corejs,
+          typescript1corejs2: typescript.corejs,
           firefox2: false,
           firefox45: firefox.nightly,
           firefox47: true,
           opera10_50: false,
-          chrome51: "flagged",
+          chrome51: chrome.experimental,
           chrome54: true,
           ie11: false,
           edge14: true,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -172,19 +177,20 @@ exports.tests = [
           && D.c.value === 3 && D.c.enumerable === false && D.c.configurable === false && D.c.writable === false;
           */},
         res: {
-          babel6: babel.corejs,
+          babel6corejs2: babel.corejs,
           closure: true,
           es7shim: true,
-          typescript1: typescript.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
           edge15: true,
-          chrome51: "flagged",
+          chrome51: chrome.experimental,
           chrome54: true,
           firefox2: false,
           firefox50: true,
           opera10_50: false,
           safari10: true,
           duktape2_0: false,
+          graalvm: true,
         },
       },
       {
@@ -196,8 +202,8 @@ exports.tests = [
           return !Object.getOwnPropertyDescriptors(P).hasOwnProperty('a');
         */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
           edge15: true,
           firefox2: false,
@@ -206,6 +212,7 @@ exports.tests = [
           chrome54: true,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         },
       },
     ],
@@ -228,10 +235,10 @@ exports.tests = [
          && Array(1).includes();
          */},
         res: {
-          babel6: babel.corejs,
+          babel6corejs2: babel.corejs,
           closure: true,
           es7shim: true,
-          typescript1: typescript.corejs,
+          typescript1corejs2: typescript.corejs,
           safari9: true,
           chrome47: true,
           ie11: false,
@@ -240,6 +247,7 @@ exports.tests = [
           firefox43: true,
           opera10_50: false,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -270,10 +278,10 @@ exports.tests = [
          }, 'foo', 6) === true && passed === 3;
          */},
         res: {
-          babel6: babel.corejs,
+          babel6corejs2: babel.corejs,
           closure20180402: true,
           es7shim: true,
-          typescript1: typescript.corejs,
+          typescript1corejs2: typescript.corejs,
           safari9: true,
           chrome47: true,
           ie11: false,
@@ -282,6 +290,7 @@ exports.tests = [
           firefox43: true,
           opera10_50: false,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -296,8 +305,8 @@ exports.tests = [
          });
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           chrome47: true,
           ie11: false,
           edge14: true,
@@ -306,6 +315,7 @@ exports.tests = [
           opera10_50: false,
           safari10: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
     ],
@@ -329,9 +339,9 @@ exports.tests = [
          && 'hello'.padStart(3, '123') === 'hello';
          */},
         res: {
-          babel6: babel.corejs,
+          babel6corejs2: babel.corejs,
           closure: true,
-          typescript1: typescript.corejs,
+          typescript1corejs2: typescript.corejs,
           es7shim: true,
           firefox2: false,
           firefox48: true,
@@ -339,11 +349,12 @@ exports.tests = [
           ie11: false,
           edge14: edge.experimental,
           edge15: true,
-          chrome52: "flagged",
+          chrome52: chrome.experimental,
           chrome57: true,
           node8: true,
           safari10: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -359,9 +370,9 @@ exports.tests = [
          && 'hello'.padEnd(3, '123') === 'hello';
          */},
         res: {
-          babel6: babel.corejs,
+          babel6corejs2: babel.corejs,
           closure: true,
-          typescript1: typescript.corejs,
+          typescript1corejs2: typescript.corejs,
           es7shim: true,
           firefox2: false,
           firefox48: true,
@@ -369,11 +380,12 @@ exports.tests = [
           ie11: false,
           edge14: edge.experimental,
           edge15: true,
-          chrome52: "flagged",
+          chrome52: chrome.experimental,
           chrome57: true,
           node8: true,
           safari10: true,
           duktape2_0: false,
+          graalvm: true,
         }
       }
     ]
@@ -392,12 +404,12 @@ exports.tests = [
           return typeof function f( a, b, ){} === 'function';
         */},
         res: {
-          babel6: true,
+          babel6corejs2: true,
           closure: true,
-          typescript2: true,
+          typescript2corejs2: true,
           ie11: false,
           edge14: true,
-          chrome57: "flagged",
+          chrome57: chrome.experimental,
           chrome58: true,
           firefox2: false,
           firefox52: true,
@@ -405,6 +417,7 @@ exports.tests = [
           node8: true,
           safari10: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -414,12 +427,12 @@ exports.tests = [
           return Math.min(1,2,3,) === 1;
         */},
         res: {
-          babel6: true,
+          babel6corejs2: true,
           closure: true,
-          typescript2: true,
+          typescript2corejs2: true,
           ie11: false,
           edge14: true,
-          chrome57: "flagged",
+          chrome57: chrome.experimental,
           chrome58: true,
           firefox2: false,
           firefox52: true,
@@ -427,6 +440,7 @@ exports.tests = [
           node8: true,
           safari10: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
     ],
@@ -458,10 +472,10 @@ exports.tests = [
         */},
         res: {
           tr: true,
-          babel6: babel.regenerator,
+          babel6corejs2: babel.regenerator,
           closure: true,
-          typescript1: typescript.asyncawait,
-          chrome52: "flagged",
+          typescript1corejs2: typescript.downlevelIteration,
+          chrome52: chrome.experimental,
           chrome55: true,
           ie11: false,
           edge13: edge.experimental,
@@ -471,6 +485,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -491,9 +506,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: true,
-          typescript1: null,
+          typescript1corejs2: typescript.downlevelIteration,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -504,6 +519,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -514,9 +530,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: false,
-          typescript1: null,
+          typescript1corejs2: null,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -528,6 +544,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -538,9 +555,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: false,
-          typescript1: null,
+          typescript1corejs2: false,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -551,6 +568,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         },
       },
       {
@@ -568,10 +586,10 @@ exports.tests = [
         */},
         res: {
           tr: true,
-          babel6: babel.regenerator,
+          babel6corejs2: babel.regenerator,
           closure: true,
-          typescript1: typescript.asyncawait,
-          chrome52: "flagged",
+          typescript1corejs2: typescript.downlevelIteration,
+          chrome52: chrome.experimental,
           chrome55: true,
           ie11: false,
           edge13: edge.experimental,
@@ -581,6 +599,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -599,9 +618,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: true,
-          typescript1: null,
+          typescript1corejs2: typescript.downlevelIteration,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -612,6 +631,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -622,9 +642,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: true,
-          typescript1: null,
+          typescript1corejs2: null,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -635,6 +655,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -650,9 +671,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: true,
-          typescript1: null,
+          typescript1corejs2: typescript.downlevelIteration,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -663,6 +684,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -673,9 +695,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: false,
-          typescript1: null,
+          typescript1corejs2: null,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -686,6 +708,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -706,9 +729,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: true,
-          typescript1: null,
+          typescript1corejs2: typescript.downlevelIteration,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -719,6 +742,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -739,9 +763,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: true,
-          typescript1: null,
+          typescript1corejs2: typescript.downlevelIteration,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -752,6 +776,43 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
+        }
+      },
+      {
+        name: 'async arrow functions in methods, classes',
+        exec: function () {/*
+          function doSomething(callback) {
+            callback();
+          }
+          class C {
+            a(){
+              doSomething(async () => {
+                await 1;
+                asyncTestPassed();
+              });
+            }
+          };
+          var p = new C().a();
+        */},
+        res: {
+          tr: true,
+          babel6corejs2: babel.regenerator,
+          closure: true,
+          typescript1corejs2: typescript.downlevelIteration,
+          chrome52: chrome.experimental,
+          chrome55: true,
+          ie11: false,
+          edge13: edge.experimental,
+          edge15: true,
+          firefox2: false,
+          firefox52: true,
+          opera10_50: false,
+          safari10: false,
+          safari10_1: false,
+          safari11: true,
+          duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -770,10 +831,10 @@ exports.tests = [
         */},
         res: {
           tr: true,
-          babel6: babel.regenerator,
+          babel6corejs2: babel.regenerator,
           closure: true,
-          typescript1: false, // still buggy output
-          chrome52: "flagged",
+          typescript1corejs2: typescript.downlevelIteration,
+          chrome52: chrome.experimental,
           chrome55: true,
           ie11: false,
           edge13: edge.experimental,
@@ -783,6 +844,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -794,9 +856,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: false,
-          typescript1: null,
+          typescript1corejs2: false,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -808,6 +870,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         },
       },
       {
@@ -817,9 +880,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: false,
-          typescript1: null,
+          typescript1corejs2: false,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -830,6 +893,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         },
       },
       {
@@ -848,9 +912,9 @@ exports.tests = [
         */},
         res: {
           tr: null,
-          babel6: null,
+          babel6corejs2: null,
           closure: false,
-          typescript1: null,
+          typescript1corejs2: false,
           chrome52: null,
           chrome55: true,
           ie11: false,
@@ -862,6 +926,7 @@ exports.tests = [
           opera10_50: false,
           safari10_1: true,
           duktape2_0: false,
+          graalvm: true,
         },
       },
     ]
@@ -882,16 +947,20 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: {
+            val: false,
+            note_id: 'edg-shared-memory-spectre',
+            note_html: 'The feature was temporarily disabled to mitigate the Meltdown and Spectre CPU bugs.',
+          },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
           firefox57: {
-            val: false,
+            val: "flagged",
             note_id: 'fx-shared-memory-spectre',
-            note_html: 'The feature was temporarily disabled to mitigate the <a href="https://blog.mozilla.org/security/2018/01/03/mitigations-landing-new-class-timing-attack/">Meltdown and Spectre CPU bugs</a>.',
+            note_html: 'The feature was <a href="https://blog.mozilla.org/security/2018/01/03/mitigations-landing-new-class-timing-attack/">temporarily disabled</a> to mitigate the Meltdown and Spectre CPU bugs.  It can be enabled via <code>javascript.options.shared_memory</code> setting under <code>about:config</code>',
           },
           opera10_50: false,
           chrome48: chrome.sharedmem,
@@ -899,16 +968,18 @@ exports.tests = [
           chrome63: {
             val: false,
             note_id: 'chr-shared-memory-spectre',
-            note_html: 'The feature was temporarily disabled to mitigate the Meltdown and Spectre CPU bugs</a>.',
+            note_html: 'The feature was temporarily disabled to mitigate the Meltdown and Spectre CPU bugs.',
           },
+          chrome68: true,
           safari10_1: true,
           safari11: {
             val: false,
             note_id: 'sf-shared-memory-spectre',
-            note_html: 'The feature was temporarily disabled to mitigate <a href="https://webkit.org/blog/8048/what-spectre-and-meltdown-mean-for-webkit/">the Meltdown and Spectre CPU bugs</a>.',
+            note_html: 'The feature was <a href="https://webkit.org/blog/8048/what-spectre-and-meltdown-mean-for-webkit/">temporarily disabled</a> to mitigate the Meltdown and Spectre CPU bugs.',
           },
           safaritp: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -920,19 +991,21 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox52: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11: { val: false, note_id: 'sf-shared-memory-spectre' },
           safaritp: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -946,20 +1019,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari11: { val: false, note_id: 'sf-shared-memory-spectre' },
           safaritp: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -973,19 +1048,21 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox52: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11: { val: false, note_id: 'sf-shared-memory-spectre' },
           safaritp: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -998,20 +1075,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox52: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11: { val: false, note_id: 'sf-shared-memory-spectre' },
           safaritp: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1025,20 +1104,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1052,20 +1133,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1079,20 +1162,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1106,20 +1191,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1133,20 +1220,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox48: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1160,20 +1249,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox48: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1187,20 +1278,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1214,20 +1307,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1241,20 +1336,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1268,20 +1365,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1295,20 +1394,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -1322,20 +1423,22 @@ exports.tests = [
           ie11: false,
           edge15: edge.experimental,
           edge16: true,
-          edge17: false,
+          edge17: { val: false, note_id: 'edg-shared-memory-spectre' },
           firefox2: false,
           firefox46: firefox.nightly,
           firefox51: firefox.developer,
           firefox53: firefox.sharedmem,
           firefox55: true,
-          firefox57: { val: false, note_id: 'fx-shared-memory-spectre' },
+          firefox57: { val: "flagged", note_id: 'fx-shared-memory-spectre' },
           opera10_50: false,
           chrome48: chrome.sharedmem,
           chrome60: true,
           chrome63: { val: false, note_id: 'chr-shared-memory-spectre' },
+          chrome68: true,
           safari10_1: true,
           safari11_1: { val: false, note_id: 'sf-shared-memory-spectre' },
           duktape2_0: false,
+          graalvm: true,
         }
       }
     ]
@@ -1371,6 +1474,7 @@ exports.tests = [
       chrome50: true,
       safari10: true,
       duktape2_0: false,
+          graalvm: true,
     }
   },
   {
@@ -1403,6 +1507,7 @@ exports.tests = [
      */},
     res: {
       closure20180319: true,
+      typescript1corejs2: typescript.downlevelIteration,
       ie11: false,
       edge14: true,
       firefox2: false,
@@ -1413,6 +1518,7 @@ exports.tests = [
       node4: true,
       safari10: true,
       duktape2_0: false,
+          graalvm: true,
     }
   },
   {
@@ -1443,6 +1549,7 @@ exports.tests = [
       chrome47: true,
       safari10: true,
       duktape2_0: false,
+          graalvm: true,
     }
   },
   {
@@ -1462,7 +1569,7 @@ exports.tests = [
      return x === 1 && y === 2 && z + '' === '3,4';
      */},
     res: {
-      babel6: true,
+      babel6corejs2: true,
       closure: true,
       ie11: false,
       edge13: edge.experimental,
@@ -1472,8 +1579,9 @@ exports.tests = [
       opera10_50: false,
       chrome49: true,
       safari10_1: true,
-      typescript1: true,
+      typescript1corejs2: true,
       duktape2_0: false,
+          graalvm: true,
     }
   },
   {
@@ -1493,7 +1601,7 @@ exports.tests = [
      }([1,2,3,4]);
      */},
     res: {
-      babel6: true,
+      babel6corejs2: true,
       closure: true,
       ie11: false,
       edge13: edge.experimental,
@@ -1501,10 +1609,11 @@ exports.tests = [
       firefox2: false,
       firefox47: true,
       opera10_50: false,
-      typescript1: true,
+      typescript1corejs2: true,
       chrome49: true,
       safari10_1: true,
       duktape2_0: false,
+          graalvm: true,
     }
   },
   {
@@ -1540,6 +1649,7 @@ exports.tests = [
       chrome50: true,
       safari10: true,
       duktape2_0: true,
+      graalvm: true,
     },
   },
   {
@@ -1568,6 +1678,7 @@ exports.tests = [
       edge14: true,
       safari10: true,
       duktape2_0: false,
+      graalvm: true,
     },
   },
   {
@@ -1587,8 +1698,8 @@ exports.tests = [
        && prop.enumerable;
        */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: true,
         firefox2: false,
         firefox4: true,
@@ -1602,6 +1713,7 @@ exports.tests = [
         ios5_1: true,
         duktape2_0: false,
         duktape2_2: true,
+        graalvm: true,
       }
     },
       {
@@ -1616,20 +1728,21 @@ exports.tests = [
          && prop.enumerable;
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
           edge12: true,
           firefox2: false,
           firefox36: true,
           opera10_50: false,
-          chrome30: "flagged",
+          chrome30: chrome.experimental,
           chrome38: true,
           node0_12: true,
           safari9: true,
           android4_0: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         }
       },
       {
@@ -1644,8 +1757,8 @@ exports.tests = [
          }
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
           edge16: true,
           firefox2: false,
@@ -1658,6 +1771,7 @@ exports.tests = [
           safari9: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1672,8 +1786,8 @@ exports.tests = [
          && prop.enumerable;
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: true,
           firefox2: false,
           firefox4: true,
@@ -1687,6 +1801,7 @@ exports.tests = [
           ios5_1: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1701,20 +1816,21 @@ exports.tests = [
          && prop.enumerable;
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
           edge12: true,
           firefox2: false,
           firefox36: true,
           opera10_50: false,
-          chrome30: "flagged",
+          chrome30: chrome.experimental,
           chrome38: true,
           node0_12: true,
           safari9: true,
           android4_0: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1729,8 +1845,8 @@ exports.tests = [
          }
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
           edge16: true,
           firefox2: false,
@@ -1743,6 +1859,7 @@ exports.tests = [
           safari9: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1759,8 +1876,8 @@ exports.tests = [
          && Object.prototype.__lookupGetter__.call(obj, "baz") === undefined;
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: true,
           firefox2: true,
           opera10_50: true,
@@ -1773,6 +1890,7 @@ exports.tests = [
           ios5_1: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1788,8 +1906,8 @@ exports.tests = [
          && Object.prototype.__lookupGetter__.call(obj, "baz") === undefined;
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: true,
           firefox2: false,
           firefox4: true,
@@ -1803,6 +1921,7 @@ exports.tests = [
           ios5_1: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1819,20 +1938,21 @@ exports.tests = [
          && Object.prototype.__lookupGetter__.call(obj, Symbol()) === undefined;
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
           edge12: true,
           firefox2: false,
           firefox36: true,
           opera10_50: false,
-          chrome30: "flagged",
+          chrome30: chrome.experimental,
           chrome38: true,
           node0_12: true,
           safari9: true,
           android4_0: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1846,8 +1966,8 @@ exports.tests = [
          }
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: true,
           firefox2: false,
           firefox24: true,
@@ -1859,6 +1979,7 @@ exports.tests = [
           safari9: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1871,8 +1992,8 @@ exports.tests = [
          return b.__lookupGetter__("foo") === undefined
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
           firefox2: false,
           firefox4: true,
@@ -1885,6 +2006,7 @@ exports.tests = [
           ios5_1: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1901,8 +2023,8 @@ exports.tests = [
          && Object.prototype.__lookupSetter__.call(obj, "baz") === undefined;
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: true,
           firefox2: true,
           opera10_50: true,
@@ -1915,6 +2037,7 @@ exports.tests = [
           ios5_1: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1930,8 +2053,8 @@ exports.tests = [
          && Object.prototype.__lookupSetter__.call(obj, "baz") === undefined;
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: true,
           firefox2: false,
           firefox4: true,
@@ -1945,6 +2068,7 @@ exports.tests = [
           ios5_1: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1961,20 +2085,21 @@ exports.tests = [
          && Object.prototype.__lookupSetter__.call(obj, Symbol()) === undefined;
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
           edge12: true,
           firefox2: false,
           firefox36: true,
           opera10_50: false,
-          chrome30: "flagged",
+          chrome30: chrome.experimental,
           chrome38: true,
           node0_12: true,
           safari9: true,
           android4_0: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -1988,8 +2113,8 @@ exports.tests = [
          }
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: true,
           firefox2: false,
           firefox24: true,
@@ -2001,6 +2126,7 @@ exports.tests = [
           safari9: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       },
       {
@@ -2013,8 +2139,8 @@ exports.tests = [
          return b.__lookupSetter__("foo") === undefined
          */},
         res: {
-          babel6: babel.corejs,
-          typescript1: typescript.corejs,
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
           firefox2: false,
           firefox4: true,
@@ -2027,6 +2153,7 @@ exports.tests = [
           ios5_1: true,
           duktape2_0: false,
           duktape2_2: true,
+          graalvm: true,
         },
       }
     ]
@@ -2054,6 +2181,7 @@ exports.tests = [
         chrome52: true,
         safari10: true,
         duktape2_0: false,
+        graalvm: true,
       }
     },
       {
@@ -2074,6 +2202,7 @@ exports.tests = [
           chrome52: true,
           safari10: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -2100,6 +2229,7 @@ exports.tests = [
           node8: true,
           safari10: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -2126,6 +2256,7 @@ exports.tests = [
           node8: true,
           safari10: true,
           duktape2_0: false,
+          graalvm: true,
         }
       }
     ]
@@ -2159,9 +2290,11 @@ exports.tests = [
       firefox57: false,
       opera10_50: false,
       chrome51: true,
+      chrome75: false,
       safari10: true,
       safari10_1: true,
       duktape2_0: true,
+      graalvm: true,
     },
   },
   {
@@ -2184,6 +2317,7 @@ exports.tests = [
       safari10: true,
       safari10_1: true,
       duktape2_0: false,
+      graalvm: true,
     },
   },
   {
@@ -2216,6 +2350,7 @@ exports.tests = [
       nashorn1_8: true,
       nashorn9: true,
       nashorn10: true,
+	  graalvm: true,
     },
   },
   {
@@ -2240,6 +2375,7 @@ exports.tests = [
       node8: true,
       safari10_1: true,
       duktape2_0: false,
+	  graalvm: true,
     },
   },
   {
@@ -2255,21 +2391,27 @@ exports.tests = [
           return a === 1 && rest.a === undefined && rest.b === 2 && rest.c === 3;
           */},
         res: {
-          babel6: true,
+          babel6corejs2: true,
           closure: true,
-          typescript2_1: true,
+          closure20181028: {
+            val: false,
+            note_id: 'closure-object-assign',
+            note_html: 'Requires native support for <code>Object.assign</code>',
+          },
+          typescript2_1corejs2: true,
           jsx: true,
           ie11: false,
           firefox2: false,
           firefox55: true,
           opera10_50: false,
-          chrome58: 'flagged',
+          chrome58: chrome.experimental,
           chrome60: true,
           safari11: false,
           safari11_1: true,
           safaritp: true,
           webkit: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -2280,21 +2422,26 @@ exports.tests = [
           return O !== spread && (O.a + O.b + O.c) === 6;
           */},
         res: {
-          babel6: true,
+          babel6corejs2: true,
           closure: true,
+          closure20190121: {
+            val: false,
+            note_id: 'closure-object-assign',
+          },
           jsx: true,
           ie11: false,
           firefox2: false,
           firefox55: true,
           opera10_50: false,
-          chrome58: 'flagged',
+          chrome58: chrome.experimental,
           chrome60: true,
-          typescript2_1: true,
+          typescript2_1corejs2: true,
           safari11: false,
           safari11_1: true,
           safaritp: true,
           webkit: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
     ],
@@ -2338,10 +2485,11 @@ exports.tests = [
         }
       */},
         res: {
-          babel6: babel.corejs,
+          babel6corejs2: babel.corejs,
           closure20180402: true,
-          typescript1: typescript.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
+          edge18: true,
           firefox2: false,
           firefox57: false,
           firefox58: true,
@@ -2352,6 +2500,7 @@ exports.tests = [
           safaritp: true,
           webkit: true,
           duktape2_2: false,
+          graalvm: true,
         }
       },
       {
@@ -2378,10 +2527,11 @@ exports.tests = [
         }
       */},
         res: {
-          babel6: babel.corejs,
+          babel6corejs2: babel.corejs,
           closure20180402: true,
-          typescript1: typescript.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
+          edge18: true,
           firefox2: false,
           firefox57: false,
           firefox58: true,
@@ -2392,6 +2542,7 @@ exports.tests = [
           safaritp: true,
           webkit: true,
           duktape2_2: false,
+          graalvm: true,
         }
       },
       {
@@ -2420,10 +2571,11 @@ exports.tests = [
         }
       */},
         res: {
-          babel6: babel.corejs,
+          babel6corejs2: babel.corejs,
           closure20180402: true,
-          typescript1: typescript.corejs,
+          typescript1corejs2: typescript.corejs,
           ie11: false,
+          edge18: true,
           firefox2: false,
           firefox57: false,
           firefox58: true,
@@ -2434,6 +2586,7 @@ exports.tests = [
           chrome63: true,
           webkit: true,
           duktape2_2: false,
+          graalvm: true,
         }
       }
     ]
@@ -2441,7 +2594,7 @@ exports.tests = [
   {
     name: 'template literal revision',
     spec: 'https://github.com/tc39/proposal-template-literal-revision',
-    category: '2018 features',
+    category: '2018 misc',
     significance: 'small',
     exec: function() {/*
      function tag(strings, a) {
@@ -2454,6 +2607,7 @@ exports.tests = [
      return tag`\01\1\xg\xAg\u0\u0g\u00g\u000g\u{g\u{0\u{110000}${0}\0`;
      */},
     res: {
+      closure20181008: true,
       ie11: false,
       firefox2: false,
       firefox53: true,
@@ -2462,6 +2616,7 @@ exports.tests = [
       chrome62: true,
       safari11: true,
       duktape2_0: false,
+      graalvm: true,
     }
   },
   {
@@ -2476,10 +2631,10 @@ exports.tests = [
     res : {
       es6tr: null,
       tr: null,
-      babel6: true,
+      babel6corejs2: true,
       closure: false,
       jsx: null,
-      typescript1: null,
+      typescript1corejs2: null,
       es6shim: null,
       konq414: null,
       ie7: null,
@@ -2501,6 +2656,7 @@ exports.tests = [
       duktape2_2: false,
       android1_5: null,
       ios4: null,
+      graalvm: true,
     },
   },
   {
@@ -2519,7 +2675,7 @@ exports.tests = [
         && result[3] === '11';
       */},
     res : {
-      babel6: true,
+      babel6corejs2: true,
       ie11: false,
       firefox2: false,
       opera10_50: false,
@@ -2528,6 +2684,7 @@ exports.tests = [
       safari11_1: true,
       safaritp: true,
       duktape2_0: false,
+	  graalvm: true,
     }
   },
   {
@@ -2546,6 +2703,7 @@ exports.tests = [
       chrome50: chrome.harmony,
       chrome62: true,
       duktape2_0: false,
+	  graalvm: true,
     }
   },
   {
@@ -2558,7 +2716,7 @@ exports.tests = [
     return regexGreekSymbol.test('π');
   */},
     res: {
-      babel6: true,
+      babel6corejs2: true,
       ie11: false,
       firefox2: false,
       opera10_50: false,
@@ -2567,6 +2725,7 @@ exports.tests = [
       safari11_1: true,
       safaritp: true,
       duktape2_0: false,
+	  graalvm: true,
     }
   },
   {
@@ -2588,18 +2747,20 @@ exports.tests = [
           });
         */},
         res: {
-          babel6: true,
+          babel6corejs2: true,
+          closure20180805: true,
           chrome62: chrome.harmony,
           chrome63: true,
-          typescript2_3: true,
+          typescript2_3corejs2: true,
           ie11: false,
           firefox2: false,
           firefox55: firefox.nightly,
           firefox57: true,
           opera10_50: false,
-          safaritp: true,
+          safari12: true,
           webkit: true,
           duktape2_0: false,
+          graalvm: true,
         }
       },
       {
@@ -2625,27 +2786,700 @@ exports.tests = [
           })();
         */},
         res: {
-          babel6: true,
+          babel6corejs2: true,
+          closure20180910: true,
           chrome62: chrome.harmony,
           chrome63: true,
-          typescript2_3: true,
+          typescript2_3corejs2: true,
           ie11: false,
           firefox2: false,
           firefox55: firefox.nightly,
           firefox57: true,
           opera10_50: false,
-          safaritp: true,
+          safari12: true,
           webkit: true,
           duktape2_0: false,
+          graalvm: true,
         }
       }
     ]
+  },
+  {
+    name: 'optional catch binding',
+    category: '2019 misc',
+    significance: 'small',
+    spec: 'https://tc39.github.io/proposal-optional-catch-binding/',
+    subtests: [
+      {
+        name: 'basic',
+        exec: function(){/*
+          try {
+            throw new Error();
+          }
+          catch {
+            return true;
+          }
+          return false;
+        */},
+        res: {
+          babel7corejs2: true,
+          closure20190215: true,
+          typescript2_5corejs2: true,
+          ie11: false,
+          firefox2: false,
+          firefox57: false,
+          firefox58: true,
+          opera10_50: false,
+          chrome65: chrome.harmony,
+          chrome66: true,
+          safari11_1: true,
+          safaritp: true,
+          webkit: true,
+          duktape2_2: false,
+          graalvm: true,
+        },
+      },
+      {
+        name: 'await',
+        exec: function(){/*
+          (async function (){
+            try {
+              await Promise.reject();
+            }
+            catch {
+              asyncTestPassed();
+            }
+          })();
+        */},
+        res: {
+          babel7corejs2: true,
+          closure20190215: true,
+          typescript2_5corejs2: true,
+          ie11: false,
+          firefox2: false,
+          firefox57: false,
+          firefox58: true,
+          opera10_50: false,
+          chrome65: chrome.harmony,
+          chrome66: true,
+          safari11_1: true,
+          safaritp: true,
+          webkit: true,
+          duktape2_2: false,
+          graalvm: true,
+        },
+      },
+      {
+        name: 'yield',
+        exec: function(){/*
+          function *foo() {
+            try {
+              yield;
+              throw new Error();
+            }
+            catch {
+              return true;
+            }
+          }
+
+          var it = foo();
+          it.next();
+          return it.next().value;
+        */},
+        res: {
+          babel7corejs2: true,
+          closure20190215: true,
+          typescript2_5corejs2: true,
+          ie11: false,
+          firefox2: false,
+          firefox57: false,
+          firefox58: true,
+          opera10_50: false,
+          chrome65: chrome.harmony,
+          chrome66: true,
+          safari11_1: true,
+          safaritp: true,
+          webkit: true,
+          duktape2_2: false,
+          graalvm: true,
+        }
+      }
+    ]
+  },
+  {
+    name: 'Symbol.prototype.description',
+    spec: 'https://github.com/tc39/proposal-Symbol-description',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Symbol/description',
+    category: '2019 misc',
+    significance: 'small',
+    subtests: [
+      {
+        name: 'basic',
+        exec: function(){/*
+          return Symbol('foo').description === 'foo';
+        */},
+        res : {
+          babel6corejs2: false,
+          babel7corejs3: babel.corejs,
+          closure20190301: true,
+          typescript1corejs2: typescript.fallthrough,
+          typescript3_2corejs3: typescript.corejs,
+          ie11: false,
+          firefox45: false,
+          firefox63: true,
+          chrome67: false,
+          chrome69: chrome.harmony,
+          chrome70: true,
+          safari11: false,
+          safari12: true,
+          safaritp: true,
+          graalvm: true,
+        },
+      },
+      {
+        name: 'empty description',
+        exec: function(){/*
+          return Symbol('').description === '';
+        */},
+        res : {
+          babel6corejs2: false,
+          babel7corejs3: babel.corejs,
+          closure20190301: true,
+          typescript1corejs2: typescript.fallthrough,
+          typescript3_2corejs3: typescript.corejs,
+          ie11: false,
+          firefox45: false,
+          firefox63: true,
+          chrome67: false,
+          chrome69: chrome.harmony,
+          chrome70: true,
+          safari11: false,
+          safari12: true,
+          safaritp: true,
+          graalvm: true,
+        },
+      },
+      {
+        name: 'undefined description',
+        exec: function(){/*
+          return Symbol.prototype.hasOwnProperty('description')
+            && Symbol().description === undefined;
+        */},
+        res : {
+          babel6corejs2: false,
+          babel7corejs3: babel.corejs,
+          typescript1corejs2: typescript.fallthrough,
+          typescript3_2corejs3: typescript.corejs,
+          ie11: false,
+          firefox45: false,
+          firefox63: true,
+          chrome67: false,
+          chrome69: chrome.harmony,
+          chrome70: true,
+          safari11: false,
+          safari12: false,
+          safari12_1: true,
+          safaritp: true,
+          graalvm: true,
+        },
+      },
+    ]
+  },
+  {
+    name: 'Function.prototype.toString revision',
+    category: '2019 misc',
+    significance: 'small',
+    spec: 'https://github.com/tc39/Function-prototype-toString-revision',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/toString',
+    subtests: [{
+      name: 'functions created with the Function constructor',
+      exec: function(){/*
+        var fn = Function('a', ' /\x2A a \x2A/ b, c /\x2A b \x2A/ //', '/\x2A c \x2A/ ; /\x2A d \x2A/ //');
+        var str = 'function anonymous(a, /\x2A a \x2A/ b, c /\x2A b \x2A/ //\n) {\n/\x2A c \x2A/ ; /\x2A d \x2A/ //\n}';
+        return fn + '' === str;
+    */},
+      res: {
+        ie11: false,
+        firefox2: false,
+        firefox54: true,
+        opera10_50: false,
+        chrome59: chrome.harmony,
+        chrome66: true,
+        duktape2_0: false,
+        graalvm: true,
+      },
+    }, {
+      name: 'arrows',
+      exec: function(){/*
+        var str = 'a => b';
+        return eval('(' + str + ')') + '' === str;
+    */},
+      res: {
+        node4: true,
+        firefox2: false,
+        firefox51: true,
+        opera10_50: false,
+        chrome50: true,
+        safari10: true,
+        ie11: false,
+        edge13: true,
+        duktape2_0: false,
+        nashorn1_8: true,
+        nashorn9: true,
+        nashorn10: true,
+        graalvm: true,
+      },
+    }, {
+      name: '[native code]',
+      exec: function(){/*
+        const NATIVE_EVAL_RE = /\bfunction\b[\s\S]*\beval\b[\s\S]*\([\s\S]*\)[\s\S]*\{[\s\S]*\[[\s\S]*\bnative\b[\s\S]+\bcode\b[\s\S]*\][\s\S]*\}/;
+        return NATIVE_EVAL_RE.test(eval + '');
+    */},
+      res: {
+        node4: true,
+        firefox2: false,
+        firefox45: true,
+        opera10_50: true,
+        chrome50: true,
+        safari3_1: true,
+        ie11: true,
+        edge13: true,
+        duktape2_0: true,
+        nashorn9: true,
+        nashorn10: true,
+        graalvm: true,
+      },
+    }, {
+      name: 'class expression with implicit constructor',
+      exec: function(){/*
+        var str = 'class A {}';
+        return eval('(' + str + ')') + '' === str;
+    */},
+      res: {
+        node4: true,
+        firefox2: false,
+        firefox55: true,
+        opera10_50: false,
+        chrome50: true,
+        safari10: true,
+        ie11: false,
+        edge14: true,
+        duktape2_0: false,
+        graalvm: true,
+      },
+    }, {
+      name: 'class expression with explicit constructor',
+      exec: function(){/*
+        var str = 'class /\x2A a \x2A/ A /\x2A b \x2A/ extends /\x2A c \x2A/ function B(){} /\x2A d \x2A/ { /\x2A e \x2A/ constructor /\x2A f \x2A/ ( /\x2A g \x2A/ ) /\x2A h \x2A/ { /\x2A i \x2A/ ; /\x2A j \x2A/ } /\x2A k \x2A/ m /\x2A l \x2A/ ( /\x2A m \x2A/ ) /\x2A n \x2A/ { /\x2A o \x2A/ } /\x2A p \x2A/ }';
+        return eval('(/\x2A before \x2A/' + str + '/\x2A after \x2A/)') + '' === str;
+    */},
+      res: {
+        node4: true,
+        firefox2: false,
+        firefox55: true,
+        opera10_50: false,
+        chrome50: true,
+        safari10: true,
+        ie11: false,
+        edge14: true,
+        duktape2_0: false,
+        graalvm: true,
+      },
+    }, {
+      name: 'unicode escape sequences in identifiers',
+      exec: function(){/*
+        var str = 'function \\u0061(\\u{62}, \\u0063) { \\u0062 = \\u{00063}; return b; }';
+        return eval('(/\x2A before \x2A/' + str + '/\x2A after \x2A/)') + '' === str;
+    */},
+      res: {
+        ie11: false,
+        firefox2: false,
+        firefox54: true,
+        opera10_50: false,
+        chrome59: chrome.harmony,
+        chrome66: true,
+        duktape2_0: false,
+        graalvm: true,
+      },
+    }, {
+      name: 'methods and computed property names',
+      exec: function(){/*
+        var str = '[ /\x2A a \x2A/ "f" /\x2A b \x2A/ ] /\x2A c \x2A/ ( /\x2A d \x2A/ ) /\x2A e \x2A/ { /\x2A f \x2A/ }';
+        return eval('({ /\x2A before \x2A/' + str + '/\x2A after \x2A/ }.f)') + '' === str;
+    */},
+      res: {
+        ie11: false,
+        firefox2: false,
+        firefox54: true,
+        opera10_50: false,
+        chrome59: chrome.harmony,
+        chrome66: true,
+        duktape2_0: false,
+        nashorn9: true,
+        nashorn10: true,
+        graalvm: true,
+      },
+    }]
+  },
+  {
+    name: 'JSON superset',
+    spec: 'https://github.com/tc39/proposal-json-superset',
+    category: '2019 misc',
+    significance: 'small',
+    subtests: [
+      {
+        name: 'LINE SEPARATOR can appear in string literals',
+        exec: function(){/*
+          return eval("'\u2028'") === "\u2028";
+        */},
+        res : {
+          closure20190215: true,
+          ie11: false,
+          firefox2: false,
+          firefox61: false,
+          firefox62: true,
+          chrome65: false,
+          chrome66: true,
+          safari11: false,
+          safari12: true,
+        },
+      },
+      {
+        name: 'PARAGRAPH SEPARATOR can appear in string literals',
+        exec: function(){/*
+          return eval("'\u2029'") === "\u2029";
+        */},
+        res : {
+          closure20190215: true,
+          ie11: false,
+          firefox2: false,
+          firefox61: false,
+          firefox62: true,
+          chrome65: false,
+          chrome66: true,
+          safari11: false,
+          safari12: true,
+        },
+      },
+    ]
+  },
+  {
+    name: 'Object.fromEntries',
+    significance: 'small',
+    spec: 'https://github.com/tc39/proposal-object-from-entries',
+    mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Object/fromEntries',
+    category: '2019 features',
+    exec: function () {/*
+    var object = Object.fromEntries(new Map([['foo', 42], ['bar', 23]]));
+    return object.foo === 42 && object.bar === 23;
+  */},
+    res: {
+      babel6corejs2: false,
+      babel7corejs3: babel.corejs,
+      closure20190325: true,
+      typescript1corejs2: typescript.fallthrough,
+      typescript3_2corejs3: typescript.corejs,
+      firefox52: false,
+      firefox62: false,
+      firefox63: true,
+      safari12_1: true,
+      safaritp: true,
+      graalvm: false,
+      chrome73: true,
+      chrome74: true,
+    }
+  },
+  {
+    name: 'Well-formed JSON.stringify',
+    spec: 'https://github.com/tc39/proposal-well-formed-stringify',
+    category: '2019 misc',
+    significance: 'small',
+    exec: function () {/*
+    return JSON.stringify('\uDF06\uD834') === "\"\\udf06\\ud834\""
+      && JSON.stringify('\uDEAD') === "\"\\udead\"";
+  */},
+    res: {
+      ie11: false,
+      edge16: false,
+      firefox52: false,
+      firefox63: false,
+      firefox64: true,
+      chrome70: false,
+      chrome71: false,
+      chrome72: true,
+      safari1: false,
+      safari12_1: true,
+      safaritp: true,
+      graalvm: true,
+    }
+  },
+  {
+    name: 'string trimming',
+    category: '2019 features',
+    significance: 'small',
+    spec: 'https://github.com/tc39/proposal-string-left-right-trim',
+    subtests: [
+      {
+        name: 'String.prototype.trimLeft',
+        mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/TrimLeft',
+        exec: function(){/*
+        return ' \t \n abc   \t\n'.trimLeft() === 'abc   \t\n';
+      */},
+        res: {
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
+          ie11: false,
+          edge12: true,
+          firefox2: false,
+          firefox3_5: true,
+          firefox3_6: true,
+          firefox4: true,
+          chrome7: true,
+          opera10_10: false,
+          konq4_4: false,
+          konq4_9: true,
+          besen: false,
+          rhino1_7: false,
+          phantom: true,
+          node0_12: true,
+          safari3: false,
+          safari4: true,
+          safari12: true,
+          webkit: true,
+          es7shim: true,
+          android4_0: true,
+          ios5_1: true,
+          duktape2_0: false,
+          nashorn1_8: true,
+          nashorn9: true,
+          nashorn10: true,
+          graalvm: true,
+        }
+      },
+      {
+        name: 'String.prototype.trimRight',
+        mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/TrimRight',
+        exec: function(){/*
+        return ' \t \n abc   \t\n'.trimRight() === ' \t \n abc';
+      */},
+        res: {
+          babel6corejs2: babel.corejs,
+          typescript1corejs2: typescript.corejs,
+          ie11: false,
+          edge12: true,
+          firefox2: false,
+          firefox3_5: true,
+          firefox3_6: true,
+          firefox4: true,
+          chrome7: true,
+          opera10_10: false,
+          konq4_4: false,
+          konq4_9: true,
+          besen: false,
+          rhino1_7: false,
+          phantom: true,
+          node0_12: true,
+          safari3: false,
+          safari4: true,
+          safari12: true,
+          webkit: true,
+          es7shim: true,
+          android4_0: true,
+          ios5_1: true,
+          duktape2_0: false,
+          nashorn1_8: true,
+          nashorn9: true,
+          nashorn10: true,
+          graalvm: true,
+        }
+      },
+      {
+        name: 'String.prototype.trimStart',
+        mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimStart',
+        exec: function(){/*
+        return ' \t \n abc   \t\n'.trimStart() === 'abc   \t\n';
+      */},
+        res: {
+          babel6corejs2: babel.corejs,
+          closure20190325: {
+            val: false,
+            note_id: 'closure-string-trimstart',
+            note_html: 'Requires native support for String.prototype.trimLeft.',
+          },
+          typescript1corejs2: typescript.corejs,
+          ie11: false,
+          firefox2: false,
+          firefox59: false,
+          firefox60: firefox.nightly,
+          firefox61: true,
+          chrome66: true,
+          opera10_50: false,
+          safari12: true,
+          duktape2_0: false,
+          graalvm: true,
+        }
+      },
+      {
+        name: 'String.prototype.trimEnd',
+        mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/trimEnd',
+        exec: function(){/*
+        return ' \t \n abc   \t\n'.trimEnd() === ' \t \n abc';
+      */},
+        res: {
+          babel6corejs2: babel.corejs,
+          closure20190325: {
+            val: false,
+            note_id: 'closure-string-trimend',
+            note_html: 'Requires native support for String.prototype.trimRight.',
+          },
+          typescript1corejs2: typescript.corejs,
+          ie11: false,
+          firefox2: false,
+          firefox59: false,
+          firefox60: firefox.nightly,
+          firefox61: true,
+          chrome66: true,
+          opera10_50: false,
+          safari12: true,
+          duktape2_0: false,
+          graalvm: true,
+        }
+      }
+    ]
+  },
+  {
+    name: 'Array.prototype.{flat, flatMap}',
+    category: '2019 features',
+    significance: 'medium',
+    spec: 'https://tc39.github.io/proposal-flatMap/',
+    links: [
+      {
+        note_id: 'flatten-compat-issue',
+        note_html: 'Name of <code>Array.prototype.flatten()</code> changed to <code>Array.prototype.flat()</code> due to <a href="https://github.com/tc39/proposal-flatMap/pull/56">web compatibility issues.</a>',
+      }
+    ],
+    subtests: [
+      {
+        name: 'Array.prototype.flat',
+        mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flat',
+        exec: function(){/*
+        return [1, [2, 3], [4, [5, 6]]].flat().join('') === '12345,6';
+      */},
+        res: {
+          babel6corejs2: false,
+          babel7corejs3: babel.corejs,
+          closure20190301: true,
+          typescript1corejs2: typescript.fallthrough,
+          typescript3_2corejs3: typescript.corejs,
+          ie11: false,
+          firefox2: false,
+          firefox58: false,
+          firefox59: {
+            val: false,
+            note_id: 'ffox-flatten',
+            note_html: 'Older Firefox Nightly builds support only the obsolete draft function name <code>Array.prototype.flatten()</code>.'
+          },
+          firefox62: true,
+          chrome69: true,
+          opera10_50: false,
+          safari12: true,
+          safaritp: true,
+          duktape2_2: false,
+          graalvm: true,
+        }
+      },
+      {
+        name: 'Array.prototype.flatMap',
+        mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap',
+        exec: function(){/*
+        return [{a: 1, b: 2}, {a: 3, b: 4}].flatMap(function (it) {
+          return [it.a, it.b];
+        }).join('') === '1234';
+      */},
+        res: {
+          babel6corejs2: babel.corejs,
+          closure20190301: true,
+          typescript1corejs2: typescript.corejs,
+          ie11: false,
+          firefox2: false,
+          firefox58: false,
+          firefox59: firefox.nightly,
+          firefox62: true,
+          chrome69: true,
+          opera10_50: false,
+          safari12: true,
+          duktape2_2: false,
+          graalvm: true,
+        }
+      },
+      {
+        name: 'flat and flatMap in Array.prototype[@@unscopables]',
+        exec: function(){/*
+        return Array.prototype[Symbol.unscopables].flat
+          && Array.prototype[Symbol.unscopables].flatMap;
+      */},
+        res: {
+          babel6corejs2: false,
+          babel7corejs3: babel.corejs,
+          typescript1corejs2: typescript.fallthrough,
+          typescript3_2corejs3: typescript.corejs,
+          ie11: false,
+          firefox2: false,
+          firefox58: false,
+          firefox59: false,
+          firefox62: false,
+          firefox67: true,
+          chrome69: false,
+          chrome73: true,
+          chrome74: true,
+          opera10_50: false,
+          safari12: false,
+          duktape2_2: false,
+          graalvm: false,
+        }
+      },
+    ]
+  },
+  {
+    name: 'String.prototype.matchAll',
+    category: '2020 features',
+    significance: 'small',
+    spec: 'https://github.com/tc39/String.prototype.matchAll',
+    exec: function(){/*
+      var iterator = '11a2bb'.matchAll(/(\d)(\D)/g);
+      if(iterator[Symbol.iterator]() !== iterator)return false;
+      var a = '', b = '', c = '', step;
+      while(!(step = iterator.next()).done){
+        a += step.value[0];
+        b += step.value[1];
+        c += step.value[2];
+      }
+      return a === '1a2b'
+        && b === '12'
+        && c === 'ab';
+    */},
+    res: {
+      babel6corejs2: babel.corejs,
+      typescript1corejs2: typescript.corejs,
+      ie11: false,
+      firefox2: false,
+      firefox65: false,
+      firefox66: firefox.nightly,
+      firefox67: true,
+      chrome67: false,
+      chrome68: chrome.harmony,
+      chrome73: true,
+      chrome74: true,
+      opera10_50: false,
+      duktape2_0: false,
+      graalvm: true,
+    }
   },
 ];
 
 //Shift annex B features to the bottom
 exports.tests = exports.tests.reduce(function(a,e) {
-  var index = ['2016 features', '2016 misc', '2017 features', '2017 misc', '2017 annex b', '2018 features', 'finished (stage 4)'].indexOf(e.category);
+  var index = ['2016 features', '2016 misc', '2017 features', '2017 misc', '2017 annex b', '2018 features', '2018 misc', '2019 features', '2019 misc', '2020 features', 'finished (stage 4)'].indexOf(e.category);
   if (index === -1) {
     console.log('"' + a.category + '" is not an ES2016+ category!');
   }

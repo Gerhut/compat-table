@@ -4,7 +4,6 @@ var babel = common.babel;
 var typescript = common.typescript;
 var firefox = common.firefox;
 var chrome = common.chrome;
-var edge = common.edge;
 
 exports.name = 'ES Next';
 exports.target_file = 'esnext/index.html';
@@ -31,11 +30,12 @@ exports.tests = [
         return typeof obj::foo === "function" && obj::foo().garply === "barfoo";
       */},
       res: {
-        babel6: true,
+        babel6corejs2: true,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -45,11 +45,12 @@ exports.tests = [
         return typeof ::obj.foo === "function" && ::obj.foo().garply === "barfoo";
       */},
       res: {
-        babel6: true,
+        babel6corejs2: true,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       },
     },
   ],
@@ -66,11 +67,12 @@ exports.tests = [
     } === 42;
   */},
   res: {
-    babel6: true,
+    babel6corejs2: true,
     ie11: false,
     firefox2: false,
     opera10_50: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -88,1140 +90,13 @@ exports.tests = [
     return result === 'tromple';
   */},
   res: {
-    babel6: true,
+    babel6corejs2: true,
     ie11: false,
     firefox2: false,
     opera10_50: false,
     duktape2_0: false,
+    graalvm: false,
   }
-},
-{
-  name: 'SIMD (Single Instruction, Multiple Data)',
-  category: STAGE1,
-  significance: 'large',
-  spec: 'https://tc39.github.io/ecmascript_simd/',
-  mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD',
-  subtests: [
-    {
-      name: 'basic support',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD',
-      exec: function () {/*
-        simdFloatTypes=['Float32x4'];
-        simdBoolTypes=['Bool32x4','Bool16x8','Bool8x16'];
-        simdIntTypes=['Int32x4','Int16x8','Int8x16','Uint32x4','Uint16x8','Uint8x16'];
-        simd32bitFloatIntTypes=['Float32x4','Int32x4','Uint32x4'];
-        simdSmallIntTypes=['Int16x8','Int8x16','Uint16x8','Uint8x16'];
-        simdBoolIntTypes=simdBoolTypes.concat(simdIntTypes);
-        simdFloatIntTypes=simdFloatTypes.concat(simdIntTypes);
-        simdAllTypes=simdFloatTypes.concat(simdIntTypes,simdBoolTypes);
-        return typeof SIMD !== 'undefined';
-      */},
-      res: {
-        ie11: false,
-        edge12: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'Float32x4',
-      spec: 'https://tc39.github.io/ecmascript_simd/#float32x4',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Float32x4',
-      exec: function(){/*
-        return typeof SIMD.Float32x4 === 'function';
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'Int32x4',
-      spec: 'https://tc39.github.io/ecmascript_simd/#int32x4',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int32x4',
-      exec: function(){/*
-        return typeof SIMD.Int32x4 === 'function';
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'Int16x8',
-      spec: 'https://tc39.github.io/ecmascript_simd/#int16x8',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int16x8',
-      exec: function(){/*
-        return typeof SIMD.Int16x8 === 'function';
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'Int8x16',
-      spec: 'https://tc39.github.io/ecmascript_simd/#int8x16',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Int8x16',
-      exec: function(){/*
-        return typeof SIMD.Int8x16 === 'function';
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'Uint32x4',
-      spec: 'https://tc39.github.io/ecmascript_simd/#uint32x4',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint32x4',
-      exec: function(){/*
-        return typeof SIMD.Uint32x4 === 'function';
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'Uint16x8',
-      spec: 'https://tc39.github.io/ecmascript_simd/#uint16x8',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint16x8',
-      exec: function(){/*
-        return typeof SIMD.Uint16x8 === 'function';
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'Uint8x16',
-      spec: 'https://tc39.github.io/ecmascript_simd/#uint8x16',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Uint8x16',
-      exec: function(){/*
-        return typeof SIMD.Uint8x16 === 'function';
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'Bool32x4',
-      spec: 'https://tc39.github.io/ecmascript_simd/#bool32x4',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Bool32x4',
-      exec: function(){/*
-        return typeof SIMD.Bool32x4 === 'function';
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'Bool16x8',
-      spec: 'https://tc39.github.io/ecmascript_simd/#bool16x8',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Bool16x8',
-      exec: function(){/*
-        return typeof SIMD.Bool16x8 === 'function';
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'Bool8x16',
-      spec: 'https://tc39.github.io/ecmascript_simd/#bool8x16',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Bool8x16',
-      exec: function(){/*
-        return typeof SIMD.Bool8x16 === 'function';
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%floatType%.abs',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-abs',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/abs',
-      exec: function(){/*
-        return simdFloatTypes.every(function(type){
-          return typeof SIMD[type].abs === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.add',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-add',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/add',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].add === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%integerType%.addSaturate',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-add-saturate',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/addSaturate',
-      exec: function(){/*
-        return simdSmallIntTypes.every(function(type){
-          return typeof SIMD[type].addSaturate === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.and',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-and',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/and',
-      exec: function(){/*
-        return simdBoolIntTypes.every(function(type){
-          return typeof SIMD[type].and === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%booleanType%.anyTrue',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-any-true',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/anyTrue',
-      exec: function(){/*
-        return simdBoolTypes.every(function(type){
-          return typeof SIMD[type].anyTrue === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%booleanType%.allTrue',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-all-true',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/allTrue',
-      exec: function(){/*
-        return simdBoolTypes.every(function(type){
-          return typeof SIMD[type].allTrue === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.check',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-check',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/check',
-      exec: function(){/*
-        return simdAllTypes.every(function(type){
-          return typeof SIMD[type].check === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.equal',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-equal',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/equal',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].equal === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.extractLane',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-extract-lane',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/extractLane',
-      exec: function(){/*
-        return simdAllTypes.every(function(type){
-          return typeof SIMD[type].extractLane === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.greaterThan',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-greater-than',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/greaterThan',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].greaterThan === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.greaterThanOrEqual',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-greater-than-or-equal',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/greaterThanOrEqual',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].greaterThanOrEqual === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.lessThan',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-less-than',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/lessThan',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].lessThan === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.lessThanOrEqual',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-less-than-or-equal',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/lessThanOrEqual',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].lessThanOrEqual === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.mul',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-mul',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/mul',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].mul === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%floatType%.div',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-div',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/div',
-      exec: function(){/*
-        return simdFloatTypes.every(function(type){
-          return typeof SIMD[type].div === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.load',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-load-function',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].load === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.load1',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
-      exec: function(){/*
-        return simd32bitFloatIntTypes.every(function(type){
-          return typeof SIMD[type].load1 === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.load2',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
-      exec: function(){/*
-        return simd32bitFloatIntTypes.every(function(type){
-          return typeof SIMD[type].load2 === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.load3',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/load',
-      exec: function(){/*
-        return simd32bitFloatIntTypes.every(function(type){
-          return typeof SIMD[type].load3 === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%floatType%.max',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-max',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/max',
-      exec: function(){/*
-        return simdFloatTypes.every(function(type){
-          return typeof SIMD[type].max === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%floatType%.maxNum',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-max-num',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/maxNum',
-      exec: function(){/*
-        return simdFloatTypes.every(function(type){
-          return typeof SIMD[type].maxNum === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        edge15: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%floatType%.min',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-min',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/min',
-      exec: function(){/*
-        return simdFloatTypes.every(function(type){
-          return typeof SIMD[type].min === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%floatType%.minNum',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-min-num',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/minNum',
-      exec: function(){/*
-        return simdFloatTypes.every(function(type){
-          return typeof SIMD[type].minNum === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        edge15: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.neg',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-neg',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/neg',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].neg === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.not',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-not',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/not',
-      exec: function(){/*
-        return simdBoolTypes.every(function(type){
-          return typeof SIMD[type].not === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.notEqual',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-not-equal',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/notEqual',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].notEqual === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.or',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-or',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/or',
-      exec: function(){/*
-        return simdBoolIntTypes.every(function(type){
-          return typeof SIMD[type].or === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%floatType%.reciprocalApproximation',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-reciprocal-approximation',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/reciprocalApproximation',
-      exec: function(){/*
-        return simdFloatTypes.every(function(type){
-          return typeof SIMD[type].reciprocalApproximation === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%floatType%.reciprocalSqrtApproximation',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-reciprocal-sqrt-approximation',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/reciprocalSqrtApproximation',
-      exec: function(){/*
-        return simdFloatTypes.every(function(type){
-          return typeof SIMD[type].reciprocalSqrtApproximation === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.replaceLane',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-replace-lane',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/replaceLane',
-      exec: function(){/*
-        return simdAllTypes.every(function(type){
-          return typeof SIMD[type].replaceLane === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.select',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-select',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/select',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].select === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%integerType%.shiftLeftByScalar',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-shift-left-by-scalar',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/shiftLeftByScalar',
-      exec: function(){/*
-        return simdIntTypes.every(function(type){
-          return typeof SIMD[type].shiftLeftByScalar === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%integerType%.shiftRightByScalar',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-shift-right-by-scalar',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/shiftRightByScalar',
-      exec: function(){/*
-        return simdIntTypes.every(function(type){
-          return typeof SIMD[type].shiftRightByScalar === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.shuffle',
-      spec: 'https://tc39.github.io/ecmascript_simd/#shuffle',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/shuffle',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].shuffle === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.splat',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-splat',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/splat',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].splat === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%floatType%.sqrt',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-sqrt',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/sqrt',
-      exec: function(){/*
-        return simdFloatTypes.every(function(type){
-          return typeof SIMD[type].sqrt === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.store',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-store-function',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].store === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.store1',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
-      exec: function(){/*
-        return simd32bitFloatIntTypes.every(function(type){
-          return typeof SIMD[type].store1 === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.store2',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
-      exec: function(){/*
-        return simd32bitFloatIntTypes.every(function(type){
-          return typeof SIMD[type].store2 === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.store3',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/store',
-      exec: function(){/*
-        return simd32bitFloatIntTypes.every(function(type){
-          return typeof SIMD[type].store3 === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.sub',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-sub',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/sub',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].sub === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%integerType%.subSaturate',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-sub-saturate',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/subSaturate',
-      exec: function(){/*
-        return simdSmallIntTypes.every(function(type){
-          return typeof SIMD[type].subSaturate === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.swizzle',
-      spec: 'https://tc39.github.io/ecmascript_simd/#swizzle',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/swizzle',
-      exec: function(){/*
-        return simdFloatIntTypes.every(function(type){
-          return typeof SIMD[type].swizzle === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        edge13: edge.experimental,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.xor',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-xor',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/xor',
-      exec: function(){/*
-        return simdBoolIntTypes.every(function(type){
-          return typeof SIMD[type].xor === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.fromTIMDBits',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-to-timd',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/fromFloat32x4Bits',
-      exec: function(){/*
-        return ['Float32x4','Int32x4','Int8x16','Uint32x4','Uint16x8','Uint8x16'].every(function(type){
-          return typeof SIMD.Int16x8['from' + type + 'Bits'] === 'function';
-        });
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'SIMD.%type%.fromTIMD',
-      spec: 'https://tc39.github.io/ecmascript_simd/#simd-to-timd-logical',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/SIMD/fromFloat32x4',
-      exec: function(){/*
-        return typeof SIMD.Float32x4.fromInt32x4 === 'function' && typeof SIMD.Float32x4.fromUint32x4 === 'function' && typeof SIMD.Int32x4.fromFloat32x4 === 'function' && typeof SIMD.Uint32x4.fromFloat32x4 === 'function';
-      */},
-      res: {
-        ie11: false,
-        firefox2: false,
-        firefox48: firefox.nightly,
-        opera10_50: false,
-        chrome37: chrome.simd,
-        chrome58: false,
-        edge14: edge.experimental,
-        duktape2_0: false,
-      }
-    }
-  ]
 },
 {
   name: 'Class and Property Decorators',
@@ -1244,21 +119,22 @@ exports.tests = [
         return Object.getOwnPropertyDescriptor(A.prototype, "B").configurable === false;
       */},
       res: {
-        babel6: {val: false, note_id: "babel-decorators-legacy", note_html: "Babel 6 still has no official support decorators, but you can use <a href='https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy'>this plugin</a>."},
-        typescript1: true,
+        babel6corejs2: {val: false, note_id: "babel-decorators-legacy", note_html: "Babel 6 still has no official support decorators, but you can use <a href='https://github.com/loganfsmyth/babel-plugin-transform-decorators-legacy'>this plugin</a>."},
+        typescript1corejs2: true,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
   ],
 },
 {
   name: 'Realms',
-  category: STAGE1,
+  category: STAGE2,
   significance: 'large',
-  spec: 'https://github.com/caridy/proposal-realms',
+  spec: 'https://github.com/tc39/proposal-realms',
   exec: function () {/*
     return typeof Realm === "function"
       && ["eval", "global", "intrinsics", "stdlib", "directEval", "indirectEval", "initGlobal", "nonEval"].every(function(key){
@@ -1270,6 +146,7 @@ exports.tests = [
     firefox52: false,
     opera10_50: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -1281,214 +158,43 @@ exports.tests = [
     return 'a𠮷b'.at(1) === '𠮷';
   */},
   res: {
-    babel6: babel.corejs,
-    typescript1: typescript.corejs,
+    babel6corejs2: babel.corejs,
+    typescript1corejs2: typescript.corejs,
     es7shim: true,
     ie11: false,
     firefox2: false,
     opera10_50: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
-  name: 'string trimming',
-  category: STAGE3,
-  significance: 'small',
-  spec: 'https://github.com/sebmarkbage/ecmascript-string-left-right-trim',
-  subtests: [
-    {
-      name: 'String.prototype.trimLeft',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/TrimLeft',
-      exec: function(){/*
-        return ' \t \n abc   \t\n'.trimLeft() === 'abc   \t\n';
-      */},
-      res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
-        ie11: false,
-        edge12: true,
-        firefox2: false,
-        firefox3_5: true,
-        firefox3_6: true,
-        firefox4: true,
-        chrome7: true,
-        opera10_10: false,
-        konq4_4: false,
-        konq4_9: true,
-        besen: false,
-        rhino1_7: false,
-        phantom: true,
-        node0_12: true,
-        safari3: false,
-        safari4: true,
-        safaritp: true,
-        webkit: true,
-        es7shim: true,
-        android4_0: true,
-        ios5_1: true,
-        duktape2_0: false,
-        nashorn1_8: true,
-        nashorn9: true,
-        nashorn10: true,
-      }
-    },
-    {
-      name: 'String.prototype.trimRight',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/String/TrimRight',
-      exec: function(){/*
-        return ' \t \n abc   \t\n'.trimRight() === ' \t \n abc';
-      */},
-      res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
-        ie11: false,
-        edge12: true,
-        firefox2: false,
-        firefox3_5: true,
-        firefox3_6: true,
-        firefox4: true,
-        chrome7: true,
-        opera10_10: false,
-        konq4_4: false,
-        konq4_9: true,
-        besen: false,
-        rhino1_7: false,
-        phantom: true,
-        node0_12: true,
-        safari3: false,
-        safari4: true,
-        safaritp: true,
-        webkit: true,
-        es7shim: true,
-        android4_0: true,
-        ios5_1: true,
-        duktape2_0: false,
-        nashorn1_8: true,
-        nashorn9: true,
-        nashorn10: true,
-      }
-    },
-    {
-      name: 'String.prototype.trimStart',
-      exec: function(){/*
-        return ' \t \n abc   \t\n'.trimStart() === 'abc   \t\n';
-      */},
-      res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
-        ie11: false,
-        firefox2: false,
-        firefox59: false,
-        firefox60: firefox.nightly,
-        firefox61: true,
-        chrome66: true,
-        opera10_50: false,
-        safaritp: true,
-        duktape2_0: false,
-      }
-    },
-    {
-      name: 'String.prototype.trimEnd',
-      exec: function(){/*
-        return ' \t \n abc   \t\n'.trimEnd() === ' \t \n abc';
-      */},
-      res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
-        ie11: false,
-        firefox2: false,
-        firefox59: false,
-        firefox60: firefox.nightly,
-        firefox61: true,
-        chrome66: true,
-        opera10_50: false,
-        safaritp: true,
-        duktape2_0: false,
-      }
-    }
-  ]
-},
-{
-  name: 'global',
+  name: 'globalThis',
   category: STAGE3,
   significance: 'small',
   spec: 'https://github.com/tc39/proposal-global',
   subtests: [{
-    name: '"global" global property is global object',
+    name: '"globalThis" global property is global object',
     exec: function(){/*
       var actualGlobal = Function('return this')();
       actualGlobal.__system_global_test__ = 42;
-      return typeof global === 'object' && global && global === actualGlobal && !global.lacksGlobal && global.__system_global_test__ === 42;
+      return typeof globalThis === 'object' && globalThis && globalThis === actualGlobal && !globalThis.lacksGlobalThis && globalThis.__system_global_test__ === 42;
     */},
     res: {
-      babel6: babel.corejs,
-      typescript1: typescript.corejs,
+      babel6corejs2: false,
+      babel7corejs3: babel.corejs,
+      typescript1corejs2: typescript.fallthrough,
+      typescript3_2corejs3: typescript.corejs,
       ie11: false,
       firefox2: false,
-      firefox53: {
-        val: false,
-        note_id: 'ffox-global-property',
-        note_html: 'The feature was disabled due to <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1325907">some</a> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1326032">compatibility</a> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1328218">issues</a>.',
-      },
+      firefox53: false,
+      firefox65: true,
+      chrome70: chrome.experimental,
+      chrome71: true,
       opera10_50: false,
       safari10_1: false,
-      safaritp: {
-        val: false,
-        note_id: 'wk-global-property',
-        note_html: 'The feature was disabled due to <a href="https://bugs.webkit.org/show_bug.cgi?id=165171">compatibility issues</a>.',
-      },
-      webkit: {
-        val: false,
-        note_id: 'wk-global-property',
-        note_html: 'The feature was disabled due to <a href="https://bugs.webkit.org/show_bug.cgi?id=165171">compatibility issues</a>.',
-      },
-      node0_10: true,
-      node0_12: true,
-      node4: true,
-      node6: true,
-      node6_5: true,
-      node7: true,
-      node7_6: true,
-      node8: true,
-      node8_3: true,
-      node8_7: true,
-      duktape2_0: false,
-      duktape2_1: true,
-    }
-  }, {
-    name: '"global" global property has correct property descriptor',
-    exec: function(){/*
-      var actualGlobal = Function('return this')();
-      if (typeof global !== 'object') { return false; }
-      if (!('global' in actualGlobal)) { return false; }
-      if (Object.prototype.propertyIsEnumerable.call(actualGlobal, 'global')) { return false; }
-      if (typeof Object.getOwnPropertyDescriptor !== 'function') { return true; } // ES3
-
-      var descriptor = Object.getOwnPropertyDescriptor(actualGlobal, 'global');
-      return descriptor.value === actualGlobal && !descriptor.enumerable && descriptor.configurable && descriptor.writable;
-    */},
-    res: {
-      babel6: babel.corejs,
-      typescript1: typescript.corejs,
-      ie11: false,
-      firefox2: false,
-      firefox53: {
-        val: false,
-        note_id: 'ffox-global-property',
-        note_html: 'The feature was disabled due to <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1325907">some</a> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1326032">compatibility</a> <a href="https://bugzilla.mozilla.org/show_bug.cgi?id=1328218">issues</a>.',
-      },
-      opera10_50: false,
-      safaritp: {
-        val: false,
-        note_id: 'wk-global-property',
-        note_html: 'The feature was disabled due to <a href="https://bugs.webkit.org/show_bug.cgi?id=165171">compatibility issues</a>.',
-      },
-      safari10_1: false,
-      webkit: {
-        val: false,
-        note_id: 'wk-global-property',
-        note_html: 'The feature was disabled due to <a href="https://bugs.webkit.org/show_bug.cgi?id=165171">compatibility issues</a>.',
-      },
+      safari12_1: true,
+      safaritp: true,
       node0_10: false,
       node0_12: false,
       node4: false,
@@ -1500,7 +206,48 @@ exports.tests = [
       node8_3: false,
       node8_7: false,
       duktape2_0: false,
-      duktape2_1: true,
+      duktape2_1: false,
+      graalvm: true,
+    }
+  }, {
+    name: '"globalThis" global property has correct property descriptor',
+    exec: function(){/*
+      var actualGlobal = Function('return this')();
+      if (typeof globalThis !== 'object') { return false; }
+      if (!('globalThis' in actualGlobal)) { return false; }
+      if (Object.prototype.propertyIsEnumerable.call(actualGlobal, 'globalThis')) { return false; }
+
+      var descriptor = Object.getOwnPropertyDescriptor(actualGlobal, 'globalThis');
+      return descriptor.value === actualGlobal && !descriptor.enumerable && descriptor.configurable && descriptor.writable;
+    */},
+    res: {
+      babel6corejs2: false,
+      babel7corejs3: babel.corejs,
+      typescript1corejs2: typescript.fallthrough,
+      typescript3_2corejs3: typescript.corejs,
+      ie11: false,
+      firefox2: false,
+      firefox53: false,
+      firefox65: true,
+      chrome70: chrome.experimental,
+      chrome71: true,
+      opera10_50: false,
+      safari10_1: false,
+      safari12_1: true,
+      safaritp: true,
+      node0_10: false,
+      node0_12: false,
+      node4: false,
+      node6: false,
+      node6_5: false,
+      node7: false,
+      node7_6: false,
+      node8: false,
+      node8_3: false,
+      node8_7: false,
+      duktape2_0: false,
+      duktape2_1: false,
+      graalvm: true,
     }
   }]
 },
@@ -1516,12 +263,13 @@ exports.tests = [
         return typeof Observable !== 'undefined';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1530,12 +278,13 @@ exports.tests = [
         return typeof Symbol.observable === 'symbol';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1544,12 +293,13 @@ exports.tests = [
         return 'subscribe' in Observable.prototype;
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1568,12 +318,13 @@ exports.tests = [
         return nonCallableCheckPassed && primitiveCheckPassed && newCheckPassed;
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1583,12 +334,13 @@ exports.tests = [
         return Symbol.observable in Observable.prototype && o[Symbol.observable]() === o;
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1597,12 +349,13 @@ exports.tests = [
         return Observable.of(1, 2, 3) instanceof Observable;
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1611,42 +364,16 @@ exports.tests = [
         return (Observable.from([1,2,3,4]) instanceof Observable) && (Observable.from(new Set([1, 2, 3])) instanceof Observable);
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     }
   ]
-},
-{
-  name: 'String.prototype.matchAll',
-  category: STAGE3,
-  significance: 'small',
-  spec: 'https://github.com/tc39/String.prototype.matchAll',
-  exec: function(){/*
-    var iterator = '11a2bb'.matchAll(/(\d)(\D)/g);
-    if(iterator[Symbol.iterator]() !== iterator)return false;
-    var a = '', b = '', c = '', step;
-    while(!(step = iterator.next()).done){
-      a += step.value[0];
-      b += step.value[1];
-      c += step.value[2];
-    }
-    return a === '1a2b'
-      && b === '12'
-      && c === 'ab';
-  */},
-  res: {
-    babel6: babel.corejs,
-    typescript1: typescript.corejs,
-    ie11: false,
-    firefox2: false,
-    opera10_50: false,
-    duktape2_0: false,
-  }
 },
 {
   name: 'additional meta properties',
@@ -1665,6 +392,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1677,6 +405,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1694,6 +423,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     }
   ]
@@ -1718,11 +448,12 @@ exports.tests = [
       && index === 0;
   */},
   res : {
-    typescript1: true,
+    typescript1corejs2: true,
     ie11: false,
     firefox2: false,
     opera10_50: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -1745,6 +476,7 @@ exports.tests = [
     firefox2: false,
     opera10_50: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -1765,6 +497,7 @@ exports.tests = [
     opera10_50: false,
     chrome65: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -1785,6 +518,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1799,6 +533,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     }
   ]
@@ -1815,12 +550,13 @@ exports.tests = [
         return typeof Reflect.defineMetadata == 'function';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1829,12 +565,13 @@ exports.tests = [
         return typeof Reflect.hasMetadata == 'function';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1843,12 +580,13 @@ exports.tests = [
         return typeof Reflect.hasOwnMetadata == 'function';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1857,12 +595,13 @@ exports.tests = [
         return typeof Reflect.getMetadata == 'function';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1871,12 +610,13 @@ exports.tests = [
         return typeof Reflect.getOwnMetadata == 'function';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1885,12 +625,13 @@ exports.tests = [
         return typeof Reflect.getMetadataKeys == 'function';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1899,12 +640,13 @@ exports.tests = [
         return typeof Reflect.getOwnMetadataKeys == 'function';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1913,12 +655,13 @@ exports.tests = [
         return typeof Reflect.deleteMetadata == 'function';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1927,12 +670,13 @@ exports.tests = [
         return typeof Reflect.metadata == 'function';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     }
   ]
@@ -1953,6 +697,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1965,6 +710,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1977,6 +723,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -1989,6 +736,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -2001,6 +749,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -2013,6 +762,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -2025,6 +775,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     }
   ]
@@ -2033,7 +784,7 @@ exports.tests = [
   name: 'Frozen Realms API',
   category: STAGE1,
   significance: 'medium',
-  spec: 'https://github.com/FUDCo/frozen-realms',
+  spec: 'https://github.com/tc39/proposal-frozen-realms',
   exec: function () {/*
     return typeof Reflect.Realm.immutableRoot === 'function'
       && typeof Reflect.Realm.prototype.spawn === 'function';
@@ -2043,6 +794,7 @@ exports.tests = [
     firefox2: false,
     opera10_50: false,
     duktape2_0: false,
+    graalvm: false,
   }
 },
 {
@@ -2060,14 +812,17 @@ exports.tests = [
         return new C().x === 'x';
       */},
       res: {
-        babel6: true,
+        babel6corejs2: true,
         tr: true,
-        typescript1: true,
+        typescript1corejs2: true,
         ie11: false,
         firefox2: false,
+        firefox67: firefox.classFields,
         chrome65: chrome.harmony,
+        chrome72: true,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -2088,8 +843,11 @@ exports.tests = [
         ie11: false,
         firefox2: false,
         chrome66: chrome.harmony,
+        chrome74: true,
+        firefox67: firefox.privateClassFields,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -2107,15 +865,37 @@ exports.tests = [
         ie11: false,
         firefox2: false,
         chrome66: chrome.harmony,
+        chrome74: true,
+        firefox67: firefox.privateClassFields,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
-    }
+    },
+    {
+      name: 'computed instance class fields',
+      exec: function () {/*
+        class C {
+          ['x'] = 42;
+        }
+        return new C().x === 42;
+      */},
+      res: {
+        ie11: false,
+        firefox2: false,
+        chrome73: true,
+        firefox66: false,
+        firefox68: firefox.classFields,
+        opera10_50: false,
+        duktape2_0: false,
+        graalvm: false,
+      }
+    },
   ]
 },
 {
   name: 'static class fields',
-  category: STAGE2,
+  category: STAGE3,
   significance: 'medium',
   spec: 'https://github.com/tc39/proposal-static-class-features/',
   subtests: [
@@ -2128,12 +908,15 @@ exports.tests = [
         return C.x === 'x';
       */},
       res: {
-        babel6: true,
+        babel6corejs2: true,
         tr: true,
-        typescript1: true,
+        typescript1corejs2: true,
         firefox2: false,
+        chrome71: chrome.harmony,
+        chrome72: true,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
     },
     {
@@ -2149,31 +932,30 @@ exports.tests = [
       */},
       res: {
         firefox2: false,
+        chrome74: true,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       }
-    }
+    },
+    {
+      name: 'computed static class fields',
+      exec: function () {/*
+        class C {
+          static ['x'] = 42;
+        }
+        return C.x === 42;
+      */},
+      res: {
+        firefox2: false,
+        chrome73: true,
+        firefox66: false,
+        opera10_50: false,
+        duktape2_0: false,
+        graalvm: false,
+      }
+    },
   ]
-},
-{
-  name: 'asap',
-  spec: 'https://github.com/rwaldron/tc39-notes/blob/master/es6/2014-09/sept-25.md#510-globalasap-for-enqueuing-a-microtask',
-  category: STAGE0,
-  significance: 'medium',
-  exec: function(){/*
-    var passed = false;
-    setTimeout(function(){ passed = false; }, 1);
-    asap(function(){ if(passed)asyncTestPassed(); });
-    passed = true;
-  */},
-  res : {
-    babel6: babel.corejs,
-    typescript1: typescript.corejs,
-    ie11: false,
-    firefox2: false,
-    opera10_50: false,
-    duktape2_0: false,
-  }
 },
 {
   name: 'syntactic tail calls',
@@ -2197,6 +979,7 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       },
     },
     {
@@ -2222,138 +1005,10 @@ exports.tests = [
         firefox2: false,
         opera10_50: false,
         duktape2_0: false,
+        graalvm: false,
       },
     }
   ]
-},
-{
-  name: 'Function.prototype.toString revision',
-  category: STAGE3,
-  significance: 'small',
-  spec: 'https://github.com/tc39/Function-prototype-toString-revision',
-  mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Function/toString',
-  subtests: [{
-    name: 'functions created with the Function constructor',
-    exec: function(){/*
-      var fn = Function('a', ' /\x2A a \x2A/ b, c /\x2A b \x2A/ //', '/\x2A c \x2A/ ; /\x2A d \x2A/ //');
-      var str = 'function anonymous(a, /\x2A a \x2A/ b, c /\x2A b \x2A/ //\n) {\n/\x2A c \x2A/ ; /\x2A d \x2A/ //\n}';
-      return fn + '' === str;
-    */},
-    res: {
-      ie11: false,
-      firefox2: false,
-      firefox54: true,
-      opera10_50: false,
-      chrome59: chrome.harmony,
-      chrome66: true,
-      duktape2_0: false,
-    },
-  }, {
-    name: 'arrows',
-    exec: function(){/*
-      var str = 'a => b';
-      return eval('(' + str + ')') + '' === str;
-    */},
-    res: {
-      node4: true,
-      firefox2: false,
-      firefox51: true,
-      opera10_50: false,
-      chrome50: true,
-      safari10: true,
-      ie11: false,
-      edge13: true,
-      duktape2_0: false,
-      nashorn1_8: true,
-      nashorn9: true,
-      nashorn10: true,
-    },
-  }, {
-    name: '[native code]',
-    exec: function(){/*
-      const NATIVE_EVAL_RE = /\bfunction\b[\s\S]*\beval\b[\s\S]*\([\s\S]*\)[\s\S]*\{[\s\S]*\[[\s\S]*\bnative\b[\s\S]+\bcode\b[\s\S]*\][\s\S]*\}/;
-      return NATIVE_EVAL_RE.test(eval + '');
-    */},
-    res: {
-      node4: true,
-      firefox2: false,
-      firefox45: true,
-      opera10_50: true,
-      chrome50: true,
-      safari3_1: true,
-      ie11: true,
-      edge13: true,
-      duktape2_0: true,
-      nashorn9: true,
-      nashorn10: true,
-    },
-  }, {
-    name: 'class expression with implicit constructor',
-    exec: function(){/*
-      var str = 'class A {}';
-      return eval('(' + str + ')') + '' === str;
-    */},
-    res: {
-      node4: true,
-      firefox2: false,
-      firefox55: true,
-      opera10_50: false,
-      chrome50: true,
-      safari10: true,
-      ie11: false,
-      edge14: true,
-      duktape2_0: false,
-    },
-  }, {
-    name: 'class expression with explicit constructor',
-    exec: function(){/*
-      var str = 'class /\x2A a \x2A/ A /\x2A b \x2A/ extends /\x2A c \x2A/ function B(){} /\x2A d \x2A/ { /\x2A e \x2A/ constructor /\x2A f \x2A/ ( /\x2A g \x2A/ ) /\x2A h \x2A/ { /\x2A i \x2A/ ; /\x2A j \x2A/ } /\x2A k \x2A/ m /\x2A l \x2A/ ( /\x2A m \x2A/ ) /\x2A n \x2A/ { /\x2A o \x2A/ } /\x2A p \x2A/ }';
-      return eval('(/\x2A before \x2A/' + str + '/\x2A after \x2A/)') + '' === str;
-    */},
-    res: {
-      node4: true,
-      firefox2: false,
-      firefox55: true,
-      opera10_50: false,
-      chrome50: true,
-      safari10: true,
-      ie11: false,
-      edge14: true,
-      duktape2_0: false,
-    },
-  }, {
-    name: 'unicode escape sequences in identifiers',
-    exec: function(){/*
-      var str = 'function \\u0061(\\u{62}, \\u0063) { \\u0062 = \\u{00063}; return b; }';
-      return eval('(/\x2A before \x2A/' + str + '/\x2A after \x2A/)') + '' === str;
-    */},
-    res: {
-      ie11: false,
-      firefox2: false,
-      firefox54: true,
-      opera10_50: false,
-      chrome59: chrome.harmony,
-      chrome66: true,
-      duktape2_0: false,
-    },
-  }, {
-    name: 'methods and computed property names',
-    exec: function(){/*
-      var str = '[ /\x2A a \x2A/ "f" /\x2A b \x2A/ ] /\x2A c \x2A/ ( /\x2A d \x2A/ ) /\x2A e \x2A/ { /\x2A f \x2A/ }';
-      return eval('({ /\x2A before \x2A/' + str + '/\x2A after \x2A/ }.f)') + '' === str;
-    */},
-    res: {
-      ie11: false,
-      firefox2: false,
-      firefox54: true,
-      opera10_50: false,
-      chrome59: chrome.harmony,
-      chrome66: true,
-      duktape2_0: false,
-      nashorn9: true,
-      nashorn10: true,
-    },
-  }]
 },
 {
   name: 'Math.signbit',
@@ -2367,12 +1022,13 @@ exports.tests = [
       && Math.signbit(42) === true;
   */},
   res : {
-    babel6: babel.corejs,
-    typescript1: typescript.corejs,
+    babel6corejs2: babel.corejs,
+    typescript1corejs2: typescript.corejs,
     ie11: false,
     firefox52: false,
     opera10_50: false,
     duktape2_2: false,
+    graalvm: false,
   }
 },
 {
@@ -2388,12 +1044,13 @@ exports.tests = [
         && Math.clamp(6, 2, 4) === 4;
     */},
     res: {
-      babel6: babel.corejs,
-      typescript1: typescript.corejs,
+      babel6corejs2: babel.corejs,
+      typescript1corejs2: typescript.corejs,
       ie11: false,
       firefox52: false,
       opera10_50: false,
       duktape2_2: false,
+      graalvm: false,
     },
   }, {
     name: 'Math.DEG_PER_RAD',
@@ -2401,12 +1058,13 @@ exports.tests = [
       return Math.DEG_PER_RAD === Math.PI / 180;
     */},
     res: {
-      babel6: babel.corejs,
-      typescript1: typescript.corejs,
+      babel6corejs2: babel.corejs,
+      typescript1corejs2: typescript.corejs,
       ie11: false,
       firefox52: false,
       opera10_50: false,
       duktape2_2: false,
+      graalvm: false,
     },
   }, {
     name: 'Math.degrees',
@@ -2415,11 +1073,12 @@ exports.tests = [
         && Math.degrees(Math.PI) === 180;
     */},
     res: {
-      babel6: babel.corejs,
-      typescript1: typescript.corejs,
+      babel6corejs2: babel.corejs,
+      typescript1corejs2: typescript.corejs,
       firefox52: false,
       opera10_50: false,
       duktape2_2: false,
+      graalvm: false,
     },
   }, {
     name: 'Math.fscale',
@@ -2427,12 +1086,13 @@ exports.tests = [
       return Math.fscale(3, 1, 2, 1, Math.PI) === Math.fround((3 - 1) * (Math.PI - 1) / (2 - 1) + 1);
     */},
     res: {
-      babel6: babel.corejs,
-      typescript1: typescript.corejs,
+      babel6corejs2: babel.corejs,
+      typescript1corejs2: typescript.corejs,
       ie11: false,
       firefox52: false,
       opera10_50: false,
       duktape2_2: false,
+      graalvm: false,
     },
   }, {
     name: 'Math.RAD_PER_DEG',
@@ -2440,12 +1100,13 @@ exports.tests = [
       return Math.RAD_PER_DEG === 180 / Math.PI;
     */},
     res: {
-      babel6: babel.corejs,
-      typescript1: typescript.corejs,
+      babel6corejs2: babel.corejs,
+      typescript1corejs2: typescript.corejs,
       ie11: false,
       firefox52: false,
       opera10_50: false,
       duktape2_2: false,
+      graalvm: false,
     },
   }, {
     name: 'Math.radians',
@@ -2454,12 +1115,13 @@ exports.tests = [
         && Math.radians(180) === Math.PI;
     */},
     res: {
-      babel6: babel.corejs,
-      typescript1: typescript.corejs,
+      babel6corejs2: babel.corejs,
+      typescript1corejs2: typescript.corejs,
       ie11: false,
       firefox52: false,
       opera10_50: false,
       duktape2_2: false,
+      graalvm: false,
     },
   }, {
     name: 'Math.scale',
@@ -2467,12 +1129,13 @@ exports.tests = [
       return Math.scale(0, 3, 5, 8, 10) === 5;
     */},
     res: {
-      babel6: babel.corejs,
-      typescript1: typescript.corejs,
+      babel6corejs2: babel.corejs,
+      typescript1corejs2: typescript.corejs,
       ie11: false,
       firefox52: false,
       opera10_50: false,
       duktape2_2: false,
+      graalvm: false,
     },
   }]
 },
@@ -2488,13 +1151,14 @@ exports.tests = [
         return typeof Promise.try === 'function';
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2503,13 +1167,14 @@ exports.tests = [
         return Promise.try(function () {}) instanceof Promise;
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2520,13 +1185,14 @@ exports.tests = [
         return score === 1;
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2542,13 +1208,14 @@ exports.tests = [
         });
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2564,13 +1231,14 @@ exports.tests = [
         });
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2586,13 +1254,14 @@ exports.tests = [
         });
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2608,65 +1277,14 @@ exports.tests = [
         });
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox2: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
-      }
-    }
-  ]
-},
-{
-  name: 'Array.prototype.{flatten, flatMap}',
-  category: STAGE3,
-  significance: 'medium',
-  spec: 'https://tc39.github.io/proposal-flatMap/',
-  links: [
-    {
-      note_id: 'flatten-compat-issue',
-      note_html: 'Name of Array.prototype.flatten will likely change due to <a href="https://github.com/tc39/proposal-flatMap/pull/56">web compatibility issues.</a>',
-    }
-  ],
-  subtests: [
-    {
-      name: 'Array.prototype.flatten',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatten',
-      exec: function(){/*
-        return [1, [2, 3], [4, [5, 6]]].flatten().join('') === '12345,6';
-      */},
-      res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
-        ie11: false,
-        firefox2: false,
-        firefox58: false,
-        firefox59: firefox.nightly,
-        opera10_50: false,
-        safaritp: true,
-        duktape2_2: false,
-      }
-    },
-    {
-      name: 'Array.prototype.flatMap',
-      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/Array/flatMap',
-      exec: function(){/*
-        return [{a: 1, b: 2}, {a: 3, b: 4}].flatMap(function (it) {
-          return [it.a, it.b];
-        }).join('') === '1234';
-      */},
-      res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
-        ie11: false,
-        firefox2: false,
-        firefox58: false,
-        firefox59: firefox.nightly,
-        opera10_50: false,
-        safaritp: true,
-        duktape2_2: false,
+        graalvm: false,
       }
     }
   ]
@@ -2686,12 +1304,13 @@ exports.tests = [
         return C.get(A) + C.get(B) === 3;
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2705,12 +1324,13 @@ exports.tests = [
         return C.get(A) + C.get(B) === 5;
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2722,12 +1342,13 @@ exports.tests = [
         return C.has(A) + C.has(B);
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2739,12 +1360,13 @@ exports.tests = [
         return C.has(3) + C.has(4);
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2756,12 +1378,13 @@ exports.tests = [
         return C.get(A) + C.get(B) === 3;
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2775,12 +1398,13 @@ exports.tests = [
         return C.get(A) + C.get(B) === 5;
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2792,12 +1416,13 @@ exports.tests = [
         return C.has(A) + C.has(B);
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
     {
@@ -2809,110 +1434,15 @@ exports.tests = [
         return C.has(A) + C.has(B);
       */},
       res: {
-        babel6: babel.corejs,
-        typescript1: typescript.corejs,
+        babel6corejs2: babel.corejs,
+        typescript1corejs2: typescript.corejs,
         ie11: false,
         firefox52: false,
         opera10_50: false,
         duktape2_2: false,
+        graalvm: false,
       }
     },
-  ]
-},
-{
-  name: 'optional catch binding',
-  category: STAGE3,
-  significance: 'tiny',
-  spec: 'https://tc39.github.io/proposal-optional-catch-binding/',
-  subtests: [
-    {
-      name: 'basic',
-      exec: function(){/*
-        try {
-          throw new Error();
-        }
-        catch {
-          return true;
-        }
-        return false;
-      */},
-      res: {
-        babel7: true,
-        typescript2_5: true,
-        ie11: false,
-        firefox2: false,
-        firefox57: false,
-        firefox58: true,
-        opera10_50: false,
-        chrome65: chrome.harmony,
-        chrome66: true,
-        safari11_1: true,
-        safaritp: true,
-        webkit: true,
-        duktape2_2: false,
-      },
-    },
-    {
-      name: 'await',
-      exec: function(){/*
-        (async function (){
-          try {
-            await Promise.reject();
-          }
-          catch {
-            asyncTestPassed();
-          }
-        })();
-      */},
-      res: {
-        babel7: true,
-        typescript2_5: true,
-        ie11: false,
-        firefox2: false,
-        firefox57: false,
-        firefox58: true,
-        opera10_50: false,
-        chrome65: chrome.harmony,
-        chrome66: true,
-        safari11_1: true,
-        safaritp: true,
-        webkit: true,
-        duktape2_2: false,
-      },
-    },
-    {
-      name: 'yield',
-      exec: function(){/*
-        function *foo() {
-          try {
-            yield;
-            throw new Error();
-          }
-          catch {
-            return true;
-          }
-        }
-
-        var it = foo();
-        it.next();
-        return it.next().value;
-      */},
-      res: {
-        babel7: true,
-        typescript2_5: true,
-        ie11: false,
-        firefox2: false,
-        firefox57: false,
-        firefox58: true,
-        opera10_50: false,
-        chrome65: chrome.harmony,
-        chrome66: true,
-        safari11_1: true,
-        safaritp: true,
-        webkit: true,
-        duktape2_2: false,
-      }
-    }
   ]
 },
 {
@@ -2937,7 +1467,7 @@ exports.tests = [
     return result === 'Hello, hello!';
   */},
   res : {
-    babel7: true,
+    babel7corejs2: true,
     ie11: false,
     firefox2: false,
     firefox57: false,
@@ -2947,11 +1477,12 @@ exports.tests = [
       note_html: 'Requires the <code>--enable-pipeline-operator</code> compile option.'
     },
     opera10_50: false,
+    graalvm: false,
   }
 },
 {
   name: 'extensible numeric literals',
-  spec: 'https://github.com/littledan/proposal-extensible-numeric-literals',
+  spec: 'https://github.com/tc39/proposal-extended-numeric-literals',
   category: STAGE1,
   significance: 'medium',
   exec: function(){/*
@@ -2965,6 +1496,7 @@ exports.tests = [
     ie11: false,
     firefox52: false,
     opera10_50: false,
+    graalvm: false,
   }
 },
 {
@@ -2985,10 +1517,11 @@ exports.tests = [
         }
       */},
       res : {
-        babel7: true,
+        babel7corejs2: true,
         ie11: false,
         firefox52: false,
         opera10_50: false,
+        graalvm: false,
       }
     },
     {
@@ -3007,10 +1540,11 @@ exports.tests = [
         }
       */},
       res : {
-        babel7: true,
+        babel7corejs2: true,
         ie11: false,
         firefox52: false,
         opera10_50: false,
+        graalvm: false,
       }
     },
     {
@@ -3024,10 +1558,11 @@ exports.tests = [
         }
       */},
       res : {
-        babel7: true,
+        babel7corejs2: true,
         ie11: false,
         firefox52: false,
         opera10_50: false,
+        graalvm: false,
       }
     },
     {
@@ -3041,10 +1576,11 @@ exports.tests = [
         }
       */},
       res : {
-        babel7: true,
+        babel7corejs2: true,
         ie11: false,
         firefox52: false,
         opera10_50: false,
+        graalvm: false,
       }
     },
   ]
@@ -3063,8 +1599,10 @@ exports.tests = [
         return foo?.baz === 42 && bar?.baz === undefined;
       */},
       res : {
-        babel7: true,
+        babel7corejs2: true,
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3075,8 +1613,10 @@ exports.tests = [
         return foo?.['baz'] === 42 && bar?.['baz'] === undefined;
       */},
       res : {
-        babel7: true,
+        babel7corejs2: true,
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3087,8 +1627,10 @@ exports.tests = [
         return foo?.baz() === 42 && bar?.baz() === undefined;
       */},
       res : {
-        babel7: true,
+        babel7corejs2: true,
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
   ]
@@ -3108,6 +1650,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3120,6 +1664,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
   ]
@@ -3137,13 +1683,15 @@ exports.tests = [
       0 ?? 42 === 0;
   */},
   res : {
-    babel7: true,
+    babel7corejs2: true,
     ie11: false,
+    firefox52: false,
+    graalvm: false,
   }
 },
 {
   name: 'partial application syntax',
-  spec: 'https://github.com/rbuckton/proposal-partial-application',
+  spec: 'https://github.com/tc39/proposal-partial-application',
   category: STAGE1,
   significance: 'medium',
   subtests: [
@@ -3158,6 +1706,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3171,6 +1721,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3184,6 +1736,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3197,6 +1751,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3210,6 +1766,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3223,6 +1781,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3236,6 +1796,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3252,6 +1814,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3266,6 +1830,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3279,6 +1845,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3292,6 +1860,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3305,6 +1875,8 @@ exports.tests = [
       */},
       res : {
         ie11: false,
+        firefox52: false,
+        graalvm: false,
       }
     },
   ]
@@ -3319,25 +1891,17 @@ exports.tests = [
       0b1010_0001_1000_0101 === 0b1010000110000101;
   */},
   res : {
-    babel7: true,
-    typescript1: false,
-    typescript2_7: true,
+    babel7corejs2: true,
+    typescript1corejs2: false,
+    typescript2_7corejs2: true,
     ie11: false,
     firefox2: false,
+    firefox67: false,
+    firefox68: true,
     chrome67: chrome.harmony,
+    chrome75: true,
     opera10_50: false,
-  }
-},
-{
-  name: 'Symbol.prototype.description',
-  spec: 'https://github.com/tc39/proposal-Symbol-description',
-  category: STAGE2,
-  significance: 'small',
-  exec: function(){/*
-    return Symbol('foo').description === 'foo';
-  */},
-  res : {
-    ie11: false,
+    graalvm: false,
   }
 },
 {
@@ -3353,6 +1917,8 @@ exports.tests = [
       */},
       res : {
           ie11: false,
+          firefox52: false,
+          graalvm: false,
       }
     },
     {
@@ -3362,6 +1928,8 @@ exports.tests = [
       */},
       res : {
           ie11: false,
+          firefox52: false,
+          graalvm: false,
       }
     },
     {
@@ -3371,6 +1939,8 @@ exports.tests = [
       */},
       res : {
           ie11: false,
+          firefox52: false,
+          graalvm: false,
       }
     },
     {
@@ -3380,6 +1950,8 @@ exports.tests = [
       */},
       res : {
           ie11: false,
+          firefox52: false,
+          graalvm: false,
       }
     },
     {
@@ -3397,6 +1969,8 @@ exports.tests = [
       */},
       res : {
           ie11: false,
+          firefox52: false,
+          graalvm: false,
       }
     },
     {
@@ -3415,6 +1989,8 @@ exports.tests = [
       */},
       res : {
           ie11: false,
+          firefox52: false,
+          graalvm: false,
       }
     },
     {
@@ -3432,6 +2008,8 @@ exports.tests = [
       */},
       res : {
           ie11: false,
+          firefox52: false,
+          graalvm: false,
       }
     },
     {
@@ -3450,6 +2028,8 @@ exports.tests = [
       */},
       res : {
           ie11: false,
+          firefox52: false,
+          graalvm: false,
       }
     },
   ]
@@ -3466,7 +2046,12 @@ exports.tests = [
         return (1n + 2n) === 3n;
       */},
       res: {
+        firefox45: false,
+        firefox66: false,
+        firefox67: firefox.bigint,
+        firefox68: true,
         chrome67: true,
+        graalvm: true,
       },
     },
     {
@@ -3475,7 +2060,12 @@ exports.tests = [
         return BigInt("3") === 3n;
       */},
       res: {
+        firefox45: false,
+        firefox66: false,
+        firefox67: firefox.bigint,
+        firefox68: true,
         chrome67: true,
+        graalvm: true,
       },
     },
     {
@@ -3484,7 +2074,12 @@ exports.tests = [
         return typeof BigInt.asUintN === 'function';
       */},
       res: {
+        firefox45: false,
+        firefox66: false,
+        firefox67: firefox.bigint,
+        firefox68: true,
         chrome67: true,
+        graalvm: true,
       },
     },
     {
@@ -3493,7 +2088,12 @@ exports.tests = [
         return typeof BigInt.asIntN === 'function';
       */},
       res: {
+        firefox45: false,
+        firefox66: false,
+        firefox67: firefox.bigint,
+        firefox68: true,
         chrome67: true,
+        graalvm: true,
       },
     },
     {
@@ -3505,7 +2105,11 @@ exports.tests = [
         return view[0] === -0x8000000000000000n;
       */},
       res: {
+        firefox45: false,
+        firefox67: false,
+        firefox68: true,
         chrome67: true,
+        graalvm: true,
       },
     },
     {
@@ -3517,25 +2121,45 @@ exports.tests = [
         return view[0] === 0n;
       */},
       res: {
+        firefox45: false,
+        firefox67: false,
+        firefox68: true,
         chrome67: true,
+        graalvm: true,
       },
     },
     {
       name: 'DataView.prototype.getBigInt64',
       exec: function () {/*
-        return typeof DataView.prototype.getBigInt64 === 'function';
+        var buffer = new ArrayBuffer(64);
+        var view = new DataView(buffer);
+        view.setBigInt64(0, 1n);
+        return view.getBigInt64(0) === 1n;
       */},
       res: {
+        firefox45: false,
+        firefox66: false,
+        firefox67: firefox.bigint,
+        firefox68: true,
         chrome67: true,
+        graalvm: true,
       },
     },
     {
       name: 'DataView.prototype.getBigUint64',
       exec: function () {/*
-        return typeof DataView.prototype.getBigUint64 === 'function';
+        var buffer = new ArrayBuffer(64);
+        var view = new DataView(buffer);
+        view.setBigUint64(0, 1n);
+        return view.getBigUint64(0) === 1n;
       */},
       res: {
+        firefox45: false,
+        firefox66: false,
+        firefox67: firefox.bigint,
+        firefox68: true,
         chrome67: true,
+        graalvm: true,
       },
     },
   ],
@@ -3544,41 +2168,41 @@ exports.tests = [
   name: 'String.prototype.replaceAll',
   significance: 'small',
   spec: 'https://github.com/tc39/proposal-string-replace-all',
-  category: STAGE1,
+  category: STAGE2,
   exec: function () {/*
     return 'q=query+string+parameters'.replaceAll('+', ' ') === 'q=query string parameters';
   */},
   res: {
+      babel6corejs2: false,
+      babel7corejs3: babel.corejs,
+      typescript1corejs2: typescript.fallthrough,
+      typescript3_2corejs3: typescript.corejs,
       ie11: false,
+      firefox52: false,
+      graalvm: false,
   }
 },
 {
   name: 'String.prototype.codePoints',
   significance: 'small',
-  spec: 'https://github.com/RReverser/string-prototype-codepoints',
+  spec: 'https://github.com/tc39/proposal-string-prototype-codepoints',
   category: STAGE1,
   exec: function () {/*
     var results = [];
     for (let code of 'a𠮷b'.codePoints()) results.push(code);
     return results.length === 3
-      && results[0] === 97
-      && results[1] === 134071
-      && results[2] === 98;
+      && results[0].codePoint === 97 && results[0].position === 0
+      && results[1].codePoint === 134071 && results[1].position === 1
+      && results[2].codePoint === 98 && results[2].position === 3;
   */},
   res: {
-      ie11: false,
-  }
-},
-{
-  name: 'Object.fromEntries',
-  significance: 'small',
-  spec: 'https://github.com/tc39/proposal-object-from-entries',
-  category: STAGE1,
-  exec: function () {/*
-    var object = Object.fromEntries(new Map([['foo', 42], ['bar', 23]]));
-    return object.foo === 42 && object.bar === 23;
-  */},
-  res: {
+    babel6corejs2: false,
+    babel7corejs3: babel.corejs,
+    typescript1corejs2: typescript.fallthrough,
+    typescript3_2corejs3: typescript.corejs,
+    ie11: false,
+    firefox52: false,
+    graalvm: false,
   }
 },
 {
@@ -3593,6 +2217,12 @@ exports.tests = [
         return [1, 2, 3].lastItem === 3;
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3601,6 +2231,12 @@ exports.tests = [
         return [1, 2, 3].lastIndex === 2;
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
   ]
@@ -3608,18 +2244,24 @@ exports.tests = [
 {
   name: 'Set methods',
   spec: 'https://github.com/tc39/proposal-set-methods',
-  category: STAGE1,
+  category: STAGE2,
   significance: 'medium',
   subtests: [
     {
-      name: 'Set.prototype.intersect',
+      name: 'Set.prototype.intersection',
       exec: function () {/*
-        var set = new Set([1, 2, 3]).intersect(new Set([2, 3, 4]));
+        var set = new Set([1, 2, 3]).intersection(new Set([2, 3, 4]));
         return set.size === 2
           && set.has(2)
           && set.has(3);
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox2: false,
+        graalvm: false,
       }
     },
     {
@@ -3632,28 +2274,88 @@ exports.tests = [
           && set.has(3);
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox2: false,
+        graalvm: false,
       }
     },
     {
-      name: 'Set.prototype.except',
+      name: 'Set.prototype.difference',
       exec: function () {/*
-        var set = new Set([1, 2, 3]).except(new Set([3, 4]));
+        var set = new Set([1, 2, 3]).difference(new Set([3, 4]));
         return set.size === 2
           && set.has(1)
           && set.has(2);
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox2: false,
+        graalvm: false,
       }
     },
     {
-      name: 'Set.prototype.xor',
+      name: 'Set.prototype.symmetricDifference',
       exec: function () {/*
-        var set = new Set([1, 2]).xor(new Set([2, 3]));
+        var set = new Set([1, 2]).symmetricDifference(new Set([2, 3]));
         return set.size === 2
           && set.has(1)
           && set.has(3);
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox2: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Set.prototype.isDisjointFrom',
+      exec: function () {/*
+        return new Set([1, 2, 3]).isDisjointFrom([4, 5, 6]);
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox2: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Set.prototype.isSubsetOf',
+      exec: function () {/*
+        return new Set([1, 2, 3]).isSubsetOf([5, 4, 3, 2, 1]);
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox2: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Set.prototype.isSupersetOf',
+      exec: function () {/*
+        return new Set([5, 4, 3, 2, 1]).isSupersetOf([1, 2, 3]);
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox2: false,
+        graalvm: false,
       }
     },
   ]
@@ -3675,6 +2377,12 @@ exports.tests = [
           && map.get(1)[1] === 3;
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3686,6 +2394,44 @@ exports.tests = [
           && map.get(102).id === 102;
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Map.prototype.deleteAll',
+      exec: function () {/*
+        var map = new Map([[1, 2], [3, 4], [5, 6], [7, 8]]);
+        map.deleteAll(1, 5)
+        return map.size === 2
+          && map.get(3) === 4
+          && map.get(7) === 8;
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Map.prototype.every',
+      exec: function () {/*
+        return new Map([[1, 4], [2, 5], [3, 6]]).every(it => typeof it == 'number');
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3697,6 +2443,70 @@ exports.tests = [
           && map.get(3) === 6;
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Map.prototype.find',
+      exec: function () {/*
+        return new Map([[1, 2], [2, 3], [3, 4]]).find(it => it % 2) === 3;
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Map.prototype.findKey',
+      exec: function () {/*
+        return new Map([[1, 2], [2, 3], [3, 4]]).findKey(it => it % 2) === 2;
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Map.prototype.includes',
+      exec: function () {/*
+        return new Map([[1, 2], [2, NaN]]).includes(2)
+          && new Map([[1, 2], [2, NaN]]).includes(NaN);
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Map.prototype.keyOf',
+      exec: function () {/*
+        return new Map([[1, 2], [2, NaN]]).keyOf(2) === 1
+          && new Map([[1, 2], [2, NaN]]).keyOf(NaN) === undefined;
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3709,6 +2519,12 @@ exports.tests = [
           && map.get(9) === 6;
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3721,6 +2537,12 @@ exports.tests = [
           && map.get(3) === 36;
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3733,6 +2555,40 @@ exports.tests = [
           && map.get(3) === 6;
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Map.prototype.reduce',
+      exec: function () {/*
+        return new Map([['a', 1], ['b', 2], ['c', 3], ]).reduce(((a, b) => a + b), 1) === 7;
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'Map.prototype.some',
+      exec: function () {/*
+        return new Map([[1, 4], [2, 5], [3, 6]]).some(it => it % 2);
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3745,6 +2601,12 @@ exports.tests = [
           && set.has(3);
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3757,6 +2619,12 @@ exports.tests = [
           && set.has(4);
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3765,6 +2633,12 @@ exports.tests = [
         return new Set([1, 2, 3]).every(it => typeof it === 'number');
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3776,6 +2650,12 @@ exports.tests = [
           && set.has(3);
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3784,6 +2664,12 @@ exports.tests = [
         return new Set([1, 2, 3]).find(it => !(it % 2)) === 2;
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3792,6 +2678,12 @@ exports.tests = [
         return new Set([1, 2, 3]).join('|') === '1|2|3';
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3804,6 +2696,12 @@ exports.tests = [
           && set.has(9);
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3812,6 +2710,12 @@ exports.tests = [
         return new Set([1, 2, 3]).reduce((memo, it) => memo + it) === 6;
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
     },
     {
@@ -3820,7 +2724,285 @@ exports.tests = [
         return new Set([1, 2, 3]).some(it => it % 2);
       */},
       res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
       }
+    },
+    {
+      name: 'WeakMap.prototype.deleteAll',
+      exec: function () {/*
+        var a = {};
+        var b = {};
+        var c = {};
+        var d = {};
+        var map = new WeakMap([[a, 1], [b, 2], [c, 3], [d, 4]]);
+        map.deleteAll(a, c)
+        return !map.has(a)
+          && map.get(b) === 2
+          && !map.has(c)
+          && map.get(d) === 4;
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'WeakSet.prototype.addAll',
+      exec: function () {/*
+        var a = {};
+        var b = {};
+        var c = {};
+        var d = {};
+        var set = new WeakSet([a, b]);
+        set.addAll(c, d)
+        return set.has(a)
+          && set.has(b)
+          && set.has(c)
+          && set.has(d);
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+    {
+      name: 'WeakSet.prototype.deleteAll',
+      exec: function () {/*
+        var a = {};
+        var b = {};
+        var c = {};
+        var d = {};
+        var set = new WeakSet([a, b, c, d]);
+        set.deleteAll(a, c)
+        return !set.has(a)
+          && set.has(b)
+          && !set.has(c)
+          && set.has(d);
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+        firefox52: false,
+        graalvm: false,
+      }
+    },
+  ]
+},
+{
+  name: 'ArrayBuffer.prototype.transfer',
+  category: STAGE2,
+  significance: 'small',
+  spec: 'https://github.com/domenic/proposal-arraybuffer-transfer/',
+  subtests: [
+    {
+      name: 'ArrayBuffer.prototype.transfer()',
+      exec: function () {/*
+        const buffer1 = new Uint8Array([1, 2]).buffer;
+        const buffer2 = buffer1.transfer();
+        return buffer1.byteLength === 0
+          && buffer2.byteLength === 2;
+      */},
+      res: {
+        ie11: false,
+        firefox52: false,
+        chrome70: false,
+        safari12: false,
+      },
+    },
+    {
+      name: 'ArrayBuffer.prototype.realloc()',
+      exec: function () {/*
+        const buffer1 = new ArrayBuffer(1024);
+        const buffer2 = buffer1.realloc(256);
+        return buffer1.byteLength === 0
+          && buffer2.byteLength === 256;
+      */},
+      res: {
+        ie11: false,
+        firefox52: false,
+        chrome70: false,
+        safari12: false,
+      },
+    },
+  ]
+},
+{
+  name: 'Promise.allSettled',
+  category: STAGE3,
+  significance: 'small',
+  spec: 'https://github.com/tc39/proposal-promise-allSettled',
+  exec: function () {/*
+    Promise.allSettled([
+      Promise.resolve(1),
+      Promise.reject(2),
+      Promise.resolve(3)
+    ]).then(it => {
+      if (
+        it.length === 3 &&
+        it[0].status === 'fulfilled' && it[0].value === 1 &&
+        it[1].status === 'rejected' && it[1].reason === 2 &&
+        it[2].status === 'fulfilled' && it[2].value === 3
+      ) asyncTestPassed();
+    });
+  */},
+  res: {
+    babel6corejs2: false,
+    babel7corejs3: babel.corejs,
+    typescript1corejs2: typescript.fallthrough,
+    typescript3_2corejs3: typescript.corejs,
+    firefox68: true,
+    chrome76: true,
+  }
+},
+{
+  name: 'Math.seededPRNG',
+  significance: 'small',
+  spec: 'https://github.com/tc39/proposal-seeded-random',
+  category: STAGE1,
+  exec: function () {/*
+    var gen1 = Math.seededPRNG({ seed: 42 });
+    var gen2 = Math.seededPRNG({ seed: 42 });
+    if (!gen1.next || !gen1[Symbol.iterator]) return false;
+    var first = gen1.next().value;
+    if (first < 0 || first > 1) return false;
+    if (first !== gen2.next().value) return false;
+    var second = gen1.next().value;
+    if (first === second) return false;
+    return second === gen2.next().value;
+  */},
+  res: {
+    babel6corejs2: false,
+    babel7corejs3: babel.corejs,
+    typescript1corejs2: typescript.fallthrough,
+    typescript3_2corejs3: typescript.corejs,
+  }
+},
+{
+  name: '{ BigInt, Number }.fromString',
+  category: STAGE1,
+  significance: 'small',
+  spec: 'https://github.com/tc39/proposal-number-fromstring',
+  subtests: [
+    {
+      name: 'Number.fromString',
+      exec: function () {/*
+        return Number.fromString('42') === 42;
+      */},
+      res: {
+        babel6corejs2: false,
+        babel7corejs3: babel.corejs,
+        typescript1corejs2: typescript.fallthrough,
+        typescript3_2corejs3: typescript.corejs,
+      },
+    },
+    {
+      name: 'BigInt.fromString',
+      exec: function () {/*
+        return BigInt.fromString('42') === 42n;
+      */},
+      res: {
+      },
+    },
+  ]
+},
+{
+  name: 'Promise.any',
+  category: STAGE1,
+  significance: 'small',
+  spec: 'https://github.com/tc39/proposal-promise-any',
+  exec: function () {/*
+    Promise.any([
+      Promise.resolve(1),
+      Promise.reject(2),
+      Promise.resolve(3)
+    ]).then(it => {
+      if (it === 1) asyncTestPassed();
+    });
+  */},
+  res: {
+    babel6corejs2: false,
+    babel7corejs3: babel.corejs,
+    typescript1corejs2: typescript.fallthrough,
+    typescript3_2corejs3: typescript.corejs,
+  }
+},
+{
+  name: 'Legacy RegExp features in JavaScript',
+  category: STAGE3,
+  significance: 'small',
+  spec: 'https://github.com/tc39/proposal-regexp-legacy-features',
+  subtests: [
+    {
+      name: 'RegExp "lastMatch"',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/lastMatch',
+      exec: function () {
+        var re = /\w/;
+        re.exec('x');
+        return RegExp.lastMatch === 'x';
+      },
+      res: {
+        ie7: true,
+        firefox2: true,
+        safari3_1: true,
+        chrome7: true,
+        opera7_5: false,
+        opera10_10: false,
+        opera10_50: true,
+        konq4_4: true,
+        besen: false,
+        rhino1_7: true,
+        phantom: true,
+        android4_0: true,
+        duktape2_0: false,
+        nashorn1_8: true,
+        nashorn9: true,
+        nashorn10: true,
+        graalvm: true,
+      },
+    },
+    {
+      name: 'RegExp.$1-$9',
+      mdn: 'https://developer.mozilla.org/en-US/docs/Web/JavaScript/Reference/Global_Objects/RegExp/n',
+      exec: function () {
+        for (var i = 1; i < 10; i++) {
+          if (!(('$' + i) in RegExp)) return false;
+        }
+        return true;
+      },
+      res: {
+        ie7: true,
+        firefox2: true,
+        safari3_1: true,
+        chrome7: true,
+        opera7_5: true,
+        opera10_10: true,
+        opera10_50: true,
+        konq4_4: true,
+        besen: false,
+        rhino1_7: true,
+        phantom: true,
+        android4_0: true,
+        duktape2_0: false,
+        nashorn1_8: true,
+        nashorn9: true,
+        nashorn10: true,
+        graalvm: true,
+      },
     },
   ]
 },
