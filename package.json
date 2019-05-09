@@ -3,9 +3,8 @@
   "description": "Raw kangax/compat-table data without unnecessary dependencies.",
   "main": "index.js",
   "scripts": {
-    "clean": "rimraf \"!(index).js\"",
-    "prebuild": "npm run clean",
-    "build": "cpy node_modules/compat-table/data-*.js ."
+    "prebuild": "rimraf \"data-*\"",
+    "build": "cpy node_modules/compat-table/data-* ."
   },
   "repository": {
     "type": "git",
