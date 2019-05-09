@@ -7,8 +7,7 @@ script:
   - npm run build
   - "! git diff --quite"
 before_deploy:
-  - git add .
-  - npm version 0.0.$(date +%Y%m%d%H%M%S)
+  - npm version --force 0.0.$(date +%Y%m%d%H%M%S)
   - git --quiet push --follow-tags github ${TRAVIS_BRANCH}
 deploy:
   provider: npm
