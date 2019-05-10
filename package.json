@@ -3,7 +3,7 @@
   "description": "Raw kangax/compat-table data without unnecessary dependencies.",
   "main": "index.js",
   "scripts": {
-    "prebuild": "rimraf \"data-*\"",
+    "prebuild": "del 'data-*'",
     "build": "cpy node_modules/compat-table/data-* ."
   },
   "repository": {
@@ -22,7 +22,7 @@
   "devDependencies": {
     "compat-table": "kangax/compat-table#gh-pages",
     "cpy-cli": "^1.0.1",
-    "rimraf": "^2.6.1"
+    "del-cli": "^1.1.0"
   },
   "version": "0.0.20190509084935"
 }
