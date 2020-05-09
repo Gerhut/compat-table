@@ -21,7 +21,7 @@
   "homepage": "https://github.com/Gerhut/compat-table#readme",
   "devDependencies": {
     "compat-table": "kangax/compat-table#gh-pages",
-    "cpy-cli": "^1.0.1",
+    "cpy-cli": "^3.1.1",
     "del-cli": "^3.0.0"
   },
   "version": "0.0.20190509084935"
